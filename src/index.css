@@ -11,7 +11,7 @@
   --color-muted-foreground: #8fb8c9;
   --color-border: #0f2e3d;
   --radius: 0.75rem;
-  --color-highlight: #00a8e8;
+  --color-highlight: #f5a623;
   --color-surface: #003459;
 }
 @layer base {
@@ -94,6 +94,18 @@
     }
     100% {
       transform: translateX(-50%);
+    }
+  }
+  @keyframes signal-pulse {
+    0%,
+    100% {
+      opacity: 0.25;
+      transform: scale(0.9) translateY(0);
+    }
+
+    50% {
+      opacity: 0.9;
+      transform: scale(1.25) translateY(-6px);
     }
   }
   .animate-fade-in {

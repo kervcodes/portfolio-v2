@@ -79,10 +79,10 @@ export const About = () => {
                     </div>
 
                     <div className="flex flex-wrap gap-4 pt-4 animate-fade-in animation-delay-500">
-                        <Button>
+                        <Button href="#contact" size="lg">
                             Contact Me <ArrowRight className="w-5 h-5" />
                         </Button>
-                        <AnimatedBorderButton>
+                        <AnimatedBorderButton href="/resume/kervintz_noel_resume.pdf" download="Kervintz_Noel_Resume.pdf">
                             <Download className="w-5 h-5" />
                             Download CV
                         </AnimatedBorderButton>

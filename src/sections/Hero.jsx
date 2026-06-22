@@ -41,7 +41,7 @@ export const Hero = () => {
                         <Button className="lg">
                             Contact Me <ArrowRight className="w-5 h-6" />
                         </Button>
-                        <AnimatedBorderButton>
+                        <AnimatedBorderButton href="/resume/resume.pdf" download="Kervintz_Noel_Resume.pdf">
                             <Download className="w-5 h-5" />
                             Download CV
                         </AnimatedBorderButton>

@@ -7,7 +7,8 @@ const navLinks = [
     { href: "#about", label: "About" },
     { href: "#projects", label: "Projects" },
     { href: "#experience", label: "Experience" },
-    { href: "#testimonials", label: "Testimonials" },
+    { href: "#blogs", label: "Blogs" },
+    // { href: "#testimonials", label: "Testimonials" },
     { href: "#contact", label: "Contact" },
 ]
 export const Navbar = () => {
@@ -50,7 +51,7 @@ export const Navbar = () => {
                 <div className="container items-center mx-auto px-6 py-6 flex flex-col gap-4">
                     {
                         navLinks.map((link, index) => (
-                            <a href={link.href} key={index} className=" py-2 text-lg text-muted-foreground hover:text-foreground ">
+                            <a href={link.href} key={index} className=" py-2 text-lg text-muted-foreground hover:text-foreground" target="#{link.href}">
                                 {link.label}
                             </a>
                         ))

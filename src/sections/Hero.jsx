@@ -23,21 +23,21 @@ export const Hero = () => {
             </div>
          
             {/* Content */}
-            <div className="container mx-auto px-6 pt-50 pb-20 relative z-10">
+            <div className="container mx-auto px-6 pt-40 pb-20 relative z-10">
                 <div className="max-w-3xl mx-auto flex flex-col items-center text-center space-y-8">
                     {/* HeadLine */}
                     <div className="space-y-4">
-                        <h1 className="color-highlight text-5xl md:text-6xl lg:text-7xl font-bold leading-tight animate-fade-in animation-delay-100">
+                        <h1 className="color-highlight text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-fade-in animation-delay-100">
                             Software Engineer
                         </h1>
-                        <h3 className="color-highlight text-3xl md:text-4xl lg:text-5xl font-bold leading-tight animate-fade-in animation-delay-300">Boston, MA</h3>
-                        <p className="text-lg text-mute-foreground max-w-lg mx-auto animate-fade-in animation-delay-800">
+                        <h3 className="color-highlight text-2xl md:text-3xl lg:text-4xl pb-10 font-bold leading-tight animate-fade-in animation-delay-300">Boston, Ma</h3>
+                        <p className="text-lg/8 text-mute-foreground max-w-2xl mx-auto animate-fade-in animation-delay-800">
                             Hi, I'm Kervintz, a full-stack engineer who turns product ideas into reliable SaaS applications —
                             from polished user interfaces to backend systems, APIs, and cloud infrastructure.
                         </p>
                     </div>
                     {/* CTA */}
-                    <div className="flex flex-wrap justify-center gap-4 animate-fade-in animation-delay-300">
+                    <div className="flex items-center justify-center gap-4 animated-fade-in animation-delay-300">
                         <Button className="lg">
                             Contact Me <ArrowRight className="w-5 h-6" />
                         </Button>

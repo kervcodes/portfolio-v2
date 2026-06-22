@@ -1,11 +1,10 @@
-import { Button } from "@/components/Button";
 import { AnimatedBorderButton } from "@/components/AnimatedBorderButton";
-import { 
-    ArrowRight, 
-    Download,  
+import { Button } from "@/components/Button";
+import {
+    ArrowRight,
+    Download,
 } from "lucide-react";
-import { FaLinkedinIn } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 
 
 export const Hero = () => {
@@ -38,10 +37,10 @@ export const Hero = () => {
                     </div>
                     {/* CTA */}
                     <div className="flex items-center justify-center gap-4 animated-fade-in animation-delay-300">
-                        <Button className="lg">
+                        <Button size="lg" href="#contact">
                             Contact Me <ArrowRight className="w-5 h-6" />
                         </Button>
-                        <AnimatedBorderButton href="/resume/resume.pdf" download="Kervintz_Noel_Resume.pdf">
+                        <AnimatedBorderButton href="/resume/kervintz_noel_resume.pdf" download="Kervintz_Noel_Resume.pdf">
                             <Download className="w-5 h-5" />
                             Download CV
                         </AnimatedBorderButton>

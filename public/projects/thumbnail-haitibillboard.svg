@@ -1,0 +1,40 @@
+<svg viewBox="0 0 600 340" width="600" height="340" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="340" fill="#00171f"/>
+  <rect width="600" height="50" fill="#003459"/>
+  <circle cx="22" cy="25" r="9" fill="#D21034"/>
+  <text x="38" y="30" fill="#ffffff" font-family="system-ui,sans-serif" font-size="15" font-weight="700">HaitiBillboard</text>
+  <text x="180" y="30" fill="#007ea7" font-family="system-ui,sans-serif" font-size="12">Haitian Music Analytics</text>
+  <rect x="16" y="58" width="178" height="62" rx="8" fill="#0a2535"/>
+  <text x="26" y="85" fill="#ffffff" font-family="system-ui,sans-serif" font-size="22" font-weight="700">312</text>
+  <text x="26" y="106" fill="#ffffff" fill-opacity="0.45" font-family="system-ui,sans-serif" font-size="11">Artists tracked</text>
+  <rect x="210" y="58" width="178" height="62" rx="8" fill="#0a2535"/>
+  <text x="220" y="85" fill="#ffffff" font-family="system-ui,sans-serif" font-size="22" font-weight="700">4.2M</text>
+  <text x="220" y="106" fill="#ffffff" fill-opacity="0.45" font-family="system-ui,sans-serif" font-size="11">Monthly streams</text>
+  <rect x="404" y="58" width="178" height="62" rx="8" fill="#0a2535"/>
+  <text x="414" y="85" fill="#ffffff" font-family="system-ui,sans-serif" font-size="22" font-weight="700">5</text>
+  <text x="414" y="106" fill="#ffffff" fill-opacity="0.45" font-family="system-ui,sans-serif" font-size="11">Platforms</text>
+  <text x="16" y="142" fill="#ffffff" fill-opacity="0.4" font-family="system-ui,sans-serif" font-size="10" letter-spacing="1.5">TOP ARTISTS THIS WEEK</text>
+  <text x="16" y="170" fill="#ffffff" fill-opacity="0.7" font-family="system-ui,sans-serif" font-size="12">BélO</text>
+  <rect x="120" y="156" width="420" height="22" rx="4" fill="#00a8e8" fill-opacity="0.85"/>
+  <text x="550" y="172" fill="#ffffff" fill-opacity="0.6" font-family="system-ui,sans-serif" font-size="10" text-anchor="end">2.1M</text>
+  <text x="16" y="208" fill="#ffffff" fill-opacity="0.7" font-family="system-ui,sans-serif" font-size="12">Roody R.</text>
+  <rect x="120" y="194" width="336" height="22" rx="4" fill="#00a8e8" fill-opacity="0.65"/>
+  <text x="466" y="210" fill="#ffffff" fill-opacity="0.6" font-family="system-ui,sans-serif" font-size="10" text-anchor="end">1.7M</text>
+  <text x="16" y="246" fill="#ffffff" fill-opacity="0.7" font-family="system-ui,sans-serif" font-size="12">Harmonik</text>
+  <rect x="120" y="232" width="264" height="22" rx="4" fill="#D21034" fill-opacity="0.75"/>
+  <text x="394" y="248" fill="#ffffff" fill-opacity="0.6" font-family="system-ui,sans-serif" font-size="10" text-anchor="end">1.3M</text>
+  <text x="16" y="284" fill="#ffffff" fill-opacity="0.7" font-family="system-ui,sans-serif" font-size="12">System Band</text>
+  <rect x="120" y="270" width="198" height="22" rx="4" fill="#D21034" fill-opacity="0.5"/>
+  <text x="328" y="286" fill="#ffffff" fill-opacity="0.6" font-family="system-ui,sans-serif" font-size="10" text-anchor="end">990K</text>
+  <rect width="600" height="34" y="306" fill="#041824"/>
+  <rect x="16" y="316" width="54" height="16" rx="8" fill="#003459"/>
+  <text x="24" y="328" fill="#007ea7" font-family="system-ui,sans-serif" font-size="10">Next.js</text>
+  <rect x="78" y="316" width="60" height="16" rx="8" fill="#003459"/>
+  <text x="86" y="328" fill="#007ea7" font-family="system-ui,sans-serif" font-size="10">Node.js</text>
+  <rect x="146" y="316" width="76" height="16" rx="8" fill="#003459"/>
+  <text x="154" y="328" fill="#007ea7" font-family="system-ui,sans-serif" font-size="10">PostgreSQL</text>
+  <rect x="230" y="316" width="52" height="16" rx="8" fill="#003459"/>
+  <text x="238" y="328" fill="#007ea7" font-family="system-ui,sans-serif" font-size="10">Spotify</text>
+  <rect x="290" y="316" width="66" height="16" rx="8" fill="#003459"/>
+  <text x="298" y="328" fill="#007ea7" font-family="system-ui,sans-serif" font-size="10">YouTube</text>
+</svg>

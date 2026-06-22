@@ -1,0 +1,43 @@
+<svg viewBox="0 0 600 340" width="600" height="340" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="340" fill="#00171f"/>
+  <rect width="600" height="50" fill="#003459"/>
+  <circle cx="22" cy="25" r="9" fill="#00a8e8"/>
+  <text x="38" y="30" fill="#ffffff" font-family="system-ui,sans-serif" font-size="15" font-weight="700">opsboard</text>
+  <text x="120" y="30" fill="#007ea7" font-family="system-ui,sans-serif" font-size="12">SRE Dashboard</text>
+  <circle cx="462" cy="25" r="5" fill="#2ecc71"/>
+  <text x="472" y="29" fill="#2ecc71" font-family="system-ui,sans-serif" font-size="11">All systems operational</text>
+  <rect x="16" y="58" width="178" height="70" rx="8" fill="#0a2535"/>
+  <circle cx="30" cy="74" r="5" fill="#2ecc71"/>
+  <text x="42" y="78" fill="#2ecc71" font-family="system-ui,sans-serif" font-size="11">Healthy</text>
+  <text x="26" y="105" fill="#ffffff" font-family="system-ui,sans-serif" font-size="24" font-weight="700">99.9%</text>
+  <text x="26" y="120" fill="#ffffff" fill-opacity="0.45" font-family="system-ui,sans-serif" font-size="11">Uptime (30d)</text>
+  <rect x="210" y="58" width="178" height="70" rx="8" fill="#0a2535"/>
+  <text x="220" y="105" fill="#ffffff" font-family="system-ui,sans-serif" font-size="24" font-weight="700">142ms</text>
+  <text x="220" y="120" fill="#ffffff" fill-opacity="0.45" font-family="system-ui,sans-serif" font-size="11">P99 latency</text>
+  <rect x="404" y="58" width="178" height="70" rx="8" fill="#0a2535"/>
+  <text x="414" y="105" fill="#ffffff" font-family="system-ui,sans-serif" font-size="24" font-weight="700">0.01%</text>
+  <text x="414" y="120" fill="#ffffff" fill-opacity="0.45" font-family="system-ui,sans-serif" font-size="11">Error rate</text>
+  <text x="16" y="152" fill="#ffffff" fill-opacity="0.4" font-family="system-ui,sans-serif" font-size="10" letter-spacing="1.5">SYSTEM UPTIME — LAST 30 DAYS</text>
+  <rect x="16" y="160" width="566" height="130" rx="8" fill="#041824"/>
+  <line x1="32" y1="176" x2="32" y2="274" stroke="#003459" stroke-width="0.5"/>
+  <line x1="32" y1="196" x2="566" y2="196" stroke="#003459" stroke-width="0.5" stroke-dasharray="4,4"/>
+  <line x1="32" y1="224" x2="566" y2="224" stroke="#003459" stroke-width="0.5" stroke-dasharray="4,4"/>
+  <line x1="32" y1="252" x2="566" y2="252" stroke="#003459" stroke-width="0.5" stroke-dasharray="4,4"/>
+  <text x="28" y="199" fill="#ffffff" fill-opacity="0.3" font-family="system-ui,sans-serif" font-size="9" text-anchor="end">100%</text>
+  <text x="28" y="227" fill="#ffffff" fill-opacity="0.3" font-family="system-ui,sans-serif" font-size="9" text-anchor="end">99.9</text>
+  <text x="28" y="255" fill="#ffffff" fill-opacity="0.3" font-family="system-ui,sans-serif" font-size="9" text-anchor="end">99.8</text>
+  <polyline points="32,198 80,197 128,198 176,197 224,198 248,248 260,238 280,198 328,197 376,198 424,197 472,198 520,197 566,198" fill="none" stroke="#00a8e8" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M32,198 L80,197 L128,198 L176,197 L224,198 L248,248 L260,238 L280,198 L328,197 L376,198 L424,197 L472,198 L520,197 L566,198 L566,274 L32,274 Z" fill="#00a8e8" fill-opacity="0.08"/>
+  <line x1="248" y1="163" x2="248" y2="274" stroke="#D21034" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="252" y="166" width="56" height="18" rx="4" fill="#D21034" fill-opacity="0.2"/>
+  <text x="258" y="179" fill="#D21034" font-family="system-ui,sans-serif" font-size="10">Incident</text>
+  <rect width="600" height="34" y="306" fill="#041824"/>
+  <rect x="16" y="316" width="54" height="16" rx="8" fill="#003459"/>
+  <text x="24" y="328" fill="#007ea7" font-family="system-ui,sans-serif" font-size="10">Next.js</text>
+  <rect x="78" y="316" width="46" height="16" rx="8" fill="#003459"/>
+  <text x="86" y="328" fill="#007ea7" font-family="system-ui,sans-serif" font-size="10">Prisma</text>
+  <rect x="132" y="316" width="76" height="16" rx="8" fill="#003459"/>
+  <text x="140" y="328" fill="#007ea7" font-family="system-ui,sans-serif" font-size="10">PostgreSQL</text>
+  <rect x="216" y="316" width="46" height="16" rx="8" fill="#003459"/>
+  <text x="224" y="328" fill="#007ea7" font-family="system-ui,sans-serif" font-size="10">Vercel</text>
+</svg>

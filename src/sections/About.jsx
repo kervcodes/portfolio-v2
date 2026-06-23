@@ -55,7 +55,7 @@ export const About = () => {
                         <p className="text-foreground">
                             Outside of code, you'll find me doing lawn care, knee-deep
                             in a handyman project around the house, or firing up the
-                            grill with my wife and two boys.
+                            grill with my wife and my two boys.
                         </p>
                     </div>
 

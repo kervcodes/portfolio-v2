@@ -31,8 +31,8 @@ export const Hero = () => {
                         </h1>
                         <h3 className="color-highlight text-2xl md:text-3xl lg:text-4xl pb-10 font-bold leading-tight animate-fade-in animation-delay-300">Boston, Massachusetts</h3>
                         <p className="text-lg/8 text-mute-foreground max-w-2xl mx-auto animate-fade-in animation-delay-800">
-                            Hi, I'm Kervintz, a full-stack engineer who turns product ideas into reliable SaaS applications —
-                            from polished user interfaces to backend systems, APIs, and cloud infrastructure.
+                            Hi, I'm Kervintz — a full-stack engineer and SRE who builds production-grade SaaS,
+                            from frontend to cloud infrastructure.
                         </p>
                     </div>
                     {/* CTA */}

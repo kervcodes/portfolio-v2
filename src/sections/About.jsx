@@ -31,17 +31,12 @@ export const About = () => {
                             depend on.
                         </p>
                         <p>
-                            My path into tech was nontraditional. I started programming
-                            in high school in Haiti, then had to immigrate to the United
-                            States before I could finish my degree. I worked Desktop
-                            Support by day and taught myself to code by night, until I
-                            committed fully to software development in 2019.
+                            I started programming in high school in Haiti and moved to the United States to pursue my career in tech — teaching myself to code while working in IT, until I committed fully to software development in 2019
                         </p>
 
                         {/* Pull quote */}
                         <blockquote className="border-l-2 border-primary pl-6 py-2 text-xl text-foreground italic">
-                            "I'd rather build something that works quietly in production
-                            for years than something that only looks good in a demo."
+                            "I build for longevity — systems that stay reliable long after the launch excitement fades."
                         </blockquote>
 
                         <p>
@@ -55,15 +50,12 @@ export const About = () => {
                             Beyond my day-to-day work, I'm building Tidywaro,
                             HaitiBillboard, and opsboard, three independent products that
                             span mobile, web, and infrastructure, and I help small law
-                            firms modernize the systems they run on. I write software
-                            that solves real problems, not software that just demos
-                            well.
+                            firms modernize the systems they run on.
                         </p>
                         <p className="text-foreground">
-                            Fun fact: when I'm not writing code, you'll find me out in
-                            the yard doing lawn care, knee-deep in a handyman project
-                            around the house, or firing up the grill with my wife and
-                            two boys.
+                            Outside of code, you'll find me doing lawn care, knee-deep
+                            in a handyman project around the house, or firing up the
+                            grill with my wife and two boys.
                         </p>
                     </div>
 

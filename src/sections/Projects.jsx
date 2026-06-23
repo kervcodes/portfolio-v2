@@ -61,11 +61,7 @@ export const Projects = () => {
                             {" "}make an impact.
                         </span>
                     </h2>
-                    {/* DISCLAIMER */}
-                    <blockquote className="border-l-2 border-primary pl-6 py-2 text-xl text-foreground mt-10 mb-15 font-serif italic font-normal text-white">
-                        These projects are still beeing actively developed and maintained, and may not be fully functional or production-ready. They are intended to showcase my skills and experience as a software engineer, and to provide a glimpse into the types of projects I enjoy working on.
-        
-                    </blockquote>
+
                     <p className="text-muted-foreground animate-fade-in animation-delay-200">
                         A selection of full-stack applications, AI-powered tools, and technical experiments built to sharpen my engineering skills and solve practical problems.
                     </p>

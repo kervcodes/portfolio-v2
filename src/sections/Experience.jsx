@@ -1,7 +1,16 @@
 const experiences = [
   {
+    period: "Jun 2025 — Present",
+    role: "Independent Software Consultant / Founder",
+    company: "Self-Employed · Boston, MA",
+    description:
+      "Building Tidywaro, HaitiBillboard, and opsboard as independent SaaS products. Consulting with small law firms on technology modernization. Freelance full-stack development across React Native, Next.js, and AWS.",
+    technologies: ["React Native", "Next.js", "AWS", "TypeScript", "Supabase"],
+    current: true,
+  },
+  {
     period: "Jan 2023 — Jun 2025",
-    role: "Technology Associate (SRE)",
+    role: "Site Reliability Engineer (Technology Associate)",
     company: "Liberty Mutual Insurance · Boston, MA",
     description:
       "Investigated production issues across distributed cloud services, APIs, and event-driven systems, driving root-cause analysis with engineering teams. Analyzed internal and third-party APIs to identify technical debt and failure patterns. Built a React-based internal dashboard to visualize system health and improve operational visibility. Monitored production environments using Datadog and BigPanda, correlating alerts to reduce noise and accelerate resolution.",

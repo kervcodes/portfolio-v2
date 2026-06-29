@@ -2,14 +2,13 @@ import { FaLinkedinIn } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 
 const socialLinks = [
-  { icon: FaGithub, href: "#", label: "GitHub" },
-  { icon: FaLinkedinIn, href: "#", label: "LinkedIn" },
-
+  { icon: FaGithub, href: "https://github.com/kervcodes", label: "GitHub" },
+  { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/kervintznoel/", label: "LinkedIn" },
 ];
 
 const footerLinks = [
   { href: "#about", label: "About" },
-  { href: "#projects", label: "Projects" },
+  { href: "#learning", label: "Learning" },
   { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact" },
 ];
@@ -51,6 +50,8 @@ export const Footer = () => {
                 key={social.label}
                 href={social.href}
                 aria-label={social.label}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all"
               >
                 <social.icon className="w-5 h-5" />

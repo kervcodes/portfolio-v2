@@ -4,7 +4,7 @@ import { Hero } from "@/sections/Hero";
 import { About } from "@/sections/About";
 // import { Projects } from "@/sections/Projects";
 import { Learning } from "@/sections/Learning";
-import { Posts } from "@/sections/Posts";
+// import { Posts } from "@/sections/Posts";
 import { Experience } from "@/sections/Experience";
 // import { Testimonials } from "@/sections/Testimonials";
 import { Contact } from "@/sections/Contact";
@@ -20,7 +20,7 @@ const HomePage = () => (
       <About />
       {/* <Projects /> */}
       <Learning />
-      <Posts />
+      {/* <Posts /> */}
       <Experience />
       {/* <Testimonials /> */}
       <Contact />

@@ -59,6 +59,14 @@ export const Contact = () => {
           name: formData.name,
           email: formData.email,
           message: formData.message,
+          time: new Date().toLocaleString("en-US", {
+            weekday: "short",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
         },
         publicKey
       );

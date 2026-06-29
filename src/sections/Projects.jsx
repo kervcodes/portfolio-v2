@@ -97,18 +97,26 @@ export const Projects = () => {
 
                                     {/* Hover links — fade in on hover */}
                                     <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <a
-                                            href={project.link}
-                                            className="p-3 rounded-full glass hover:bg-primary hover:text-primary-foreground transition-all"
-                                        >
-                                            <ArrowUpRight className="w-5 h-5" />
-                                        </a>
-                                        <a
-                                            href={project.github}
-                                            className="p-3 rounded-full glass hover:bg-primary hover:text-primary-foreground transition-all"
-                                        >
-                                            <FaGithub className="w-5 h-5" />
-                                        </a>
+                                        {project.link && project.link !== "#" && (
+                                            <a
+                                                href={project.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="p-3 rounded-full glass hover:bg-primary hover:text-primary-foreground transition-all"
+                                            >
+                                                <ArrowUpRight className="w-5 h-5" />
+                                            </a>
+                                        )}
+                                        {project.github && project.github !== "#" && (
+                                            <a
+                                                href={project.github}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="p-3 rounded-full glass hover:bg-primary hover:text-primary-foreground transition-all"
+                                            >
+                                                <FaGithub className="w-5 h-5" />
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
 
@@ -138,13 +146,13 @@ export const Projects = () => {
                         ))}
                     </div>
 
-                    {/* View All CTA */}
-                    <div className="text-center mt-12 animate-fade-in animation-delay-500">
+                    {/* View All CTA — unhide when a /projects page exists */}
+                    {/* <div className="text-center mt-12 animate-fade-in animation-delay-500">
                         <AnimatedBorderButton>
                             View All Projects
                             <ArrowUpRight className="w-5 h-5" />
                         </AnimatedBorderButton>
-                    </div>
+                    </div> */}
                 </div>
                 
             </div>

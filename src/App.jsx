@@ -2,6 +2,8 @@ import {Navbar} from "@/layout/Navbar";
 import {Hero} from "@/sections/Hero";
 import {About} from "@/sections/About";
 import {Projects} from "@/sections/Projects";
+import {Learning} from "@/sections/Learning";
+import {Blogs} from "@/sections/Blogs";
 import {Experience} from "@/sections/Experience";
 // import {Testimonials} from "@/sections/Testimonials";
 import {Contact} from "@/sections/Contact";
@@ -15,7 +17,9 @@ function App() {
       <main>
         <Hero />
         <About />
-        <Projects />
+        {/* <Projects /> */}
+        <Learning />
+        <Blogs />
         <Experience />
         {/* <Testimonials /> */}
         <Contact />

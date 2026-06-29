@@ -69,8 +69,8 @@ export const About = () => {
                             </span>
                         ))}
                     </div>
-
-                    <div className="flex flex-wrap gap-4 pt-4 animate-fade-in animation-delay-500">
+                    {/* CTA */}
+                    <div className="flex items-center justify-center flex-wrap gap-4 pt-4 animate-fade-in animation-delay-500">
                         <Button href="#contact" size="lg">
                             Contact Me <ArrowRight className="w-5 h-5" />
                         </Button>

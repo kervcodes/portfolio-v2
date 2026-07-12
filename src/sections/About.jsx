@@ -46,12 +46,12 @@ export const About = () => {
                             I'm a proud 2022 Hack.Diversity Fellow and a graduate of
                             Boston University with a B.S. in Computer Science.
                         </p>
-                        <p>
+                        {/* <p>
                             Beyond my day-to-day work, I'm building Tidywaro,
                             HaitiBillboard, and opsboard, three independent products that
                             span mobile, web, and infrastructure, and I help small law
                             firms modernize the systems they run on.
-                        </p>
+                        </p> */}
                         <p className="text-foreground">
                             Outside of code, you'll find me doing lawn care, knee-deep
                             in a handyman project around the house, or firing up the

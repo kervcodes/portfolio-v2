@@ -11,19 +11,19 @@ import { POSTS } from "@/data/posts";
 
 // ─── Tag color map ────────────────────────────────────────────────────────────
 const TAG_COLORS = {
-    "AI Engineering":     "text-primary border-primary/30 bg-primary/5",
-    "RAG":                "text-primary border-primary/30 bg-primary/5",
-    "Agents":             "text-primary border-primary/30 bg-primary/5",
-    "MCP":                "text-primary border-primary/30 bg-primary/5",
-    "Claude API":         "text-primary border-primary/30 bg-primary/5",
-    "n8n":                "text-primary border-primary/30 bg-primary/5",
-    "SRE":                "text-highlight border-highlight/30 bg-highlight/5",
-    "Full-Stack":         "text-secondary-foreground border-secondary-foreground/30 bg-secondary-foreground/5",
-    "React Native":       "text-secondary-foreground border-secondary-foreground/30 bg-secondary-foreground/5",
-    "Career":             "text-muted-foreground border-border/50 bg-surface",
-    "Building in Public": "text-muted-foreground border-border/50 bg-surface",
+    "AI Engineering":     "text-primary border-primary/30 bg-primary/8",
+    "RAG":                "text-primary border-primary/30 bg-primary/8",
+    "Agents":             "text-primary border-primary/30 bg-primary/8",
+    "MCP":                "text-primary border-primary/30 bg-primary/8",
+    "Claude API":         "text-primary border-primary/30 bg-primary/8",
+    "n8n":                "text-primary border-primary/30 bg-primary/8",
+    "SRE":                "text-highlight border-highlight/30 bg-highlight/8",
+    "Full-Stack":         "text-secondary-foreground border-secondary-foreground/20 bg-secondary",
+    "React Native":       "text-secondary-foreground border-secondary-foreground/20 bg-secondary",
+    "Career":             "text-muted-foreground border-border bg-muted",
+    "Building in Public": "text-muted-foreground border-border bg-muted",
 };
-const tagClass = (tag) => TAG_COLORS[tag] || "text-muted-foreground border-border/50 bg-surface";
+const tagClass = (tag) => TAG_COLORS[tag] || "text-muted-foreground border-border bg-muted";
 
 // ─── Section ──────────────────────────────────────────────────────────────────
 export const Posts = () => {
@@ -31,7 +31,6 @@ export const Posts = () => {
     const featuredUpcoming = POSTS.filter((p) => p.comingSoon && p.featured);
     const bgUpcoming       = POSTS.filter((p) => p.comingSoon && !p.featured);
 
-    // Dynamic grid cols so cards center when fewer than max are showing
     const featuredGridCols =
         featuredUpcoming.length === 1 ? "grid-cols-1 max-w-sm mx-auto" :
         featuredUpcoming.length === 2 ? "md:grid-cols-2" :
@@ -41,20 +40,19 @@ export const Posts = () => {
         bgUpcoming.length === 2 ? "md:grid-cols-2" :
         "md:grid-cols-3";
 
-    // Shared card body for both published and featured upcoming
     const PostCardBody = ({ post }) => (
         <>
             <div className="flex items-center justify-between mb-4">
                 <span className="text-xs text-muted-foreground">{post.date} · {post.readTime}</span>
                 {post.comingSoon ? (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-surface border border-border/50 text-muted-foreground">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted border border-border text-muted-foreground">
                         Coming soon
                     </span>
                 ) : (
                     <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 )}
             </div>
-            <h3 className="text-lg font-semibold text-white group-hover:text-primary transition-colors mb-3 leading-snug">
+            <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors mb-3 leading-snug">
                 {post.title}
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-4">
@@ -72,20 +70,19 @@ export const Posts = () => {
 
     return (
         <section id="posts" className="py-24 relative overflow-hidden scroll-mt-24">
-            {/* Background glows */}
             <div className="absolute top-1/4 left-0 w-80 h-80 bg-highlight/5 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-1/3 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
             <div className="container max-w-5xl mx-auto px-6 relative z-10">
 
-                {/* ── Section Header ── */}
+                {/* Section Header */}
                 <div className="text-center mx-auto max-w-3xl mb-16 animate-fade-in">
                     <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase">
                         Writing
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-secondary-foreground">
+                    <h2 className="font-serif text-4xl md:text-5xl font-bold mt-4 mb-6 text-foreground">
                         Building in
-                        <span className="font-serif italic font-normal text-white">
+                        <span className="italic font-normal text-primary">
                             {" "}public.
                         </span>
                     </h2>
@@ -95,14 +92,14 @@ export const Posts = () => {
                     </p>
                 </div>
 
-                {/* ── Published posts (full linked cards) ── */}
+                {/* Published posts */}
                 {published.length > 0 && (
                     <div className="grid md:grid-cols-2 gap-6 mb-8 animate-fade-in animation-delay-100">
                         {published.map((post, idx) => (
                             <Link
                                 key={idx}
                                 to={`/posts/${post.slug}`}
-                                className="group glass rounded-2xl p-6 border border-border/30 hover:border-primary/40 transition-all duration-300 flex flex-col"
+                                className="group bg-card rounded-2xl p-6 border border-border shadow-sm hover:border-primary/30 hover:shadow-md transition-all duration-300 flex flex-col"
                                 style={{ animationDelay: `${idx * 80}ms` }}
                             >
                                 <PostCardBody post={post} />
@@ -111,7 +108,7 @@ export const Posts = () => {
                     </div>
                 )}
 
-                {/* ── Featured upcoming posts (full opacity, non-clickable) ── */}
+                {/* Featured upcoming posts */}
                 {featuredUpcoming.length > 0 && (
                     <div className="animate-fade-in animation-delay-100">
                         {published.length > 0 && (
@@ -123,7 +120,7 @@ export const Posts = () => {
                             {featuredUpcoming.map((post, idx) => (
                                 <div
                                     key={idx}
-                                    className="group glass rounded-2xl p-6 border border-border/30 flex flex-col"
+                                    className="group bg-card rounded-2xl p-6 border border-border shadow-sm flex flex-col"
                                     style={{ animationDelay: `${idx * 80}ms` }}
                                 >
                                     <PostCardBody post={post} />
@@ -133,7 +130,7 @@ export const Posts = () => {
                     </div>
                 )}
 
-                {/* ── Background upcoming posts (dimmed) ── */}
+                {/* Background upcoming posts — dimmed */}
                 {bgUpcoming.length > 0 && (
                     <div className="animate-fade-in animation-delay-200">
                         <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-4">
@@ -143,16 +140,16 @@ export const Posts = () => {
                             {bgUpcoming.map((post, idx) => (
                                 <div
                                     key={idx}
-                                    className="glass rounded-xl p-5 border border-border/20 opacity-50"
+                                    className="bg-card rounded-xl p-5 border border-border opacity-50"
                                     style={{ animationDelay: `${(idx + 1) * 60}ms` }}
                                 >
                                     <div className="flex items-center justify-between mb-3">
                                         <span className="text-xs text-muted-foreground">{post.date} · {post.readTime}</span>
-                                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-surface border border-border/50 text-muted-foreground">
+                                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted border border-border text-muted-foreground">
                                             Coming soon
                                         </span>
                                     </div>
-                                    <h3 className="text-sm font-semibold text-white mb-2 leading-snug">
+                                    <h3 className="text-sm font-semibold text-foreground mb-2 leading-snug">
                                         {post.title}
                                     </h3>
                                     <div className="flex flex-wrap gap-1.5 mt-3">
@@ -168,7 +165,7 @@ export const Posts = () => {
                     </div>
                 )}
 
-                {/* ── Hashnode CTA ── */}
+                {/* Hashnode CTA */}
                 <div className="text-center mt-12 animate-fade-in animation-delay-300">
                     <p className="text-sm text-muted-foreground mb-3">
                         All posts are published on Hashnode.

@@ -8,7 +8,7 @@ const socialLinks = [
 
 const footerLinks = [
   { href: "#about", label: "About" },
-  { href: "#learning", label: "Learning" },
+  { href: "/sprint", label: "AI Sprint" },
   { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact" },
 ];
@@ -17,12 +17,12 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="px-6 py-12 border-t border-border">
+    <footer className="px-6 py-12 border-t border-border bg-card">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Logo & Copyright */}
           <div className="text-center md:text-left">
-            <a href="#" className="text-xl font-bold tracking-tight">
+            <a href="#" className="font-serif text-xl font-bold tracking-tight text-foreground">
               KN<span className="text-primary">.</span>
             </a>
             <p className="text-sm text-muted-foreground mt-2">
@@ -44,7 +44,7 @@ export const Footer = () => {
           </nav>
 
           {/* Social Links */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {socialLinks.map((social) => (
               <a
                 key={social.label}
@@ -52,9 +52,9 @@ export const Footer = () => {
                 aria-label={social.label}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all"
+                className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:border-primary hover:text-primary transition-all"
               >
-                <social.icon className="w-5 h-5" />
+                <social.icon className="w-4 h-4" />
               </a>
             ))}
           </div>

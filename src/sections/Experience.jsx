@@ -49,34 +49,24 @@ const experiences = [
 export const Experience = () => {
     return (
     <section id="experience" className="relative py-24 md:py-32 overflow-hidden scroll-mt-24">
-      <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2"/>
+      <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
 
-      <div className="container max-w-4xl mx-auto relative z-10">
+      <div className="container max-w-4xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <div className="text-center mx-auto max-w-4xl mb-16">
-            <span
-                className="text-secondary-foreground text-sm
-                font-medium tracking-wider uppercase animate-fade-in"
-            >
+            <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase animate-fade-in">
                 Career Journey
             </span>
 
-            <h2
-                className="text-4xl md:text-5xl font-bold
-                mt-4 mb-6 animate-fade-in animation-delay-100
-                text-secondary-foreground"
-            >
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animation-delay-100 text-foreground">
                 Where my{" "}
-                <span className="font-serif italic font-normal text-white">
+                <span className="italic font-normal text-primary">
                 engineering foundation
                 </span>{" "}
                 was built.
             </h2>
 
-            <p
-                className="text-muted-foreground
-                animate-fade-in animation-delay-200"
-            >
+            <p className="text-muted-foreground animate-fade-in animation-delay-200">
                 A look at the roles and projects that shaped my experience across software
                 development, production support, cloud systems, and product delivery.
             </p>
@@ -84,7 +74,7 @@ export const Experience = () => {
 
         {/* Timeline */}
         <div className="relative">
-          <div className="timeline-glow absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/70 via-primary/30 to-transparent md:-translate-x-1/2 shadow-[0_0_25px_rgba(32,178,166,0.8)]" />
+          <div className="timeline-glow absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-linear-to-b from-primary/60 via-primary/20 to-transparent md:-translate-x-1/2" />
 
           {/* Experience Items */}
           <div className="space-y-12">
@@ -101,7 +91,7 @@ export const Experience = () => {
                   )}
                 </div>
 
-                {/* Content */}
+                {/* Content card */}
                 <div
                   className={`pl-8 md:pl-0 ${
                     idx % 2 === 0
@@ -109,15 +99,13 @@ export const Experience = () => {
                       : "md:col-start-2 md:pl-16"
                   }`}
                 >
-                  <div
-                    className={`glass p-6 rounded-2xl border border-primary/30 hover:border-primary/50 transition-all duration-500`}
-                  >
+                  <div className="bg-card p-6 rounded-2xl border border-border shadow-sm hover:shadow-md transition-all duration-300">
                     <span className="text-sm text-primary font-medium">
                       {exp.period}
                     </span>
-                    <h3 className="text-xl font-semibold mt-2">{exp.role}</h3>
-                    <p className="text-muted-foreground">{exp.company}</p>
-                    <p className="text-sm text-muted-foreground mt-4">
+                    <h3 className="text-xl font-semibold mt-2 text-foreground">{exp.role}</h3>
+                    <p className="text-muted-foreground text-sm">{exp.company}</p>
+                    <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
                       {exp.description}
                     </p>
                     <div
@@ -128,7 +116,7 @@ export const Experience = () => {
                       {exp.technologies.map((tech, techIdx) => (
                         <span
                           key={techIdx}
-                          className="px-3 py-1 bg-surface text-xs rounded-full text-muted-foreground"
+                          className="px-3 py-1 bg-secondary text-xs rounded-full text-secondary-foreground font-medium"
                         >
                           {tech}
                         </span>

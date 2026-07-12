@@ -15,27 +15,27 @@ export const About = () => {
 
                     {/* Eyebrow + Heading */}
                     <div className="space-y-4 animate-fade-in animation-delay-100">
-                        <p className="text-sm tracking-widest uppercase text-muted-foreground">
+                        <p className="text-sm tracking-widest uppercase text-secondary-foreground font-medium">
                             About
                         </p>
-                        <h2 className="color-highlight text-4xl md:text-5xl font-bold leading-tight">
+                        <h2 className="font-serif text-4xl md:text-5xl font-bold leading-tight text-foreground">
                             I'm Kervintz Noel.
                         </h2>
                     </div>
 
                     {/* Story */}
-                    <div className="space-y-6 text-lg text-muted-foreground leading-relaxed animate-fade-in animation-delay-300">
+                    <div className="space-y-6 text-base text-muted-foreground leading-relaxed animate-fade-in animation-delay-300">
                         <p>
                             I live in Boston, MA, where I build reliable web
                             applications and enterprise systems that people actually
                             depend on.
                         </p>
                         <p>
-                            I started programming in high school in Haiti and moved to the United States to pursue my career in tech — teaching myself to code while working in IT, until I committed fully to software development in 2019
+                            I started programming in high school in Haiti and moved to the United States to pursue my career in tech — teaching myself to code while working in IT, until I committed fully to software development in 2019.
                         </p>
 
                         {/* Pull quote */}
-                        <blockquote className="border-l-2 border-primary pl-6 py-2 text-xl text-foreground italic">
+                        <blockquote className="border-l-2 border-primary pl-6 py-2 text-xl text-foreground font-serif italic">
                             "I build for longevity — systems that stay reliable long after the launch excitement fades."
                         </blockquote>
 
@@ -59,18 +59,20 @@ export const About = () => {
                         </p>
                     </div>
 
-                    <div className="flex flex-wrap gap-3 pt-2 animate-fade-in animation-delay-500">
+                    {/* Tech stack badges */}
+                    <div className="flex flex-wrap gap-2 pt-2 animate-fade-in animation-delay-500">
                         {tools.map((tool) => (
                             <span
                                 key={tool}
-                                className="glass px-4 py-1.5 rounded-full text-sm text-foreground"
+                                className="px-4 py-1.5 rounded-full text-sm font-medium bg-secondary text-secondary-foreground border border-border"
                             >
                                 {tool}
                             </span>
                         ))}
                     </div>
+
                     {/* CTA */}
-                    <div className="flex items-center justify-center flex-wrap gap-4 pt-4 animate-fade-in animation-delay-500">
+                    <div className="flex flex-wrap items-center gap-4 pt-4 animate-fade-in animation-delay-500">
                         <Button href="#contact" size="lg">
                             Contact Me <ArrowRight className="w-5 h-5" />
                         </Button>

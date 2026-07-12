@@ -15,10 +15,10 @@ const TAG_COLORS = {
     "SRE":                "text-highlight border-highlight/30 bg-highlight/5",
     "Full-Stack":         "text-secondary-foreground border-secondary-foreground/30 bg-secondary-foreground/5",
     "React Native":       "text-secondary-foreground border-secondary-foreground/30 bg-secondary-foreground/5",
-    "Career":             "text-muted-foreground border-border/50 bg-surface",
-    "Building in Public": "text-muted-foreground border-border/50 bg-surface",
+    "Career":             "text-muted-foreground border-border/50 bg-muted",
+    "Building in Public": "text-muted-foreground border-border/50 bg-muted",
 };
-const tagClass = (tag) => TAG_COLORS[tag] || "text-muted-foreground border-border/50 bg-surface";
+const tagClass = (tag) => TAG_COLORS[tag] || "text-muted-foreground border-border/50 bg-muted";
 
 // ─── Content block renderer ───────────────────────────────────────────────────
 const ContentBlock = ({ block }) => {
@@ -31,13 +31,13 @@ const ContentBlock = ({ block }) => {
             );
         case "heading":
             return (
-                <h2 className="text-2xl md:text-3xl font-bold text-white mt-12 mb-6 leading-snug">
+                <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mt-12 mb-6 leading-snug">
                     {block.text}
                 </h2>
             );
         case "subheading":
             return (
-                <h3 className="text-xl font-semibold text-white mt-8 mb-4">
+                <h3 className="text-xl font-semibold text-foreground mt-8 mb-4">
                     {block.text}
                 </h3>
             );
@@ -67,11 +67,11 @@ const ContentBlock = ({ block }) => {
                 </ol>
             );
         case "divider":
-            return <hr className="border-border/30 my-10" />;
+            return <hr className="border-border my-10" />;
         case "callout":
             return (
                 <blockquote className="border-l-4 border-primary pl-6 my-8">
-                    <p className="text-xl md:text-2xl font-semibold text-white leading-snug">
+                    <p className="text-xl md:text-2xl font-semibold text-foreground leading-snug">
                         {block.text}
                     </p>
                 </blockquote>
@@ -87,7 +87,7 @@ const ComingSoonPage = ({ post }) => (
         <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-4">
             Coming Soon
         </span>
-        <h1 className="text-3xl md:text-4xl font-bold text-white max-w-2xl mb-6 leading-snug">
+        <h1 className="text-3xl md:text-4xl font-bold text-foreground max-w-2xl mb-6 leading-snug">
             {post.title}
         </h1>
         <p className="text-muted-foreground max-w-lg mb-8">{post.excerpt}</p>
@@ -105,7 +105,7 @@ const ComingSoonPage = ({ post }) => (
 const NotFoundPage = () => (
     <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
         <p className="text-6xl font-bold text-primary mb-4">404</p>
-        <p className="text-white text-xl mb-6">Post not found.</p>
+        <p className="text-foreground text-xl mb-6">Post not found.</p>
         <Link
             to="/#posts"
             className="inline-flex items-center gap-2 text-sm text-primary hover:underline font-medium"
@@ -178,12 +178,12 @@ export const PostDetail = () => {
                     </div>
 
                     {/* Title */}
-                    <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-6">
+                    <h1 className="font-serif text-3xl md:text-5xl font-bold text-foreground leading-tight mb-6">
                         {post.title}
                     </h1>
 
                     {/* Meta row */}
-                    <div className="flex items-center gap-6 text-sm text-muted-foreground mb-12 pb-8 border-b border-border/30">
+                    <div className="flex items-center gap-6 text-sm text-muted-foreground mb-12 pb-8 border-b border-border">
                         <span className="flex items-center gap-1.5">
                             <Calendar className="w-4 h-4" />
                             {post.date}
@@ -214,7 +214,7 @@ export const PostDetail = () => {
                     </div>
 
                     {/* Footer CTA */}
-                    <div className="mt-16 pt-10 border-t border-border/30 text-center">
+                    <div className="mt-16 pt-10 border-t border-border text-center">
                         <p className="text-muted-foreground mb-4 text-sm">
                             Follow along at{" "}
                             <a href="https://kervintznoel.com" className="text-primary hover:underline">

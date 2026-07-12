@@ -1,19 +1,59 @@
 @import "tailwindcss";
+
 @theme {
-  --color-background: #00171f;
-  --color-foreground: #ffffff;
-  --color-card: #00263a;
-  --color-primary: #00a8e8;
-  --color-primary-foreground: #00171f;
-  --color-secondary: #003459;
-  --color-secondary-foreground: #00a8e8;
-  --color-muted: #0a3a52;
-  --color-muted-foreground: #8fb8c9;
-  --color-border: #0f2e3d;
+  /* ── Sage (primary brand green) ── */
+  --color-sage-50: oklch(97% 0.015 152);
+  --color-sage-100: oklch(93% 0.030 152);
+  --color-sage-200: oklch(87% 0.055 152);
+  --color-sage-300: oklch(78% 0.080 152);
+  --color-sage-400: oklch(68% 0.095 152);
+  --color-sage-500: oklch(60% 0.100 152);
+  --color-sage-600: oklch(50% 0.095 152);
+  --color-sage-700: oklch(40% 0.080 152);
+  --color-sage-800: oklch(30% 0.060 152);
+  --color-sage-900: oklch(19% 0.045 152);
+
+  /* ── Neutral (warm-toned) ── */
+  --color-neutral-0: oklch(99.5% 0.004 88);
+  --color-neutral-50: oklch(97.5% 0.007 88);
+  --color-neutral-100: oklch(95% 0.010 88);
+  --color-neutral-200: oklch(90% 0.008 88);
+  --color-neutral-300: oklch(82% 0.008 88);
+  --color-neutral-400: oklch(70% 0.006 88);
+  --color-neutral-500: oklch(58% 0.005 88);
+  --color-neutral-600: oklch(45% 0.010 88);
+  --color-neutral-700: oklch(35% 0.005 88);
+  --color-neutral-800: oklch(25% 0.005 88);
+  --color-neutral-900: oklch(14% 0.003 88);
+
+  /* ── Semantic tokens ── */
+  --color-background: oklch(97.5% 0.007 88);
+  --color-foreground: oklch(14% 0.003 88);
+  --color-card: oklch(99.5% 0.004 88);
+  --color-primary: oklch(60% 0.100 152);
+  --color-primary-foreground: oklch(99.5% 0.004 88);
+  --color-secondary: oklch(93% 0.030 152);
+  --color-secondary-foreground: oklch(19% 0.045 152);
+  --color-muted: oklch(95% 0.010 88);
+  --color-muted-foreground: oklch(45% 0.010 88);
+  --color-border: oklch(90% 0.008 88);
+  --color-surface: oklch(99.5% 0.004 88);
+  --color-highlight: oklch(72% 0.15 82);
+
+  /* ── Semantic states ── */
+  --color-success: oklch(58% 0.13 152);
+  --color-warning: oklch(72% 0.15 82);
+  --color-error: oklch(56% 0.17 25);
+  --color-info: oklch(58% 0.14 232);
+
+  /* ── Typography ── */
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'DM Mono', 'Courier New', monospace;
+
   --radius: 0.75rem;
-  --color-highlight: #f5a623;
-  --color-surface: #003459;
 }
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -24,33 +64,28 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-sans);
   }
   .font-serif {
-    font-family: "Playfair Display", serif;
+    font-family: var(--font-serif);
   }
 }
+
 @layer components {
   .glass {
-    background-color: color-mix(in srgb, var(--color-surface) 50%, transparent);
-    backdrop-filter: blur(16px);
-    border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+    background-color: color-mix(in srgb, var(--color-surface) 75%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
   }
   .glass-strong {
-    background-color: color-mix(in srgb, var(--color-surface) 80%, transparent);
+    background-color: color-mix(in srgb, var(--color-surface) 96%, transparent);
     backdrop-filter: blur(24px);
-    border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
-  }
-  .glow-text {
-    text-shadow: 0 0 30px
-      color-mix(in srgb, var(--color-primary) 50%, transparent);
-  }
-  .glow-border {
-    box-shadow: 0 0 20px
-        color-mix(in srgb, var(--color-primary) 20%, transparent),
-      inset 0 0 20px color-mix(in srgb, var(--color-primary) 5%, transparent);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--color-border);
   }
 }
+
 @layer utilities {
   @keyframes fade-in {
     from {
@@ -102,12 +137,12 @@
       opacity: 0.25;
       transform: scale(0.9) translateY(0);
     }
-
     50% {
       opacity: 0.9;
       transform: scale(1.25) translateY(-6px);
     }
   }
+
   .animate-fade-in {
     animation: fade-in 0.8s ease-out both;
   }
@@ -117,27 +152,15 @@
   .animate-marquee {
     animation: marquee 30s linear infinite;
   }
-  .animation-delay-100 {
-    animation-delay: 100ms;
-  }
-  .animation-delay-200 {
-    animation-delay: 200ms;
-  }
-  .animation-delay-300 {
-    animation-delay: 300ms;
-  }
-  .animation-delay-400 {
-    animation-delay: 400ms;
-  }
-  .animation-delay-500 {
-    animation-delay: 500ms;
-  }
-  .animation-delay-600 {
-    animation-delay: 600ms;
-  }
-  .animation-delay-800 {
-    animation-delay: 800ms;
-  }
+
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+  .animation-delay-600 { animation-delay: 600ms; }
+  .animation-delay-800 { animation-delay: 800ms; }
+
   @keyframes animated-border {
     0% {
       stroke-dashoffset: 400;
@@ -150,13 +173,12 @@
     animation: animated-border 1.5s linear infinite;
   }
   .animated-border:hover {
-    background-color: color-mix(in srgb, #00a8e8 15%, transparent);
-    backdrop-filter: blur(16px);
-    box-shadow: 0 0 20px color-mix(in srgb, #00a8e8 20%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary) 8%, transparent);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 12px color-mix(in srgb, var(--color-primary) 12%, transparent);
   }
   .timeline-glow {
-    box-shadow: 0 0 40px
-        color-mix(in srgb, var(--color-primary) 35%, transparent),
-      0 0 80px color-mix(in srgb, var(--color-primary) 25%, transparent);
+    box-shadow: 0 0 30px color-mix(in srgb, var(--color-primary) 30%, transparent),
+                0 0 60px color-mix(in srgb, var(--color-primary) 15%, transparent);
   }
 }

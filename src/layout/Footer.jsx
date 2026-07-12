@@ -22,12 +22,14 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Logo & Copyright */}
           <div className="text-center md:text-left">
-            <a href="#" className="font-serif text-xl font-bold tracking-tight text-foreground">
-              KN<span className="text-primary">.</span>
-            </a>
-            <p className="text-sm text-muted-foreground mt-2">
-              © {currentYear} Kervintz Noel. All rights reserved.
-            </p>
+            {/* <span> */}
+              <a href="#" className="font-serif text-xl font-bold tracking-tight text-foreground">
+                KN <span className="text-primary">.</span>
+              </a>
+              <span className="text-sm text-muted-foreground mt-2">
+                © {currentYear} Kervintz Noel. All rights reserved.
+              </span>
+            {/* </span> */}
           </div>
 
           {/* Links */}

@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .env.local
+
+
+# Hide impeccable files
+PRODUCT.md
+DESIGN.md

@@ -1,184 +1,349 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   PRE-FLIGHT CHECKLIST
+   Aviation checklist cards and the Quick Reference Handbook. Colour carries
+   state and nothing else: black is normal, amber is in progress, green is
+   verified, red is a warning. The charcoal panel is structure, not mood.
+   Type is B612 / B612 Mono — the face Airbus and ENAC commissioned for
+   cockpit displays.
+   ───────────────────────────────────────────────────────────────────────── */
+
 @theme {
-  /* ── Sage (primary brand green) ── */
-  --color-sage-50: oklch(97% 0.015 152);
-  --color-sage-100: oklch(93% 0.030 152);
-  --color-sage-200: oklch(87% 0.055 152);
-  --color-sage-300: oklch(78% 0.080 152);
-  --color-sage-400: oklch(68% 0.095 152);
-  --color-sage-500: oklch(60% 0.100 152);
-  --color-sage-600: oklch(50% 0.095 152);
-  --color-sage-700: oklch(40% 0.080 152);
-  --color-sage-800: oklch(30% 0.060 152);
-  --color-sage-900: oklch(19% 0.045 152);
+  /* ── Ground and ink ── */
+  --color-ground: oklch(96.8% 0.003 250);
+  --color-sheet: oklch(99.4% 0.001 250);
+  --color-ink: oklch(21% 0.012 255);
+  /* Both tiers clear 4.5:1 on the ground and on a sheet. `ink-faint` carries
+     real text — dates, indices, tag lists — so it is a readable grey, not a
+     whisper. Nothing lighter than this may hold words. */
+  --color-ink-muted: oklch(43% 0.012 255);
+  --color-ink-faint: oklch(52% 0.010 255);
+  --color-rule: oklch(87% 0.005 255);
+  --color-rule-strong: oklch(21% 0.012 255);
 
-  /* ── Neutral (warm-toned) ── */
-  --color-neutral-0: oklch(99.5% 0.004 88);
-  --color-neutral-50: oklch(97.5% 0.007 88);
-  --color-neutral-100: oklch(95% 0.010 88);
-  --color-neutral-200: oklch(90% 0.008 88);
-  --color-neutral-300: oklch(82% 0.008 88);
-  --color-neutral-400: oklch(70% 0.006 88);
-  --color-neutral-500: oklch(58% 0.005 88);
-  --color-neutral-600: oklch(45% 0.010 88);
-  --color-neutral-700: oklch(35% 0.005 88);
-  --color-neutral-800: oklch(25% 0.005 88);
-  --color-neutral-900: oklch(14% 0.003 88);
+  /* ── Panel: owns full-width bands, never used as a tint ── */
+  --color-panel: oklch(24% 0.018 255);
+  --color-panel-2: oklch(30% 0.018 255);
+  --color-panel-ink: oklch(93% 0.004 250);
+  --color-panel-muted: oklch(70% 0.010 255);
 
-  /* ── Semantic tokens ── */
-  --color-background: oklch(97.5% 0.007 88);
-  --color-foreground: oklch(14% 0.003 88);
-  --color-card: oklch(99.5% 0.004 88);
-  --color-primary: oklch(60% 0.100 152);
-  --color-primary-foreground: oklch(99.5% 0.004 88);
-  --color-secondary: oklch(93% 0.030 152);
-  --color-secondary-foreground: oklch(19% 0.045 152);
-  --color-muted: oklch(95% 0.010 88);
-  --color-muted-foreground: oklch(45% 0.010 88);
-  --color-border: oklch(90% 0.008 88);
-  --color-surface: oklch(99.5% 0.004 88);
-  --color-highlight: oklch(72% 0.15 82);
+  /* ── State roles ── */
+  --color-caution: oklch(72% 0.155 72);
+  --color-caution-ink: oklch(38% 0.095 65);
+  --color-caution-wash: oklch(95% 0.045 82);
+  --color-verified: oklch(50% 0.115 152);
+  /* Verified must keep meaning verified on the charcoal too. The light-ground
+     green computes to 2.65:1 on panel, so the panel tier is a second token —
+     never a swap to amber, which means "in progress" and would invert the
+     message on the page's conversion surface. */
+  --color-verified-panel: oklch(74% 0.13 152);
+  --color-verified-wash: oklch(95% 0.035 152);
+  --color-warning: oklch(52% 0.195 27);
+  --color-warning-wash: oklch(95% 0.035 25);
 
-  /* ── Semantic states ── */
-  --color-success: oklch(58% 0.13 152);
-  --color-warning: oklch(72% 0.15 82);
-  --color-error: oklch(56% 0.17 25);
-  --color-info: oklch(58% 0.14 232);
+  /* ── Legacy semantic aliases (unmounted files still reference these) ── */
+  --color-background: oklch(96.8% 0.003 250);
+  --color-foreground: oklch(21% 0.012 255);
+  --color-card: oklch(99.4% 0.001 250);
+  --color-surface: oklch(99.4% 0.001 250);
+  --color-primary: oklch(24% 0.018 255);
+  --color-primary-foreground: oklch(96.8% 0.003 250);
+  --color-secondary: oklch(93% 0.004 250);
+  --color-secondary-foreground: oklch(30% 0.014 255);
+  --color-muted: oklch(93.5% 0.003 250);
+  --color-muted-foreground: oklch(43% 0.012 255);
+  --color-border: oklch(87% 0.005 255);
+  --color-highlight: oklch(72% 0.155 72);
+  --color-success: oklch(54% 0.115 152);
+  --color-error: oklch(52% 0.195 27);
 
-  /* ── Typography ── */
-  --font-sans: 'DM Sans', system-ui, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-mono: 'DM Mono', 'Courier New', monospace;
+  /* ── Type ── */
+  --font-sans: "B612", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "B612 Mono", ui-monospace, "Courier New", monospace;
+  --font-serif: "B612", ui-sans-serif, system-ui, sans-serif;
 
-  --radius: 0.75rem;
+  --radius: 0.125rem;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background-color: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
   }
   button {
     cursor: pointer;
   }
-  body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    font-family: var(--font-sans);
+  /* Laminated card stock: a faint fibre tooth, not a texture image. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent 0 3px,
+      color-mix(in srgb, var(--color-ink) 1.6%, transparent) 3px 4px
+    );
   }
-  .font-serif {
-    font-family: var(--font-serif);
+  ::selection {
+    background: var(--color-caution);
+    color: var(--color-ink);
+  }
+  /* Keyboard focus is a placard outline, visible on every ground. */
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+    border-radius: 1px;
+  }
+  .on-panel :focus-visible {
+    outline-color: var(--color-caution);
   }
 }
 
 @layer components {
-  .glass {
-    background-color: color-mix(in srgb, var(--color-surface) 75%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+  /* ── The atomic row: CHALLENGE ·········· RESPONSE ────────────────────── */
+  /* The row must survive a long response in a narrow card: the value may
+     shrink and wrap, and if it still cannot fit beside the label it takes its
+     own line rather than being clipped by the page's overflow guard. */
+  .chk {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.125rem 0.625rem;
+    width: 100%;
   }
-  .glass-strong {
-    background-color: color-mix(in srgb, var(--color-surface) 96%, transparent);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-bottom: 1px solid var(--color-border);
+  .chk__label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+  .chk__lead {
+    flex: 1 1 1.25rem;
+    min-width: 1.25rem;
+    align-self: center;
+    border-bottom: 1px dotted var(--color-rule);
+    transform: translateY(-0.15em);
+  }
+  .chk__value {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font-weight: 700;
+    color: var(--color-ink);
+    text-align: right;
+  }
+  .chk--lg .chk__label {
+    font-size: 0.8125rem;
+  }
+  .chk--lg .chk__value {
+    font-size: 1.0625rem;
+  }
+
+  /* ── Section rule: the heavy bar a QRH puts above every procedure ────── */
+  .rule-head {
+    border-top: 3px solid var(--color-rule-strong);
+    padding-top: 0.75rem;
+  }
+  .rule-sub {
+    border-top: 1px solid var(--color-rule-strong);
+    padding-top: 0.5rem;
+  }
+
+  /* ── Placard label: stencil caps in mono ─────────────────────────────── */
+  .placard {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  /* ── Notice box: the colour owns the header band, never a fat edge ───── */
+  .notice {
+    border: 1px solid var(--color-rule);
+    background: var(--color-sheet);
+  }
+  .notice__band {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.3125rem 0.75rem;
+    font-weight: 700;
+  }
+  .notice--caution .notice__band {
+    background: var(--color-caution);
+    color: var(--color-ink);
+  }
+  .notice--warning .notice__band {
+    background: var(--color-warning);
+    color: var(--color-sheet);
+  }
+  .notice--verified .notice__band {
+    background: var(--color-verified);
+    color: var(--color-sheet);
+  }
+
+  /* ── Sheet: a page of the handbook ───────────────────────────────────── */
+  .sheet {
+    background: var(--color-sheet);
+    border: 1px solid var(--color-rule);
+    box-shadow:
+      0 1px 1px color-mix(in srgb, var(--color-ink) 4%, transparent),
+      0 6px 16px -8px color-mix(in srgb, var(--color-ink) 14%, transparent);
+  }
+
+  /* ── Tab strip: an actual divider tab, with a shoulder at rest ───────── */
+  .tab {
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.75rem 0.875rem 0.625rem;
+    margin-inline: 1px;
+    color: var(--color-panel-muted);
+    background: var(--color-panel-2);
+    /* the chamfered shoulder of a card divider */
+    clip-path: polygon(0 100%, 7px 0, calc(100% - 7px) 0, 100% 100%);
+    /* The tab body only clears 1.31:1 against the strip, so the silhouette
+       needs a drawn top edge to read at all. Inset, because clip-path removes
+       anything painted outside the border box. */
+    box-shadow: inset 0 1px 0 var(--color-panel-muted);
+    transition: color 160ms ease-out, background-color 160ms ease-out;
+  }
+  /* clip-path also removes the global focus outline, which is drawn at
+     outline-offset: 2px. Focus gets an inset ring instead — the chamfer stays. */
+  .tab:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--color-caution);
+  }
+  .tab::after {
+    content: "";
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0;
+    height: 3px;
+    background: var(--color-caution);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .tab:hover,
+  .tab:focus-visible {
+    color: var(--color-panel-ink);
+    background: color-mix(in srgb, var(--color-panel-2) 70%, var(--color-panel-ink));
+  }
+  .tab:hover::after,
+  .tab:focus-visible::after,
+  .tab[aria-current="true"]::after {
+    transform: scaleX(1);
+  }
+  /* The strip reports where you are, not only where the pointer is. */
+  .tab[aria-current="true"] {
+    color: var(--color-panel-ink);
+  }
+
+  /* ── Tabular figures everywhere numbers are compared ─────────────────── */
+  .nums {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
   }
 }
 
 @layer utilities {
-  @keyframes fade-in {
+  /* ── Motion: one authored moment — the check being made ──────────────── */
+  @keyframes check-draw {
+    from {
+      stroke-dashoffset: 24;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .check-mark {
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation: check-draw 420ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  @keyframes settle {
     from {
       opacity: 0;
-      transform: translateY(20px);
-      filter: blur(10px);
+      transform: translateY(6px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
-      filter: blur(0);
     }
   }
-  @keyframes slow-drift {
-    0%,
-    100% {
-      transform: translate(0, 0);
-    }
-    25% {
-      transform: translate(20px, -30px);
-    }
-    50% {
-      transform: translate(-15px, -20px);
-    }
-    75% {
-      transform: translate(30px, 10px);
-    }
-  }
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-  @keyframes marquee {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-  @keyframes signal-pulse {
-    0%,
-    100% {
-      opacity: 0.25;
-      transform: scale(0.9) translateY(0);
-    }
-    50% {
-      opacity: 0.9;
-      transform: scale(1.25) translateY(-6px);
-    }
+  .animate-settle {
+    animation: settle 520ms cubic-bezier(0.2, 0.9, 0.25, 1) both;
   }
 
+  /* Legacy name kept so unmounted sections still compile. */
   .animate-fade-in {
-    animation: fade-in 0.8s ease-out both;
-  }
-  .animate-float {
-    animation: float 4s ease-in-out infinite;
-  }
-  .animate-marquee {
-    animation: marquee 30s linear infinite;
+    animation: settle 520ms cubic-bezier(0.2, 0.9, 0.25, 1) both;
   }
 
-  .animation-delay-100 { animation-delay: 100ms; }
-  .animation-delay-200 { animation-delay: 200ms; }
-  .animation-delay-300 { animation-delay: 300ms; }
-  .animation-delay-400 { animation-delay: 400ms; }
-  .animation-delay-500 { animation-delay: 500ms; }
-  .animation-delay-600 { animation-delay: 600ms; }
-  .animation-delay-800 { animation-delay: 800ms; }
-
-  @keyframes animated-border {
-    0% {
-      stroke-dashoffset: 400;
-    }
+  @keyframes standby {
+    0%,
     100% {
-      stroke-dashoffset: -550;
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
     }
   }
-  .group:hover .animated-border-path {
-    animation: animated-border 1.5s linear infinite;
+  .animate-standby {
+    animation: standby 2.4s ease-in-out infinite;
   }
-  .animated-border:hover {
-    background-color: color-mix(in srgb, var(--color-primary) 8%, transparent);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 2px 12px color-mix(in srgb, var(--color-primary) 12%, transparent);
+
+  .animation-delay-100 { animation-delay: 80ms; }
+  .animation-delay-200 { animation-delay: 160ms; }
+  .animation-delay-300 { animation-delay: 240ms; }
+  .animation-delay-400 { animation-delay: 320ms; }
+  .animation-delay-500 { animation-delay: 400ms; }
+  .animation-delay-600 { animation-delay: 480ms; }
+  .animation-delay-800 { animation-delay: 640ms; }
+
+  /* Legacy hooks from the previous world — neutralised, not deleted, so any
+     unmounted section that still references them renders flat instead of
+     dragging the old identity back in. */
+  .timeline-glow { box-shadow: none; }
+  .glass,
+  .glass-strong {
+    background-color: var(--color-sheet);
+    border-bottom: 1px solid var(--color-rule);
   }
-  .timeline-glow {
-    box-shadow: 0 0 30px color-mix(in srgb, var(--color-primary) 30%, transparent),
-                0 0 60px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .check-mark {
+    stroke-dashoffset: 0;
   }
 }

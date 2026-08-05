@@ -1,0 +1,503 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-05T00:00:00Z",
+  "title": "Design System: Kervintz Noel — Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Card Stock",
+        "canonical": "oklch(96.8% 0.003 250)",
+        "tonalRamp": [
+          "oklch(15% 0.003 250)",
+          "oklch(26% 0.003 250)",
+          "oklch(37% 0.003 250)",
+          "oklch(48% 0.003 250)",
+          "oklch(60% 0.003 250)",
+          "oklch(72% 0.003 250)",
+          "oklch(84% 0.003 250)",
+          "oklch(95% 0.003 250)"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Sheet White",
+        "canonical": "oklch(99.4% 0.001 250)",
+        "tonalRamp": [
+          "oklch(15% 0.001 250)",
+          "oklch(26% 0.001 250)",
+          "oklch(37% 0.001 250)",
+          "oklch(48% 0.001 250)",
+          "oklch(60% 0.001 250)",
+          "oklch(72% 0.001 250)",
+          "oklch(84% 0.001 250)",
+          "oklch(95% 0.001 250)"
+        ]
+      },
+      "ink": {
+        "role": "primary",
+        "displayName": "Deck Ink",
+        "canonical": "oklch(21% 0.012 255)",
+        "tonalRamp": [
+          "oklch(15% 0.012 255)",
+          "oklch(26% 0.012 255)",
+          "oklch(37% 0.012 255)",
+          "oklch(48% 0.012 255)",
+          "oklch(60% 0.012 255)",
+          "oklch(72% 0.012 255)",
+          "oklch(84% 0.012 255)",
+          "oklch(95% 0.012 255)"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "oklch(43% 0.012 255)",
+        "tonalRamp": [
+          "oklch(15% 0.012 255)",
+          "oklch(26% 0.012 255)",
+          "oklch(37% 0.012 255)",
+          "oklch(48% 0.012 255)",
+          "oklch(60% 0.012 255)",
+          "oklch(72% 0.012 255)",
+          "oklch(84% 0.012 255)",
+          "oklch(95% 0.012 255)"
+        ]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Faint Ink — the legibility floor",
+        "canonical": "oklch(52% 0.010 255)",
+        "tonalRamp": [
+          "oklch(15% 0.010 255)",
+          "oklch(26% 0.010 255)",
+          "oklch(37% 0.010 255)",
+          "oklch(48% 0.010 255)",
+          "oklch(60% 0.010 255)",
+          "oklch(72% 0.010 255)",
+          "oklch(84% 0.010 255)",
+          "oklch(95% 0.010 255)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule Grey",
+        "canonical": "oklch(87% 0.005 255)",
+        "tonalRamp": [
+          "oklch(15% 0.005 255)",
+          "oklch(26% 0.005 255)",
+          "oklch(37% 0.005 255)",
+          "oklch(48% 0.005 255)",
+          "oklch(60% 0.005 255)",
+          "oklch(72% 0.005 255)",
+          "oklch(84% 0.005 255)",
+          "oklch(95% 0.005 255)"
+        ]
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Heavy Rule (same value as ink, named as structure)",
+        "canonical": "oklch(21% 0.012 255)",
+        "tonalRamp": [
+          "oklch(15% 0.012 255)",
+          "oklch(26% 0.012 255)",
+          "oklch(37% 0.012 255)",
+          "oklch(48% 0.012 255)",
+          "oklch(60% 0.012 255)",
+          "oklch(72% 0.012 255)",
+          "oklch(84% 0.012 255)",
+          "oklch(95% 0.012 255)"
+        ]
+      },
+      "panel": {
+        "role": "primary",
+        "displayName": "Placard Charcoal",
+        "canonical": "oklch(24% 0.018 255)",
+        "tonalRamp": [
+          "oklch(15% 0.018 255)",
+          "oklch(26% 0.018 255)",
+          "oklch(37% 0.018 255)",
+          "oklch(48% 0.018 255)",
+          "oklch(60% 0.018 255)",
+          "oklch(72% 0.018 255)",
+          "oklch(84% 0.018 255)",
+          "oklch(95% 0.018 255)"
+        ]
+      },
+      "panel-2": {
+        "role": "primary",
+        "displayName": "Panel Riser",
+        "canonical": "oklch(30% 0.018 255)",
+        "tonalRamp": [
+          "oklch(15% 0.018 255)",
+          "oklch(26% 0.018 255)",
+          "oklch(37% 0.018 255)",
+          "oklch(48% 0.018 255)",
+          "oklch(60% 0.018 255)",
+          "oklch(72% 0.018 255)",
+          "oklch(84% 0.018 255)",
+          "oklch(95% 0.018 255)"
+        ]
+      },
+      "panel-ink": {
+        "role": "neutral",
+        "displayName": "Panel Ink",
+        "canonical": "oklch(93% 0.004 250)",
+        "tonalRamp": [
+          "oklch(15% 0.004 250)",
+          "oklch(26% 0.004 250)",
+          "oklch(37% 0.004 250)",
+          "oklch(48% 0.004 250)",
+          "oklch(60% 0.004 250)",
+          "oklch(72% 0.004 250)",
+          "oklch(84% 0.004 250)",
+          "oklch(95% 0.004 250)"
+        ]
+      },
+      "panel-muted": {
+        "role": "neutral",
+        "displayName": "Panel Muted — the floor on charcoal",
+        "canonical": "oklch(70% 0.010 255)",
+        "tonalRamp": [
+          "oklch(15% 0.010 255)",
+          "oklch(26% 0.010 255)",
+          "oklch(37% 0.010 255)",
+          "oklch(48% 0.010 255)",
+          "oklch(60% 0.010 255)",
+          "oklch(72% 0.010 255)",
+          "oklch(84% 0.010 255)",
+          "oklch(95% 0.010 255)"
+        ]
+      },
+      "caution": {
+        "role": "secondary",
+        "displayName": "Caution Amber — in progress",
+        "canonical": "oklch(72% 0.155 72)",
+        "tonalRamp": [
+          "oklch(15% 0.155 72)",
+          "oklch(26% 0.155 72)",
+          "oklch(37% 0.155 72)",
+          "oklch(48% 0.155 72)",
+          "oklch(60% 0.155 72)",
+          "oklch(72% 0.155 72)",
+          "oklch(84% 0.155 72)",
+          "oklch(95% 0.155 72)"
+        ]
+      },
+      "caution-ink": {
+        "role": "secondary",
+        "displayName": "Caution Ink — amber that may hold text on white",
+        "canonical": "oklch(38% 0.095 65)",
+        "tonalRamp": [
+          "oklch(15% 0.095 65)",
+          "oklch(26% 0.095 65)",
+          "oklch(37% 0.095 65)",
+          "oklch(48% 0.095 65)",
+          "oklch(60% 0.095 65)",
+          "oklch(72% 0.095 65)",
+          "oklch(84% 0.095 65)",
+          "oklch(95% 0.095 65)"
+        ]
+      },
+      "verified": {
+        "role": "secondary",
+        "displayName": "Verified Green — complete",
+        "canonical": "oklch(50% 0.115 152)",
+        "tonalRamp": [
+          "oklch(15% 0.115 152)",
+          "oklch(26% 0.115 152)",
+          "oklch(37% 0.115 152)",
+          "oklch(48% 0.115 152)",
+          "oklch(60% 0.115 152)",
+          "oklch(72% 0.115 152)",
+          "oklch(84% 0.115 152)",
+          "oklch(95% 0.115 152)"
+        ]
+      },
+      "warning": {
+        "role": "tertiary",
+        "displayName": "Warning Red — failure only",
+        "canonical": "oklch(52% 0.195 27)",
+        "tonalRamp": [
+          "oklch(15% 0.195 27)",
+          "oklch(26% 0.195 27)",
+          "oklch(37% 0.195 27)",
+          "oklch(48% 0.195 27)",
+          "oklch(60% 0.195 27)",
+          "oklch(72% 0.195 27)",
+          "oklch(84% 0.195 27)",
+          "oklch(95% 0.195 27)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The name on the checklist card and page H1s. Uppercase, hard-broken into two lines, tracking -0.03em."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles inside SectionHead, uppercase, always under a 3px rule and beside a two-digit mono index."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Job roles, project names, post card titles. Bold but not uppercase — where the type stops shouting."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All prose in ink-muted, capped at 62ch. Long-form post paragraphs step up to 1.0625rem."
+      },
+      "label": {
+        "displayName": "Placard",
+        "purpose": "The single small-label class (.placard): mono caps at 0.16em tracking. Every kicker-free label, index, tag, caption and footer link."
+      },
+      "row-label": {
+        "displayName": "Row Label (challenge)",
+        "purpose": "The .chk__label half of the atomic row: mono caps at 0.09em, ink-muted."
+      },
+      "row-value": {
+        "displayName": "Row Value (response)",
+        "purpose": "The .chk__value half: bold, ink, right-aligned, wraps rather than clips."
+      },
+      "numeric": {
+        "displayName": "Tabular Numeric",
+        "purpose": ".nums — mono with tabular figures on any number a reader might compare."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet-lift",
+        "value": "0 1px 1px color-mix(in srgb, var(--color-ink) 4%, transparent), 0 6px 16px -8px color-mix(in srgb, var(--color-ink) 14%, transparent)",
+        "purpose": "The only shadow in the system. Lifts a .sheet card a millimetre off the card stock. Never grows on hover; no second shadow may be authored."
+      }
+    ],
+    "motion": [
+      {
+        "name": "check-draw",
+        "value": "check-draw 420ms cubic-bezier(0.65, 0, 0.35, 1) forwards",
+        "purpose": "The signature moment: the check stroke drawing itself via stroke-dasharray 24. Belongs to <Check> and nothing else."
+      },
+      {
+        "name": "settle",
+        "value": "settle 520ms cubic-bezier(0.2, 0.9, 0.25, 1) both",
+        "purpose": "Entrance for non-critical content — 6px rise plus fade. Never used in a first viewport; the hero must be legible at first paint."
+      },
+      {
+        "name": "standby",
+        "value": "standby 2.4s ease-in-out infinite",
+        "purpose": "Opacity pulse 1 → 0.35 on the active status dot. The only looping animation; must stay attached to a live state."
+      },
+      {
+        "name": "state-transition",
+        "value": "color 160ms ease-out, background-color 160ms ease-out",
+        "purpose": "Default hover/focus transition. Colour only — nothing transitions transform, size or shadow."
+      },
+      {
+        "name": "tab-wipe",
+        "value": "transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1)",
+        "purpose": "The 3px amber underline wiping in from the left on a tab that is hovered, focused, or aria-current."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } .check-mark { stroke-dashoffset: 0; } }",
+        "purpose": "Neutralises every animation and settles the check to its drawn state. Smooth scrolling is disabled with it."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "container", "value": "1024px (max-w-5xl); long-form reading narrows to 768px (max-w-3xl)" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Checklist Row",
+      "kind": "custom",
+      "refersTo": "chk",
+      "description": "The atom of the system: a challenge, leader dots, and a response. Every name/value pair on the site is one of these.",
+      "html": "<div class=\"ds-chk ds-chk--lg\"><span class=\"ds-chk__label\">Location</span><span class=\"ds-chk__lead\" aria-hidden=\"true\"></span><span class=\"ds-chk__value\">Boston, Massachusetts</span></div>",
+      "css": ".ds-chk { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.125rem 0.625rem; width: 100%; font-family: \"B612\", ui-sans-serif, system-ui, sans-serif; } .ds-chk__label { font-family: \"B612 Mono\", ui-monospace, monospace; font-size: 0.75rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--color-ink-muted, oklch(43% 0.012 255)); flex: 0 1 auto; min-width: 0; } .ds-chk__lead { flex: 1 1 1.25rem; min-width: 1.25rem; align-self: center; border-bottom: 1px dotted var(--color-rule, oklch(87% 0.005 255)); transform: translateY(-0.15em); } .ds-chk__value { flex: 0 1 auto; min-width: 0; overflow-wrap: anywhere; font-weight: 700; color: var(--color-ink, oklch(21% 0.012 255)); text-align: right; } .ds-chk--lg .ds-chk__label { font-size: 0.8125rem; } .ds-chk--lg .ds-chk__value { font-size: 1.0625rem; }"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The committed action. A square placard key that presses down rather than glowing.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Get in touch</button>",
+      "css": ".ds-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: \"B612 Mono\", ui-monospace, monospace; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; font-size: 0.875rem; padding: 1rem 1.75rem; min-height: 3rem; border-radius: 0; border: 1px solid transparent; transition: background-color 150ms, color 150ms, border-color 150ms; cursor: pointer; } .ds-btn:active { transform: translateY(1px); } .ds-btn:focus-visible { outline: 2px solid var(--color-ink, oklch(21% 0.012 255)); outline-offset: 2px; border-radius: 1px; } .ds-btn-primary { background: var(--color-ink, oklch(21% 0.012 255)); color: var(--color-sheet, oklch(99.4% 0.001 250)); border-color: var(--color-ink, oklch(21% 0.012 255)); } .ds-btn-primary:hover { background: var(--color-panel-2, oklch(30% 0.018 255)); } .ds-btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "The secondary, available action — an unlit key until you touch it, then it inverts.",
+      "html": "<a class=\"ds-btn ds-btn-outline\" href=\"#\">Download CV — PDF</a>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: \"B612 Mono\", ui-monospace, monospace; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; font-size: 0.75rem; padding: 0.75rem 1.25rem; min-height: 2.75rem; border-radius: 0; text-decoration: none; background: transparent; color: var(--color-ink, oklch(21% 0.012 255)); border: 1px solid var(--color-ink, oklch(21% 0.012 255)); transition: background-color 150ms, color 150ms; cursor: pointer; } .ds-btn-outline:hover { background: var(--color-ink, oklch(21% 0.012 255)); color: var(--color-sheet, oklch(99.4% 0.001 250)); } .ds-btn-outline:active { transform: translateY(1px); } .ds-btn-outline:focus-visible { outline: 2px solid var(--color-ink, oklch(21% 0.012 255)); outline-offset: 2px; }"
+    },
+    {
+      "name": "Panel Button",
+      "kind": "button",
+      "refersTo": "button-panel",
+      "description": "The amber key used only on charcoal grounds — the tab strip's Contact key and the contact form's submit.",
+      "html": "<div class=\"ds-panel-ctx\"><button class=\"ds-btn-panel\">Send message</button></div>",
+      "css": ".ds-panel-ctx { background: var(--color-panel, oklch(24% 0.018 255)); padding: 1.5rem; } .ds-btn-panel { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: \"B612 Mono\", ui-monospace, monospace; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; font-size: 0.875rem; padding: 1rem 1.75rem; min-height: 3rem; border-radius: 0; background: var(--color-caution, oklch(72% 0.155 72)); color: var(--color-ink, oklch(21% 0.012 255)); border: 1px solid var(--color-caution, oklch(72% 0.155 72)); transition: background-color 150ms, border-color 150ms; cursor: pointer; } .ds-btn-panel:hover { background: var(--color-sheet, oklch(99.4% 0.001 250)); border-color: var(--color-sheet, oklch(99.4% 0.001 250)); } .ds-btn-panel:active { transform: translateY(1px); } .ds-btn-panel:focus-visible { outline: 2px solid var(--color-caution, oklch(72% 0.155 72)); outline-offset: 2px; }"
+    },
+    {
+      "name": "Sheet Card",
+      "kind": "card",
+      "refersTo": "card-sheet",
+      "description": "A page of the handbook: sheet-white, 1px rule border, square corners, and the system's single shadow. Interactive sheets darken only their border on hover.",
+      "html": "<a class=\"ds-sheet\" href=\"#\"><div class=\"ds-sheet__meta\"><span class=\"ds-placard\">Mar 2026 · 8 min read</span><span class=\"ds-status ds-status--verified\"><i></i>Published</span></div><h3 class=\"ds-sheet__title\">The layoff post</h3><p class=\"ds-sheet__body\">What I learned and what broke, written as I go rather than after the fact.</p></a>",
+      "css": ".ds-sheet { display: block; padding: 1.25rem 1.75rem; text-decoration: none; background: var(--color-sheet, oklch(99.4% 0.001 250)); border: 1px solid var(--color-rule, oklch(87% 0.005 255)); border-radius: 0; box-shadow: 0 1px 1px color-mix(in srgb, var(--color-ink, #23262b) 4%, transparent), 0 6px 16px -8px color-mix(in srgb, var(--color-ink, #23262b) 14%, transparent); transition: border-color 150ms; font-family: \"B612\", ui-sans-serif, system-ui, sans-serif; } .ds-sheet:hover { border-color: var(--color-ink, oklch(21% 0.012 255)); } .ds-sheet:focus-visible { outline: 2px solid var(--color-ink, oklch(21% 0.012 255)); outline-offset: 2px; } .ds-sheet__meta { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.75rem; } .ds-sheet__title { margin: 0.75rem 0 0; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em; line-height: 1.375; color: var(--color-ink, oklch(21% 0.012 255)); max-width: 34ch; } .ds-sheet__body { margin: 0.75rem 0 0; font-size: 0.875rem; line-height: 1.625; color: var(--color-ink-muted, oklch(43% 0.012 255)); max-width: 62ch; } .ds-placard { font-family: \"B612 Mono\", ui-monospace, monospace; font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-ink-faint, oklch(52% 0.010 255)); font-variant-numeric: tabular-nums; } .ds-status { display: inline-flex; align-items: center; gap: 0.5rem; font-family: \"B612 Mono\", ui-monospace, monospace; font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; } .ds-status--verified { color: var(--color-verified, oklch(50% 0.115 152)); } .ds-status i { width: 6px; height: 6px; background: currentColor; }"
+    },
+    {
+      "name": "Notice",
+      "kind": "custom",
+      "refersTo": "notice-band-warning",
+      "description": "A boxed advisory where the state colour owns the header band and the body stays on sheet white. Used for form results and the 404 page.",
+      "html": "<aside class=\"ds-notice ds-notice--warning\"><p class=\"ds-notice__band\">Not sent</p><div class=\"ds-notice__body\">Your message didn't send. Check your connection and try again — or email me directly.</div></aside>",
+      "css": ".ds-notice { border: 1px solid var(--color-rule, oklch(87% 0.005 255)); background: var(--color-sheet, oklch(99.4% 0.001 250)); border-radius: 0; font-family: \"B612\", ui-sans-serif, system-ui, sans-serif; } .ds-notice__band { margin: 0; font-family: \"B612 Mono\", ui-monospace, monospace; font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; padding: 0.3125rem 0.75rem; font-weight: 700; } .ds-notice--warning .ds-notice__band { background: var(--color-warning, oklch(52% 0.195 27)); color: var(--color-sheet, oklch(99.4% 0.001 250)); } .ds-notice--verified .ds-notice__band { background: var(--color-verified, oklch(50% 0.115 152)); color: var(--color-sheet, oklch(99.4% 0.001 250)); } .ds-notice--caution .ds-notice__band { background: var(--color-caution, oklch(72% 0.155 72)); color: var(--color-ink, oklch(21% 0.012 255)); } .ds-notice__body { padding: 0.75rem 1rem; font-size: 0.875rem; line-height: 1.625; color: var(--color-ink-muted, oklch(43% 0.012 255)); }"
+    },
+    {
+      "name": "Panel Input",
+      "kind": "input",
+      "refersTo": "input-panel",
+      "description": "The contact form field. Fields exist only on charcoal: panel-riser ground, square corners, amber focus border.",
+      "html": "<div class=\"ds-field-ctx\"><label class=\"ds-field__label\" for=\"ds-email\">Your email</label><input class=\"ds-field\" id=\"ds-email\" type=\"email\" placeholder=\"you@company.com\" /><p class=\"ds-field__help\">This is where I'll reply.</p></div>",
+      "css": ".ds-field-ctx { background: var(--color-panel, oklch(24% 0.018 255)); padding: 1.5rem; font-family: \"B612\", ui-sans-serif, system-ui, sans-serif; } .ds-field__label { display: block; font-family: \"B612 Mono\", ui-monospace, monospace; font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-panel-muted, oklch(70% 0.010 255)); margin-bottom: 0.375rem; } .ds-field { width: 100%; background: var(--color-panel-2, oklch(30% 0.018 255)); border: 1px solid var(--color-panel-2, oklch(30% 0.018 255)); border-radius: 0; padding: 0.625rem 0.75rem; color: var(--color-panel-ink, oklch(93% 0.004 250)); font-family: inherit; font-size: 1rem; outline: none; transition: border-color 150ms; } .ds-field::placeholder { color: var(--color-panel-muted, oklch(70% 0.010 255)); } .ds-field:focus { border-color: var(--color-caution, oklch(72% 0.155 72)); } .ds-field:focus-visible { outline: 2px solid var(--color-caution, oklch(72% 0.155 72)); outline-offset: 2px; } .ds-field__help { margin: 0.375rem 0 0; font-size: 0.875rem; color: var(--color-panel-muted, oklch(70% 0.010 255)); }"
+    },
+    {
+      "name": "Tab Strip",
+      "kind": "nav",
+      "refersTo": "tab",
+      "description": "The fixed charcoal navigation: chamfered divider tabs with a 3px amber underline that wipes in on hover, focus, and on the section you are currently reading.",
+      "html": "<nav class=\"ds-tabs\" aria-label=\"Sections\"><a class=\"ds-tab\" href=\"#\">About</a><a class=\"ds-tab\" href=\"#\" aria-current=\"true\">Record</a><a class=\"ds-tab\" href=\"#\">Current</a><a class=\"ds-tab\" href=\"#\">Notes</a></nav>",
+      "css": ".ds-tabs { display: flex; align-items: stretch; background: var(--color-panel, oklch(24% 0.018 255)); padding: 0.5rem 0.75rem 0; } .ds-tab { position: relative; display: flex; align-items: center; font-family: \"B612 Mono\", ui-monospace, monospace; font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; padding: 0.75rem 0.875rem 0.625rem; margin-inline: 1px; color: var(--color-panel-muted, oklch(70% 0.010 255)); background: var(--color-panel-2, oklch(30% 0.018 255)); clip-path: polygon(0 100%, 7px 0, calc(100% - 7px) 0, 100% 100%); transition: color 160ms ease-out, background-color 160ms ease-out; } .ds-tab::after { content: \"\"; position: absolute; left: 0.5rem; right: 0.5rem; bottom: 0; height: 3px; background: var(--color-caution, oklch(72% 0.155 72)); transform: scaleX(0); transform-origin: left; transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1); } .ds-tab:hover, .ds-tab:focus-visible { color: var(--color-panel-ink, oklch(93% 0.004 250)); background: color-mix(in srgb, var(--color-panel-2, #3a3f47) 70%, var(--color-panel-ink, #eceef0)); } .ds-tab:hover::after, .ds-tab:focus-visible::after, .ds-tab[aria-current=\"true\"]::after { transform: scaleX(1); } .ds-tab[aria-current=\"true\"] { color: var(--color-panel-ink, oklch(93% 0.004 250)); } .ds-tab:focus-visible { outline: 2px solid var(--color-caution, oklch(72% 0.155 72)); outline-offset: -2px; }"
+    },
+    {
+      "name": "Section Head",
+      "kind": "custom",
+      "refersTo": "rule-head",
+      "description": "The heavy 3px bar a QRH puts above every procedure, with a two-digit mono index beside an uppercase title and a 62ch lede.",
+      "html": "<header class=\"ds-rule-head\"><div class=\"ds-rule-head__row\"><span class=\"ds-rule-head__index\">02</span><h2 class=\"ds-rule-head__title\">Record</h2></div><p class=\"ds-rule-head__lede\">Twelve years from help desk to site reliability engineering — the roles where I learned how production systems actually break.</p></header>",
+      "css": ".ds-rule-head { border-top: 3px solid var(--color-ink, oklch(21% 0.012 255)); padding-top: 0.75rem; font-family: \"B612\", ui-sans-serif, system-ui, sans-serif; } .ds-rule-head__row { display: flex; align-items: baseline; gap: 0.75rem; } .ds-rule-head__index { font-family: \"B612 Mono\", ui-monospace, monospace; font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; font-variant-numeric: tabular-nums; color: var(--color-ink-faint, oklch(52% 0.010 255)); } .ds-rule-head__title { margin: 0; font-size: 1.875rem; font-weight: 700; letter-spacing: -0.025em; text-transform: uppercase; color: var(--color-ink, oklch(21% 0.012 255)); } .ds-rule-head__lede { margin: 0.75rem 0 0; max-width: 62ch; line-height: 1.625; color: var(--color-ink-muted, oklch(43% 0.012 255)); }"
+    },
+    {
+      "name": "Status and Gauge",
+      "kind": "chip",
+      "refersTo": "notice-band-caution",
+      "description": "The annunciator pair: a square dot plus a mono caps label for state, and a flat measured bar for progress. Neither is a badge and neither is decorative.",
+      "html": "<div class=\"ds-annunciator\"><span class=\"ds-st ds-st--active\"><i class=\"ds-st__dot\"></i>In progress</span><div class=\"ds-gauge\" role=\"progressbar\" aria-valuenow=\"47\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-label=\"Course progress\"><div class=\"ds-gauge__fill\" style=\"width:47%\"></div></div><span class=\"ds-st ds-st--verified\"><i class=\"ds-st__dot\"></i>Complete</span></div>",
+      "css": "@keyframes ds-standby { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } } .ds-annunciator { display: flex; flex-direction: column; gap: 0.75rem; font-family: \"B612\", ui-sans-serif, system-ui, sans-serif; } .ds-st { display: inline-flex; align-items: center; gap: 0.5rem; font-family: \"B612 Mono\", ui-monospace, monospace; font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; } .ds-st__dot { width: 6px; height: 6px; border-radius: 0; background: currentColor; } .ds-st--active { color: var(--color-caution-ink, oklch(38% 0.095 65)); } .ds-st--active .ds-st__dot { background: var(--color-caution, oklch(72% 0.155 72)); animation: ds-standby 2.4s ease-in-out infinite; } .ds-st--verified { color: var(--color-verified, oklch(50% 0.115 152)); } .ds-gauge { height: 6px; width: 100%; background: var(--color-rule, oklch(87% 0.005 255)); } .ds-gauge__fill { height: 100%; background: var(--color-caution, oklch(72% 0.155 72)); } @media (prefers-reduced-motion: reduce) { .ds-st--active .ds-st__dot { animation: none; } }"
+    },
+    {
+      "name": "Plate Mark",
+      "kind": "custom",
+      "refersTo": "tab-current",
+      "description": "The identity mark: initials punched into a square plate with four corner rivets, the way a placard is riveted to a panel. Inherits its colour from context.",
+      "html": "<span class=\"ds-plate-ctx\"><span class=\"ds-plate\"><i class=\"ds-rivet ds-rivet--tl\"></i><i class=\"ds-rivet ds-rivet--tr\"></i><i class=\"ds-rivet ds-rivet--bl\"></i><i class=\"ds-rivet ds-rivet--br\"></i><span class=\"ds-plate__text\">KN</span></span><span class=\"ds-plate__word\">Kervintz Noel</span></span>",
+      "css": ".ds-plate-ctx { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--color-panel, oklch(24% 0.018 255)); color: var(--color-panel-ink, oklch(93% 0.004 250)); padding: 0.75rem 1rem; font-family: \"B612\", ui-sans-serif, system-ui, sans-serif; } .ds-plate { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border: 1px solid currentColor; border-radius: 0; flex-shrink: 0; } .ds-plate__text { font-family: \"B612 Mono\", ui-monospace, monospace; font-weight: 700; line-height: 1; letter-spacing: 0.06em; font-size: 13px; } .ds-rivet { position: absolute; width: 2px; height: 2px; background: currentColor; opacity: 0.6; } .ds-rivet--tl { left: 2px; top: 2px; } .ds-rivet--tr { right: 2px; top: 2px; } .ds-rivet--bl { left: 2px; bottom: 2px; } .ds-rivet--br { right: 2px; bottom: 2px; } .ds-plate__word { font-weight: 700; font-size: 0.875rem; letter-spacing: -0.025em; text-transform: uppercase; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Pre-Flight Checklist",
+    "overview": "This site is a laminated checklist card and a page torn from a Quick Reference Handbook. Not a metaphor applied as decoration — the structure is the checklist. Every claim on the page is a challenge with a response beside it, joined by leader dots: LOCATION ·········· Boston, Massachusetts. That row is the atom of the entire system. Sections, cards, notices and even the mobile menu are built out of it. The result reads as a procedure that was run, not a pitch that was written.\n\nThe material is near-white card stock with a barely-there fibre tooth — a 4px repeating hairline at 1.6% ink, drawn in body::before, not an image. Against it sit brighter sheets, separated by rules rather than shadows. Structure comes from a placard charcoal that owns full-width bands — the fixed tab strip at the top, the Contact section, the footer revision block — and never appears as a tint or a soft background elsewhere. Type is B612 and B612 Mono, the family Airbus and ENAC commissioned for cockpit displays: it is legible under stress, and that is why it is here.\n\nColour is the strictest rule in the system. It carries state and nothing else. Black is normal, caution amber is in progress, verified green is complete, warning red is failure. There is no brand accent, no gradient, no hue chosen because it looked good. If a colour on a mounted surface cannot be traced to a state a visitor can verify, it is a defect. This world explicitly refuses the centred-hero-over-card-grid portfolio, the soft rounded card, the glass panel, and the decorative accent colour.",
+    "keyCharacteristics": [
+      "Challenge–response leader-dot rows as the universal information unit",
+      "Square corners everywhere; the radius scale is effectively zero",
+      "Heavy 3px section rules and 1px sub-rules doing the work shadows usually do",
+      "Charcoal bands running full bleed; sheets never tinted",
+      "Mono placards in caps for every label, index, tab and key",
+      "Tabular numerals wherever numbers can be compared",
+      "Colour reserved for state: amber / green / red only",
+      "One authored motion moment — the check being drawn"
+    ],
+    "rules": [
+      {
+        "name": "The State-Only Colour Rule",
+        "body": "Colour on a mounted surface must name a state a visitor could verify: amber = in progress, green = complete, red = failed. There is no fourth meaning and no brand accent. A hue chosen because a section \"needed some colour\" is a defect, not a variant.",
+        "section": "colors"
+      },
+      {
+        "name": "The Band Rule",
+        "body": "When colour appears, it owns a full band, a 3px marker, a gauge fill, or a 6px dot. It never appears as a wash behind body text and never as a fat coloured border on a card. .notice puts the colour in .notice__band and leaves the body on sheet white for exactly this reason.",
+        "section": "colors"
+      },
+      {
+        "name": "The Faint Floor Rule",
+        "body": "Nothing lighter than --color-ink-faint may hold text on a light ground, and nothing lighter than --color-panel-muted may hold text on charcoal. There is no \"subtle\" tier below these — quiet text is ink-faint at full strength, not ink-muted at reduced opacity.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Faces Rule",
+        "body": "B612 for prose and headings, B612 Mono for every label, index, tab, button and number. There is no third face, no serif (--font-serif is aliased to B612 and is a shim, not an option), and no system display stack.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Any number a reader might compare against another number gets .nums. A percentage beside a gauge, an hour count, a date, a 3/6 — all tabular. A number inside a sentence does not need it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Measure Rule",
+        "body": "Prose holds max-w-[62ch] even when the grid column is wider. Pull quotes and lede headlines tighten further — 46ch for a blockquote, 34ch for a callout or card title, 28ch for a standalone page headline.",
+        "section": "typography"
+      },
+      {
+        "name": "The Challenge–Response Rule",
+        "body": "Any fact with a name and a value is a .chk row: chk__label + chk__lead (aria-hidden) + chk__value. Do not build a two-column definition list, a bordered key/value table, or a badge pair instead. The row wraps rather than clips — the value may take its own line in a narrow card.",
+        "section": "layout"
+      },
+      {
+        "name": "The Full-Bleed Band Rule",
+        "body": "The charcoal panel always spans the full viewport width with its content constrained by the same container. A charcoal card floating inside a light section is not part of this world.",
+        "section": "layout"
+      },
+      {
+        "name": "The Drawn-Depth Rule",
+        "body": "Depth is a rule you can point at. If a surface needs to feel separate, give it a border and a heavier rule above it — not a larger shadow. Hover never grows a shadow and never lifts a card.",
+        "section": "elevation"
+      },
+      {
+        "name": "The One Shadow Rule",
+        "body": ".sheet owns the only box-shadow in the system. A new component that wants elevation uses .sheet; it does not author a second shadow value.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Square Corner Rule",
+        "body": "No rounded corners. Not on cards, not on buttons, not on inputs, not on status dots. A pill or a rounded-lg in this world reads as a component imported from a different site.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Placard Key Rule",
+        "body": "Buttons are square keys. Never a pill, never a shadow that grows on hover, never a gradient, and never smaller than the body text around them — the page's conversion actions must not be its smallest lettering.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do build every name/value pair as a .chk row via <Row>. It is the atom of this system and the reason the page reads as a procedure.",
+      "Do open a new section with <SectionHead index=\"0N\" …> and take the next sequential index.",
+      "Do keep colour tied to state — amber in progress, green complete, red failed — and let everything else be ink on card stock.",
+      "Do put a state colour in a band, a dot, a 3px marker or a gauge fill, and leave the body text on sheet white or charcoal.",
+      "Do use .placard for every small label and .nums for every comparable figure.",
+      "Do cap prose at max-w-[62ch] regardless of how wide the grid column is.",
+      "Do separate list entries with border-t border-rule and first:border-t-0 rather than with margin alone.",
+      "Do wrap any charcoal surface in .on-panel so keyboard focus switches to the amber ring, and pair --color-panel-ink / --color-panel-muted for text on it.",
+      "Do draw icons as SVG paths with stroke-linecap=\"square\", matching the check and arrow already in Checklist.jsx.",
+      "Do give every interactive target at least 44px (min-h-11 / min-w-11)."
+    ],
+    "donts": [
+      "Don't round a corner. No rounded-* on cards, buttons, inputs, dots or bars; buttons are square placard keys, never pills.",
+      "Don't spend colour decoratively. An amber heading, a green divider, or a tinted card that doesn't report a state is a defect.",
+      "Don't put --color-caution text on a light ground — use --color-caution-ink. Amber-on-white does not clear 4.5:1.",
+      "Don't hold text in anything lighter than --color-ink-faint (or --color-panel-muted on charcoal), and don't reach for opacity to make text quieter.",
+      "Don't author a second box-shadow. .sheet owns the only one, and hover never grows it.",
+      "Don't use the charcoal panel as a card tint or a hover fill — it owns full-width bands only.",
+      "Don't introduce a third typeface, a serif, or a system display stack. B612 and B612 Mono are the whole vocabulary.",
+      "Don't animate for delight. The build has one authored moment; anything beyond it needs a reason a checklist would accept.",
+      "Don't use a Unicode character as an icon, or a glyph icon font. Draw the path.",
+      "Don't reuse the legacy tokens or classes listed under Compatibility Shim — they are scaffolding for unmounted files, not part of this language."
+    ]
+  }
+}

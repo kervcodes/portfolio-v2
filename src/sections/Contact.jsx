@@ -1,40 +1,21 @@
-import {
-  Mail,
-  MapPin,
-  Send,
-  CheckCircle,
-  AlertCircle,
-} from "lucide-react";
-import { Button } from "@/components/Button";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
+import { Button } from "@/components/Button";
+import { Check } from "@/components/Checklist";
 
-const contactInfo = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "kervcodes@gmail.com",
-    href: "mailto:kervcodes@gmail.com",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Boston, MA",
-    href: "Kervintznoel.com",
-  },
-];
+// Contact runs on the charcoal panel: the OWN-WORLD promises placard charcoal
+// owning full-width bands, and the page's closing conversion is the right one
+// to own. Fields are restyled for that ground rather than inverted blindly.
+const FIELD =
+  "w-full bg-panel-2 border border-panel-2 px-3 py-2.5 text-panel-ink " +
+  "placeholder:text-panel-muted focus:border-caution outline-none transition-colors";
+
+const LABEL = "placard block text-panel-muted mb-1.5";
 
 export const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isLoading, setIsLoading] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState({
-    type: null,
-    message: "",
-  });
+  const [submitStatus, setSubmitStatus] = useState({ type: null, message: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,9 +27,15 @@ export const Contact = () => {
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
       if (!serviceId || !templateId || !publicKey) {
-        throw new Error(
-          "EmailJS configuration is missing. Please check your environment variables."
-        );
+        // Visitor-facing copy never mentions env vars; the detail goes to the console.
+        console.error("EmailJS configuration is missing — check VITE_EMAILJS_* env vars.");
+        setSubmitStatus({
+          type: "error",
+          message:
+            "The contact form isn't working right now. Please email me directly at kervcodes@gmail.com and I'll get back to you.",
+        });
+        setIsLoading(false);
+        return;
       }
 
       await emailjs.send(
@@ -72,15 +59,17 @@ export const Contact = () => {
 
       setSubmitStatus({
         type: "success",
-        message: "Message sent successfully! I'll get back to you soon.",
+        message:
+          "Message sent — it's on its way to kervcodes@gmail.com. I read every one and reply personally.",
       });
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {
+      // err.text is an EmailJS internal string — logged, never shown.
       console.error("EmailJS error:", err);
       setSubmitStatus({
         type: "error",
         message:
-          err.text || "Failed to send message. Please try again later.",
+          "Your message didn't send. Check your connection and try again — or email me directly at kervcodes@gmail.com.",
       });
     } finally {
       setIsLoading(false);
@@ -88,147 +77,152 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-32 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-highlight/5 rounded-full blur-3xl" />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase animate-fade-in">
-            Get In Touch
-          </span>
-          <h2 className="font-serif text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animation-delay-100 text-foreground">
-            Let's build{" "}
-            <span className="italic font-normal text-primary">
-              something great.
+    <section
+      id="contact"
+      className="on-panel bg-panel text-panel-ink py-16 md:py-24 scroll-mt-20"
+    >
+      <div className="max-w-5xl mx-auto px-5 md:px-6">
+        <header className="border-t-3 border-panel-ink pt-3">
+          <div className="flex items-baseline gap-3">
+            <span className="placard text-panel-muted nums" aria-hidden="true">
+              05
             </span>
-          </h2>
-          <p className="text-muted-foreground animate-fade-in animation-delay-200">
-            Have a project in mind? I'd love to hear about it. Send me a message
-            and let's discuss how we can work together.
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight uppercase">
+              Contact
+            </h2>
+          </div>
+          <p className="mt-3 max-w-[62ch] text-panel-muted leading-relaxed">
+            If you're hiring, tell me about the role and the team — I'd rather
+            hear about the problems than the perks. If you're building something
+            and want to compare notes, that works too.
           </p>
-        </div>
+        </header>
 
-        <div className="max-w-xl mx-auto">
-          {/* Form */}
-          <div className="bg-card p-8 rounded-3xl border border-border shadow-sm animate-fade-in animation-delay-300">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+        <div className="mt-10 grid lg:grid-cols-12 gap-8">
+          <form
+            className="lg:col-span-7 border border-panel-2 p-5 md:p-7"
+            onSubmit={handleSubmit}
+            noValidate={false}
+          >
+            <p className="placard text-panel-muted">All three fields required</p>
+
+            <div className="mt-5 space-y-5">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                  Name
+                <label htmlFor="name" className={LABEL}>
+                  Your name
                 </label>
                 <input
                   id="name"
                   type="text"
                   required
-                  placeholder="Your name..."
+                  autoComplete="name"
+                  placeholder="Alex Rivera"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 bg-background rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-foreground placeholder:text-muted-foreground"
+                  className={FIELD}
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                  Email
+                <label htmlFor="email" className={LABEL}>
+                  Your email
                 </label>
                 <input
                   id="email"
                   type="email"
                   required
-                  placeholder="kervcodes@gmail.com"
+                  autoComplete="email"
+                  placeholder="you@company.com"
+                  aria-describedby="email-help"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 bg-background rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-foreground placeholder:text-muted-foreground"
+                  className={FIELD}
                 />
+                <p id="email-help" className="mt-1.5 text-sm text-panel-muted">
+                  This is where I'll reply.
+                </p>
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                <label htmlFor="message" className={LABEL}>
                   Message
                 </label>
                 <textarea
                   id="message"
-                  rows={5}
+                  rows={6}
                   required
+                  aria-describedby="message-help"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Your message..."
-                  className="w-full px-4 py-3 bg-background rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none text-foreground placeholder:text-muted-foreground"
+                  placeholder="We're hiring a backend engineer for our payments team…"
+                  className={`${FIELD} resize-none`}
                 />
+                <p id="message-help" className="mt-1.5 text-sm text-panel-muted">
+                  A few lines is plenty — the role, the team, or whatever you want to ask.
+                </p>
               </div>
+            </div>
 
-              <Button className="w-full" type="submit" size="lg" disabled={isLoading}>
-                {isLoading ? (
-                  <>Sending...</>
-                ) : (
-                  <>
-                    Send Message
-                    <Send className="w-5 h-5" />
-                  </>
-                )}
+            <div className="mt-6 border-t border-panel-2 pt-5">
+              <Button
+                className="w-full"
+                type="submit"
+                variant="panel"
+                size="lg"
+                disabled={isLoading}
+              >
+                {isLoading ? "Sending…" : "Send message"}
               </Button>
+            </div>
 
+            {/* Status is announced to screen readers, not just shown. */}
+            <div aria-live="polite" aria-atomic="true">
               {submitStatus.type && (
                 <div
-                  className={`flex items-center gap-3 p-4 rounded-xl ${
+                  role={submitStatus.type === "error" ? "alert" : "status"}
+                  className={`notice mt-5 ${
                     submitStatus.type === "success"
-                      ? "bg-green-50 border border-green-200 text-green-700"
-                      : "bg-red-50 border border-red-200 text-red-700"
+                      ? "notice--verified"
+                      : "notice--warning"
                   }`}
                 >
-                  {submitStatus.type === "success" ? (
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                  ) : (
-                    <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                  )}
-                  <p className="text-sm">{submitStatus.message}</p>
+                  <p className="notice__band">
+                    {submitStatus.type === "success" ? "Sent" : "Not sent"}
+                  </p>
+                  <p className="px-4 py-3 text-sm text-ink-muted leading-relaxed">
+                    {submitStatus.message}
+                  </p>
                 </div>
               )}
-            </form>
-          </div>
-
-          {/* Contact Info */}
-          {/* <div className="space-y-6 animate-fade-in animation-delay-400">
-            <div className="bg-card rounded-3xl p-8 border border-border shadow-sm">
-              <h3 className="text-xl font-semibold text-foreground mb-6">
-                Contact Information
-              </h3>
-              <div className="space-y-4">
-                {contactInfo.map((item, i) => (
-                  <a
-                    key={i}
-                    href={item.href}
-                    className="flex items-center gap-4 p-4 rounded-xl hover:bg-muted transition-colors group"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <item.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-muted-foreground">{item.label}</div>
-                      <div className="font-medium text-foreground">{item.value}</div>
-                    </div>
-                  </a>
-                ))}
-              </div>
             </div>
+          </form>
 
-            {/* Availability Card *
-            <div className="bg-card rounded-3xl p-8 border border-primary/20 shadow-sm">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
-                <span className="font-semibold text-foreground">Currently Available</span>
-              </div>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                I'm currently open to new opportunities and exciting projects.
-                Whether you need a full-time engineer or a freelance consultant,
-                let's talk!
-              </p>
-            </div>
-          </div> */}
+          {/* Direct route, for anyone who would rather not use a form. */}
+          <aside className="lg:col-span-5 lg:pl-8 lg:border-l lg:border-panel-2">
+            <p className="placard text-panel-muted">Direct</p>
+            <ul className="mt-4 space-y-4 text-sm">
+              <li>
+                <p className="placard text-panel-muted">Email</p>
+                <a
+                  href="mailto:kervcodes@gmail.com"
+                  className="text-panel-ink font-bold underline underline-offset-4 decoration-panel-muted hover:decoration-caution break-all"
+                >
+                  kervcodes@gmail.com
+                </a>
+              </li>
+              <li>
+                <p className="placard text-panel-muted">Based</p>
+                <p className="text-panel-ink font-bold">Boston, Massachusetts</p>
+              </li>
+              <li>
+                <p className="placard text-panel-muted">Availability</p>
+                <p className="inline-flex items-center gap-2 text-verified-panel font-bold">
+                  <Check className="text-verified-panel" />
+                  Open to full-time roles
+                </p>
+              </li>
+            </ul>
+          </aside>
         </div>
       </div>
     </section>

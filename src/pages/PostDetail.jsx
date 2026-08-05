@@ -1,45 +1,31 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ArrowUpRight, Clock, Calendar } from "lucide-react";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { getPostBySlug } from "@/data/posts";
+import { Status, Row, Arrow } from "@/components/Checklist";
 
-// ─── Tag color map (mirrors Posts.jsx) ───────────────────────────────────────
-const TAG_COLORS = {
-    "AI Engineering":     "text-primary border-primary/30 bg-primary/5",
-    "RAG":                "text-primary border-primary/30 bg-primary/5",
-    "Agents":             "text-primary border-primary/30 bg-primary/5",
-    "MCP":                "text-primary border-primary/30 bg-primary/5",
-    "Claude API":         "text-primary border-primary/30 bg-primary/5",
-    "n8n":                "text-primary border-primary/30 bg-primary/5",
-    "SRE":                "text-highlight border-highlight/30 bg-highlight/5",
-    "Full-Stack":         "text-secondary-foreground border-secondary-foreground/30 bg-secondary-foreground/5",
-    "React Native":       "text-secondary-foreground border-secondary-foreground/30 bg-secondary-foreground/5",
-    "Career":             "text-muted-foreground border-border/50 bg-muted",
-    "Building in Public": "text-muted-foreground border-border/50 bg-muted",
-};
-const tagClass = (tag) => TAG_COLORS[tag] || "text-muted-foreground border-border/50 bg-muted";
+// Posts are back on the homepage, so the return path is the Notes section.
+const BACK_TO = "/#posts";
+const BACK_LABEL = "All notes";
 
 // ─── Content block renderer ───────────────────────────────────────────────────
 const ContentBlock = ({ block }) => {
     switch (block.type) {
         case "paragraph":
             return (
-                <p className="text-foreground/80 leading-relaxed text-lg mb-6">
+                <p className="text-ink-muted leading-relaxed text-base mb-6">
                     {block.text}
                 </p>
             );
         case "heading":
             return (
-                <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mt-12 mb-6 leading-snug">
+                <h2 className="rule-head mt-12 mb-5 text-xl md:text-2xl font-bold text-ink uppercase tracking-tight">
                     {block.text}
                 </h2>
             );
         case "subheading":
             return (
-                <h3 className="text-xl font-semibold text-foreground mt-8 mb-4">
-                    {block.text}
-                </h3>
+                <h3 className="mt-8 mb-3 text-lg font-bold text-ink">{block.text}</h3>
             );
         case "image":
             return (
@@ -47,10 +33,10 @@ const ContentBlock = ({ block }) => {
                     <img
                         src={block.src}
                         alt={block.caption || ""}
-                        className="w-full rounded-2xl object-cover max-h-[500px]"
+                        className="w-full border border-rule object-cover max-h-130"
                     />
                     {block.caption && (
-                        <figcaption className="text-center text-sm text-muted-foreground mt-3 italic">
+                        <figcaption className="mt-2 placard text-ink-faint">
                             {block.caption}
                         </figcaption>
                     )}
@@ -58,20 +44,23 @@ const ContentBlock = ({ block }) => {
             );
         case "list":
             return (
-                <ol className="list-decimal list-inside space-y-2 mb-6 ml-2">
+                <ol className="mb-6 space-y-2">
                     {block.items.map((item, i) => (
-                        <li key={i} className="text-foreground/80 text-lg leading-relaxed">
-                            {item}
+                        <li key={i} className="flex gap-3 text-ink-muted leading-relaxed">
+                            <span className="placard nums text-ink-faint shrink-0 pt-1">
+                                {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <span>{item}</span>
                         </li>
                     ))}
                 </ol>
             );
         case "divider":
-            return <hr className="border-border my-10" />;
+            return <hr className="border-0 border-t border-rule my-10" />;
         case "callout":
             return (
-                <blockquote className="border-l-4 border-primary pl-6 my-8">
-                    <p className="text-xl md:text-2xl font-semibold text-foreground leading-snug">
+                <blockquote className="my-10 rule-head">
+                    <p className="text-xl md:text-2xl font-bold text-ink leading-snug max-w-[34ch]">
                         {block.text}
                     </p>
                 </blockquote>
@@ -81,169 +70,130 @@ const ContentBlock = ({ block }) => {
     }
 };
 
-// ─── Coming Soon page ─────────────────────────────────────────────────────────
+const BackLink = ({ className = "" }) => (
+    <Link
+        to={BACK_TO}
+        className={`placard inline-flex items-center gap-2 text-ink-muted hover:text-ink transition-colors ${className}`}
+    >
+        <Arrow dir="left" />
+        {BACK_LABEL}
+    </Link>
+);
+
+// ─── Not written yet ──────────────────────────────────────────────────────────
 const ComingSoonPage = ({ post }) => (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
-        <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-4">
-            Coming Soon
-        </span>
-        <h1 className="text-3xl md:text-4xl font-bold text-foreground max-w-2xl mb-6 leading-snug">
-            {post.title}
-        </h1>
-        <p className="text-muted-foreground max-w-lg mb-8">{post.excerpt}</p>
-        <Link
-            to="/#posts"
-            className="inline-flex items-center gap-2 text-sm text-primary hover:underline font-medium"
-        >
-            <ArrowLeft className="w-4 h-4" />
-            Back to all posts
-        </Link>
+    <div className="max-w-3xl mx-auto px-5 md:px-6 py-20">
+        <div className="sheet p-6 md:p-10">
+            <Status kind="standby">Not written yet</Status>
+            <h1 className="mt-4 text-2xl md:text-4xl font-bold text-ink leading-tight tracking-tight max-w-[28ch]">
+                {post.title}
+            </h1>
+            <p className="mt-4 text-ink-muted leading-relaxed max-w-[62ch]">
+                {post.excerpt}
+            </p>
+            <p className="mt-6 rule-sub pt-4 text-sm text-ink-muted">
+                This one is still in drafts. It'll appear here when it's done.
+            </p>
+            <p className="mt-6">
+                <BackLink />
+            </p>
+        </div>
     </div>
 );
 
-// ─── 404 page ─────────────────────────────────────────────────────────────────
+// ─── 404 ──────────────────────────────────────────────────────────────────────
 const NotFoundPage = () => (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
-        <p className="text-6xl font-bold text-primary mb-4">404</p>
-        <p className="text-foreground text-xl mb-6">Post not found.</p>
-        <Link
-            to="/#posts"
-            className="inline-flex items-center gap-2 text-sm text-primary hover:underline font-medium"
-        >
-            <ArrowLeft className="w-4 h-4" />
-            Back to all posts
-        </Link>
+    <div className="max-w-3xl mx-auto px-5 md:px-6 py-20">
+        <div className="notice notice--warning">
+            <p className="notice__band">No such entry</p>
+            <div className="px-5 py-6">
+                <h1 className="text-2xl md:text-3xl font-bold text-ink tracking-tight">
+                    This note doesn't exist.
+                </h1>
+                <p className="mt-3 text-ink-muted max-w-[62ch]">
+                    The link may be mistyped, or the note may have been renamed since it
+                    was shared.
+                </p>
+                <p className="mt-6">
+                    <BackLink />
+                </p>
+            </div>
+        </div>
     </div>
 );
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// Hoisted: defining this inside PostDetail would create a new component type
+// on every render and remount the whole article subtree.
+const Shell = ({ children }) => (
+    <div className="min-h-screen overflow-x-hidden flex flex-col">
+        <Navbar />
+        <main className="flex-1 pt-16">{children}</main>
+        <Footer />
+    </div>
+);
+
+// ─── Main ─────────────────────────────────────────────────────────────────────
 export const PostDetail = () => {
     const { slug } = useParams();
     const post = getPostBySlug(slug);
 
-    if (!post) return (
-        <div className="min-h-screen overflow-x-hidden">
-            <Navbar />
-            <main className="pt-20"><NotFoundPage /></main>
-            <Footer />
-        </div>
-    );
-
-    if (post.comingSoon) return (
-        <div className="min-h-screen overflow-x-hidden">
-            <Navbar />
-            <main className="pt-20"><ComingSoonPage post={post} /></main>
-            <Footer />
-        </div>
-    );
+    if (!post) return <Shell><NotFoundPage /></Shell>;
+    if (post.comingSoon) return <Shell><ComingSoonPage post={post} /></Shell>;
 
     return (
-        <div className="min-h-screen overflow-x-hidden">
-            <Navbar />
+        <Shell>
+            <article className="max-w-3xl mx-auto px-5 md:px-6 py-12 md:py-16">
+                <BackLink className="inline-block mb-8" />
 
-            <main className="pt-20">
-                {/* ── Cover image ── */}
-                {post.coverImage && (
-                    <div className="w-full max-h-[520px] overflow-hidden">
-                        <img
-                            src={post.coverImage}
-                            alt={post.title}
-                            className="w-full h-full object-cover"
-                        />
+                <header className="rule-head">
+                    <div className="flex flex-wrap items-baseline justify-between gap-3">
+                        <p className="placard nums text-ink-faint">
+                            {post.date} · {post.readTime}
+                        </p>
+                        <Status kind="verified">Published</Status>
                     </div>
-                )}
-
-                {/* ── Article ── */}
-                <article className="container max-w-3xl mx-auto px-6 py-16">
-
-                    {/* Back link */}
-                    <Link
-                        to="/#posts"
-                        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-10 group"
-                    >
-                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-                        All posts
-                    </Link>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-6">
-                        {post.tags.map((tag) => (
-                            <span
-                                key={tag}
-                                className={`px-2.5 py-0.5 rounded-full text-xs border ${tagClass(tag)}`}
-                            >
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-
-                    {/* Title */}
-                    <h1 className="font-serif text-3xl md:text-5xl font-bold text-foreground leading-tight mb-6">
+                    <h1 className="mt-4 text-3xl md:text-5xl font-bold text-ink leading-[1.05] tracking-[-0.02em]">
                         {post.title}
                     </h1>
-
-                    {/* Meta row */}
-                    <div className="flex items-center gap-6 text-sm text-muted-foreground mb-12 pb-8 border-b border-border">
-                        <span className="flex items-center gap-1.5">
-                            <Calendar className="w-4 h-4" />
-                            {post.date}
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                            <Clock className="w-4 h-4" />
-                            {post.readTime}
-                        </span>
-                        <span>By Kervintz Noel</span>
-                        {post.hashnodeUrl && (
-                            <a
-                                href={post.hashnodeUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-primary hover:underline ml-auto"
-                            >
-                                Read on Hashnode
-                                <ArrowUpRight className="w-3.5 h-3.5" />
-                            </a>
-                        )}
+                    <div className="mt-6 rule-sub pt-4 space-y-2">
+                        <Row label="Author">Kervintz Noel</Row>
+                        <Row label="Filed under">{post.tags.join(" · ")}</Row>
                     </div>
+                </header>
 
-                    {/* Content */}
-                    <div>
-                        {post.content.map((block, i) => (
-                            <ContentBlock key={i} block={block} />
-                        ))}
-                    </div>
+                {post.coverImage && (
+                    /* Decorative: the headline above carries the meaning. */
+                    <img
+                        src={post.coverImage}
+                        alt=""
+                        aria-hidden="true"
+                        className="mt-10 w-full border border-rule object-cover max-h-120"
+                    />
+                )}
 
-                    {/* Footer CTA */}
-                    <div className="mt-16 pt-10 border-t border-border text-center">
-                        <p className="text-muted-foreground mb-4 text-sm">
-                            Follow along at{" "}
-                            <a href="https://kervintznoel.com" className="text-primary hover:underline">
-                                kervintznoel.com
-                            </a>
-                            {" "}and on{" "}
-                            <a
-                                href="https://hashnode.com/@kervcodes"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-primary hover:underline"
-                            >
-                                Hashnode
-                            </a>
-                            .
-                        </p>
-                        <Link
-                            to="/#posts"
-                            className="inline-flex items-center gap-2 text-sm text-primary hover:underline font-medium"
+                <div className="mt-10">
+                    {post.content.map((block, i) => (
+                        <ContentBlock key={i} block={block} />
+                    ))}
+                </div>
+
+                <footer className="mt-16 rule-head flex flex-wrap items-center justify-between gap-4">
+                    <p className="text-sm text-ink-muted max-w-[46ch]">
+                        I write these as I go. You can follow along here or on{" "}
+                        <a
+                            href="https://hashnode.com/@kervcodes"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-ink font-bold underline underline-offset-4 decoration-rule hover:decoration-ink"
                         >
-                            <ArrowLeft className="w-4 h-4" />
-                            Back to all posts
-                        </Link>
-                    </div>
-                </article>
-            </main>
-
-            <Footer />
-        </div>
+                            Hashnode
+                        </a>
+                        , where I'll start cross-posting.
+                    </p>
+                    <BackLink />
+                </footer>
+            </article>
+        </Shell>
     );
 };
 

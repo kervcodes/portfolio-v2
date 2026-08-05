@@ -1,185 +1,93 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Posts.jsx — Writing & Notes
+// Posts.jsx — Notes
 //
 // All post data lives in src/data/posts.js.
 // To add a post: edit that file and set comingSoon: false when it's ready.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
 import { POSTS } from "@/data/posts";
+import { SectionHead, Status, Arrow } from "@/components/Checklist";
 
-// ─── Tag color map ────────────────────────────────────────────────────────────
-const TAG_COLORS = {
-    "AI Engineering":     "text-primary border-primary/30 bg-primary/8",
-    "RAG":                "text-primary border-primary/30 bg-primary/8",
-    "Agents":             "text-primary border-primary/30 bg-primary/8",
-    "MCP":                "text-primary border-primary/30 bg-primary/8",
-    "Claude API":         "text-primary border-primary/30 bg-primary/8",
-    "n8n":                "text-primary border-primary/30 bg-primary/8",
-    "SRE":                "text-highlight border-highlight/30 bg-highlight/8",
-    "Full-Stack":         "text-secondary-foreground border-secondary-foreground/20 bg-secondary",
-    "React Native":       "text-secondary-foreground border-secondary-foreground/20 bg-secondary",
-    "Career":             "text-muted-foreground border-border bg-muted",
-    "Building in Public": "text-muted-foreground border-border bg-muted",
-};
-const tagClass = (tag) => TAG_COLORS[tag] || "text-muted-foreground border-border bg-muted";
-
-// ─── Section ──────────────────────────────────────────────────────────────────
 export const Posts = () => {
-    const published        = POSTS.filter((p) => !p.comingSoon);
-    const featuredUpcoming = POSTS.filter((p) => p.comingSoon && p.featured);
-    const bgUpcoming       = POSTS.filter((p) => p.comingSoon && !p.featured);
-
-    const featuredGridCols =
-        featuredUpcoming.length === 1 ? "grid-cols-1 max-w-sm mx-auto" :
-        featuredUpcoming.length === 2 ? "md:grid-cols-2" :
-        "md:grid-cols-3";
-    const bgGridCols =
-        bgUpcoming.length === 1 ? "grid-cols-1 max-w-sm mx-auto" :
-        bgUpcoming.length === 2 ? "md:grid-cols-2" :
-        "md:grid-cols-3";
-
-    const PostCardBody = ({ post }) => (
-        <>
-            <div className="flex items-center justify-between mb-4">
-                <span className="text-xs text-muted-foreground">{post.date} · {post.readTime}</span>
-                {post.comingSoon ? (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted border border-border text-muted-foreground">
-                        Coming soon
-                    </span>
-                ) : (
-                    <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                )}
-            </div>
-            <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors mb-3 leading-snug">
-                {post.title}
-            </h3>
-            <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-4">
-                {post.excerpt}
-            </p>
-            <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                    <span key={tag} className={`px-2.5 py-0.5 rounded-full text-xs border ${tagClass(tag)}`}>
-                        {tag}
-                    </span>
-                ))}
-            </div>
-        </>
-    );
+    const published = POSTS.filter((p) => !p.comingSoon);
+    const upcoming = POSTS.filter((p) => p.comingSoon);
 
     return (
-        <section id="posts" className="py-24 relative overflow-hidden scroll-mt-24">
-            <div className="absolute top-1/4 left-0 w-80 h-80 bg-highlight/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-1/3 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+        <section id="posts" className="py-16 md:py-24 scroll-mt-20">
+            <div className="max-w-5xl mx-auto px-5 md:px-6">
+                <SectionHead
+                    index="04"
+                    title="Notes"
+                    lede="What I learned and what broke. Written as I go, not after the fact."
+                />
 
-            <div className="container max-w-5xl mx-auto px-6 relative z-10">
-
-                {/* Section Header */}
-                <div className="text-center mx-auto max-w-3xl mb-16 animate-fade-in">
-                    <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase">
-                        Writing
-                    </span>
-                    <h2 className="font-serif text-4xl md:text-5xl font-bold mt-4 mb-6 text-foreground">
-                        Building in
-                        <span className="italic font-normal text-primary">
-                            {" "}public.
-                        </span>
-                    </h2>
-                    <p className="text-muted-foreground">
-                        Notes on AI engineering, production systems, and what it actually looks like
-                        to build and ship real software. No fluff, just what I learned and what broke.
-                    </p>
-                </div>
-
-                {/* Published posts */}
+                {/* Published — the finished work carries the weight */}
                 {published.length > 0 && (
-                    <div className="grid md:grid-cols-2 gap-6 mb-8 animate-fade-in animation-delay-100">
-                        {published.map((post, idx) => (
+                    <div className="mt-10 space-y-4">
+                        {published.map((post) => (
                             <Link
-                                key={idx}
+                                key={post.slug}
                                 to={`/posts/${post.slug}`}
-                                className="group bg-card rounded-2xl p-6 border border-border shadow-sm hover:border-primary/30 hover:shadow-md transition-all duration-300 flex flex-col"
-                                style={{ animationDelay: `${idx * 80}ms` }}
+                                className="sheet block p-5 md:p-7 group hover:border-ink transition-colors"
                             >
-                                <PostCardBody post={post} />
+                                <div className="flex flex-wrap items-baseline justify-between gap-3">
+                                    <p className="placard nums text-ink-faint">
+                                        {post.date} · {post.readTime}
+                                    </p>
+                                    <Status kind="verified">Published</Status>
+                                </div>
+                                <h3 className="mt-3 text-xl md:text-2xl font-bold text-ink leading-snug tracking-tight max-w-[34ch]">
+                                    {post.title}
+                                </h3>
+                                <p className="mt-3 text-sm text-ink-muted leading-relaxed max-w-[62ch]">
+                                    {post.excerpt}
+                                </p>
+                                <p className="mt-5 rule-sub pt-3 placard text-ink group-hover:text-caution-ink transition-colors inline-flex items-center gap-2">
+                                    Read it
+                                    <Arrow />
+                                </p>
                             </Link>
                         ))}
                     </div>
                 )}
 
-                {/* Featured upcoming posts */}
-                {featuredUpcoming.length > 0 && (
-                    <div className="animate-fade-in animation-delay-100">
-                        {published.length > 0 && (
-                            <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-4">
-                                Coming Soon
-                            </p>
-                        )}
-                        <div className={`grid gap-6 mb-8 ${featuredGridCols}`}>
-                            {featuredUpcoming.map((post, idx) => (
-                                <div
-                                    key={idx}
-                                    className="group bg-card rounded-2xl p-6 border border-border shadow-sm flex flex-col"
-                                    style={{ animationDelay: `${idx * 80}ms` }}
+                {/* Pipeline — titles only. These are not finished articles and
+                    should not be dressed as any. */}
+                {upcoming.length > 0 && (
+                    <div className="mt-10">
+                        <p className="placard text-ink-faint">In the pipeline</p>
+                        <ul className="mt-3">
+                            {upcoming.map((post) => (
+                                <li
+                                    key={post.slug}
+                                    className="chk py-3 border-t border-rule"
                                 >
-                                    <PostCardBody post={post} />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {/* Background upcoming posts — dimmed */}
-                {bgUpcoming.length > 0 && (
-                    <div className="animate-fade-in animation-delay-200">
-                        <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-4">
-                            Also in the pipeline
-                        </p>
-                        <div className={`grid gap-4 ${bgGridCols}`}>
-                            {bgUpcoming.map((post, idx) => (
-                                <div
-                                    key={idx}
-                                    className="bg-card rounded-xl p-5 border border-border opacity-50"
-                                    style={{ animationDelay: `${(idx + 1) * 60}ms` }}
-                                >
-                                    <div className="flex items-center justify-between mb-3">
-                                        <span className="text-xs text-muted-foreground">{post.date} · {post.readTime}</span>
-                                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted border border-border text-muted-foreground">
-                                            Coming soon
-                                        </span>
-                                    </div>
-                                    <h3 className="text-sm font-semibold text-foreground mb-2 leading-snug">
+                                    <span className="chk__label text-ink-muted normal-case tracking-normal font-sans text-sm leading-snug">
                                         {post.title}
-                                    </h3>
-                                    <div className="flex flex-wrap gap-1.5 mt-3">
-                                        {post.tags.map((tag) => (
-                                            <span key={tag} className={`px-2 py-0.5 rounded-full text-[10px] border ${tagClass(tag)}`}>
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
+                                    </span>
+                                    <span className="chk__lead" aria-hidden="true" />
+                                    <span className="chk__value placard text-ink-faint nums font-normal">
+                                        {post.date}
+                                    </span>
+                                </li>
                             ))}
-                        </div>
+                        </ul>
                     </div>
                 )}
 
-                {/* Hashnode CTA */}
-                <div className="text-center mt-12 animate-fade-in animation-delay-300">
-                    <p className="text-sm text-muted-foreground mb-3">
-                        All posts are published on Hashnode.
-                    </p>
+                <p className="mt-8 text-sm text-ink-muted">
+                    Posts live here first. I'll start cross-posting them on{" "}
                     <a
                         href="https://hashnode.com/@kervcodes"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm text-primary hover:underline font-medium"
+                        className="text-ink font-bold underline underline-offset-4 decoration-rule hover:decoration-ink"
                     >
-                        Read all posts →
+                        Hashnode
                     </a>
-                </div>
-
+                    .
+                </p>
             </div>
         </section>
     );

@@ -158,8 +158,8 @@ export const POSTS = [
         content: [],
     },
     {
-        slug: "tidywaro-lessons-from-shipping-first-ai-mobile-app",
-        title: "Tidywaro: What I Learned Shipping My First AI-Powered Mobile App",
+        slug: "shipping-my-first-ai-mobile-app",
+        title: "What I Learned Shipping My First AI-Powered Mobile App",
         excerpt:
             "From idea to App Store submission: RevenueCat, Supabase, and AI clothing analysis in a React Native app. What worked, what didn't, and what I'd do differently.",
         date: "Jul 2026",
@@ -172,10 +172,10 @@ export const POSTS = [
         content: [],
     },
     {
-        slug: "law-firm-voice-assistant-n8n-rag",
-        title: "Building a Voice Assistant for a Real Law Firm Client with n8n and RAG",
+        slug: "voice-assistant-n8n-rag",
+        title: "Building a Voice Assistant for Legal Intake with n8n and RAG",
         excerpt:
-            "How I built a RAG-powered voice intake system for an actual client -- documents ingested, consultations scheduled, questions answered, all without a developer in the loop.",
+            "A RAG-powered voice intake system for a small law practice -- documents ingested, consultations scheduled, questions answered, all without a developer in the loop.",
         date: "Aug 2026",
         tags: ["Agents", "RAG", "n8n"],
         readTime: "8 min read",
@@ -186,8 +186,8 @@ export const POSTS = [
         content: [],
     },
     {
-        slug: "haitibillboard-ai-natural-language-querying",
-        title: "HaitiBillboard AI: Adding Natural Language Querying to a Music Analytics Platform",
+        slug: "natural-language-querying-music-analytics",
+        title: "Adding Natural Language Querying to a Music Analytics Platform",
         excerpt:
             "How I layered a RAG query interface over a PostgreSQL music database so anyone can ask which Haitian artists are trending and get a real answer.",
         date: "Aug 2026",

@@ -1,88 +1,94 @@
 import { Button } from "@/components/Button";
-import { AnimatedBorderButton } from "@/components/AnimatedBorderButton";
-import { ArrowRight, Download } from "lucide-react";
+import { SectionHead, Row } from "@/components/Checklist";
 
 const tools = [
-    "React", "Next.js", "Node.js", "TypeScript",
-    "PostgreSQL", "Supabase", "AWS", "Tailwind CSS",
+  "React", "Next.js", "Node.js", "TypeScript",
+  "PostgreSQL", "Supabase", "AWS", "Python",
+  "Datadog", "Tailwind CSS",
 ];
 
-export const About = () => {
-    return (
-        <section id="about" className="relative py-24 md:py-32 overflow-hidden scroll-mt-24">
-            <div className="container mx-auto px-6 relative z-10">
-                <div className="max-w-4xl mx-auto space-y-8">
+export const About = () => (
+  <section id="about" className="py-16 md:py-24 scroll-mt-20">
+    <div className="max-w-5xl mx-auto px-5 md:px-6">
+      <SectionHead
+        index="01"
+        title="About"
+        lede="Where the reliability instinct came from, and why it shows up in the code."
+      />
 
-                    {/* Eyebrow + Heading */}
-                    <div className="space-y-4 animate-fade-in animation-delay-100">
-                        <p className="text-sm tracking-widest uppercase text-secondary-foreground font-medium">
-                            About
-                        </p>
-                        <h2 className="font-serif text-4xl md:text-5xl font-bold leading-tight text-foreground">
-                            I'm Kervintz Noel.
-                        </h2>
-                    </div>
+      <div className="mt-10 grid lg:grid-cols-12 gap-10">
+        {/* Prose holds a real measure — 62ch, not the full grid width. */}
+        <div className="lg:col-span-7 space-y-5 text-ink-muted leading-relaxed max-w-[62ch]">
+          <p>
+            I live in Boston, where I build web applications and the
+            infrastructure underneath them. I started programming in high school
+            in Haiti and moved to the United States to build a career in tech —
+            teaching myself to code while working in IT, until I committed fully
+            to software development in 2019.
+          </p>
 
-                    {/* Story */}
-                    <div className="space-y-6 text-base text-muted-foreground leading-relaxed animate-fade-in animation-delay-300">
-                        <p>
-                            I live in Boston, MA, where I build reliable web
-                            applications and enterprise systems that people actually
-                            depend on.
-                        </p>
-                        <p>
-                            I started programming in high school in Haiti and moved to the United States to pursue my career in tech — teaching myself to code while working in IT, until I committed fully to software development in 2019.
-                        </p>
+          <blockquote className="my-8 rule-sub pt-4 text-lg md:text-xl leading-snug text-ink font-bold max-w-[46ch]">
+            I build for longevity — systems that stay reliable long after the
+            launch excitement fades.
+          </blockquote>
 
-                        {/* Pull quote */}
-                        <blockquote className="border-l-2 border-primary pl-6 py-2 text-xl text-foreground font-serif italic">
-                            "I build for longevity — systems that stay reliable long after the launch excitement fades."
-                        </blockquote>
+          <p>
+            I built my technical foundation through years of hands-on IT and
+            systems work at Hamilton Brook Smith Reynolds, MassArt, and Brown
+            Rudnick — Active Directory, desktop infrastructure, ticketing
+            systems, Windows Server, VMware, and the full lifecycle of
+            onboarding and offboarding users. That grounding is why I think
+            about reliability first.
+          </p>
+          <p className="text-ink">
+            The engineering came at Liberty Mutual, where I moved from support
+            into platform and site reliability engineering — investigating
+            production failures across distributed cloud services and building
+            the internal tooling to see them coming.
+          </p>
+          <p>
+            Outside of code, you'll find me doing lawn care, knee-deep in a
+            handyman project around the house, or firing up the grill with my
+            wife and my two boys.
+          </p>
 
-                        <p>
-                            I built my technical foundation through years of hands-on IT and systems work at Hamilton Brook Smith Reynolds, MassArt, and Brown Rudnick, managing Active Directory, desktop infrastructure, ticketing systems, Windows Server, VMware workstations, and the full lifecycle of user onboarding and offboarding. That operational grounding shaped how I think about reliability and systems. The engineering work came at Liberty Mutual, where I moved from support into platform and site reliability engineering, building and maintaining production systems at scale.
-                        </p>
-                        <p>
-                            I'm a proud 2022 Hack.Diversity Fellow and a graduate of
-                            Boston University with a B.S. in Computer Science.
-                        </p>
-                        {/* <p>
-                            Beyond my day-to-day work, I'm building Tidywaro,
-                            HaitiBillboard, and opsboard, three independent products that
-                            span mobile, web, and infrastructure, and I help small law
-                            firms modernize the systems they run on.
-                        </p> */}
-                        <p className="text-foreground">
-                            Outside of code, you'll find me doing lawn care, knee-deep
-                            in a handyman project around the house, or firing up the
-                            grill with my wife and my two boys.
-                        </p>
-                    </div>
+          <div className="pt-2">
+            <Button
+              href="/resume/kervintz_noel_resume.pdf"
+              download="Kervintz_Noel_Resume.pdf"
+              variant="outline"
+            >
+              Download CV — PDF
+            </Button>
+          </div>
+        </div>
 
-                    {/* Tech stack badges */}
-                    <div className="flex flex-wrap gap-2 pt-2 animate-fade-in animation-delay-500">
-                        {tools.map((tool) => (
-                            <span
-                                key={tool}
-                                className="px-4 py-1.5 rounded-full text-sm font-medium bg-secondary text-secondary-foreground border border-border"
-                            >
-                                {tool}
-                            </span>
-                        ))}
-                    </div>
+        {/* The facts, as responses. */}
+        <aside className="lg:col-span-5 lg:pl-8 lg:border-l lg:border-rule">
+          <p className="placard text-ink-faint">Particulars</p>
+          <div className="mt-4 space-y-3">
+            <Row label="Based">Boston, MA</Row>
+            <Row label="Degree">B.S. Computer Science</Row>
+            <Row label="School">Boston University</Row>
+            <Row label="Fellowship">
+              Hack.Diversity <span className="nums">2022</span>
+            </Row>
+            <Row label="From">Haiti</Row>
+          </div>
 
-                    {/* CTA */}
-                    <div className="flex flex-wrap items-center gap-4 pt-4 animate-fade-in animation-delay-500">
-                        <Button href="#contact" size="lg">
-                            Contact Me <ArrowRight className="w-5 h-5" />
-                        </Button>
-                        <AnimatedBorderButton href="/resume/kervintz_noel_resume.pdf" download="Kervintz_Noel_Resume.pdf">
-                            <Download className="w-5 h-5" />
-                            Download CV
-                        </AnimatedBorderButton>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-};
+          <p className="placard text-ink-faint mt-8">Working set</p>
+          <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
+            {tools.map((tool) => (
+              <li
+                key={tool}
+                className="font-mono text-xs text-ink-muted after:content-['·'] after:ml-3 after:text-ink-faint last:after:content-['']"
+              >
+                {tool}
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+);

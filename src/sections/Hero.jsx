@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/Button";
 import { Row, Check, Arrow } from "@/components/Checklist";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
@@ -12,6 +13,37 @@ const socials = [
   { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/kervintznoel/", label: "LinkedIn" },
   { icon: FaGithub, href: "https://github.com/kervcodes", label: "GitHub" },
 ];
+
+// ─── The one row on the card the visitor can run ─────────────────────────────
+// Every other row is already answered. This one is a step to perform, so when
+// it is performed it gets checked — the third event, on the action this whole
+// page is built to produce. The check is the same drawn stroke as the Status
+// row above it, which is the point: the card is a checklist, and you just did
+// one of the items. No copy claims the file arrived; the check reports the
+// step, and the live region says the same thing to a screen reader.
+const ResumeRow = () => {
+  const [requested, setRequested] = useState(false);
+
+  return (
+    <Row label="Resume" size="lg">
+      <span className="inline-flex items-center gap-2">
+        <a
+          href="/resume/kervintz_noel_resume.pdf"
+          download="Kervintz_Noel_Resume.pdf"
+          onClick={() => setRequested(true)}
+          className="inline-flex items-center gap-2 text-ink underline underline-offset-4 decoration-2 decoration-caution hover:decoration-ink"
+        >
+          Download PDF
+          <Arrow />
+        </a>
+        {requested && <Check className="text-verified" />}
+      </span>
+      <span className="sr-only" role="status">
+        {requested ? "Resume download started." : ""}
+      </span>
+    </Row>
+  );
+};
 
 export const Hero = () => (
   <section className="relative pt-24 md:pt-28 pb-16 md:pb-20">
@@ -54,16 +86,7 @@ export const Hero = () => (
                 Open to full-time
               </span>
             </Row>
-            <Row label="Resume" size="lg">
-              <a
-                href="/resume/kervintz_noel_resume.pdf"
-                download="Kervintz_Noel_Resume.pdf"
-                className="inline-flex items-center gap-2 text-ink underline underline-offset-4 decoration-2 decoration-caution hover:decoration-ink"
-              >
-                Download PDF
-                <Arrow />
-              </a>
-            </Row>
+            <ResumeRow />
 
             <div className="rule-sub pt-5">
               <Button href="/#contact" size="lg">

@@ -3,6 +3,7 @@ import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { getPostBySlug } from "@/data/posts";
 import { Status, Row, Arrow } from "@/components/Checklist";
+import { usePageTurn, useTurnKey } from "@/lib/motion";
 
 // Posts are back on the homepage, so the return path is the Notes section.
 const BACK_TO = "/#posts";
@@ -70,15 +71,33 @@ const ContentBlock = ({ block }) => {
     }
 };
 
-const BackLink = ({ className = "" }) => (
-    <Link
-        to={BACK_TO}
-        className={`placard inline-flex items-center gap-2 text-ink-muted hover:text-ink transition-colors ${className}`}
-    >
-        <Arrow dir="left" />
-        {BACK_LABEL}
-    </Link>
-);
+// Going back is the same event in reverse, so it is the same turn: pass the
+// slug and the heading travels down into its entry in the Notes list.
+const BackLink = ({ className = "", turnKey }) => {
+    const turn = usePageTurn();
+    return (
+        <Link
+            to={BACK_TO}
+            onClick={(e) => {
+                if (
+                    e.defaultPrevented ||
+                    e.button !== 0 ||
+                    e.metaKey ||
+                    e.ctrlKey ||
+                    e.shiftKey ||
+                    e.altKey
+                )
+                    return;
+                e.preventDefault();
+                turn(BACK_TO, turnKey);
+            }}
+            className={`placard inline-flex items-center gap-2 text-ink-muted hover:text-ink transition-colors ${className}`}
+        >
+            <Arrow dir="left" />
+            {BACK_LABEL}
+        </Link>
+    );
+};
 
 // ─── Not written yet ──────────────────────────────────────────────────────────
 const ComingSoonPage = ({ post }) => (
@@ -136,6 +155,9 @@ const Shell = ({ children }) => (
 export const PostDetail = () => {
     const { slug } = useParams();
     const post = getPostBySlug(slug);
+    // The other end of the pair. Only ever set while a turn is in flight, so
+    // two elements never hold one name at once.
+    const paired = useTurnKey() === slug;
 
     if (!post) return <Shell><NotFoundPage /></Shell>;
     if (post.comingSoon) return <Shell><ComingSoonPage post={post} /></Shell>;
@@ -143,16 +165,22 @@ export const PostDetail = () => {
     return (
         <Shell>
             <article className="max-w-3xl mx-auto px-5 md:px-6 py-12 md:py-16">
-                <BackLink className="inline-block mb-8" />
+                <BackLink className="inline-block mb-8" turnKey={slug} />
 
                 <header className="rule-head">
-                    <div className="flex flex-wrap items-baseline justify-between gap-3">
+                    <div
+                        className="flex flex-wrap items-baseline justify-between gap-3"
+                        style={paired ? { viewTransitionName: "note-stamp" } : undefined}
+                    >
                         <p className="placard nums text-ink-faint">
                             {post.date} · {post.readTime}
                         </p>
                         <Status kind="verified">Published</Status>
                     </div>
-                    <h1 className="mt-4 text-3xl md:text-5xl font-bold text-ink leading-[1.05] tracking-[-0.02em]">
+                    <h1
+                        className="mt-4 text-3xl md:text-5xl font-bold text-ink leading-[1.05] tracking-[-0.02em]"
+                        style={paired ? { viewTransitionName: "note-entry" } : undefined}
+                    >
                         {post.title}
                     </h1>
                     <div className="mt-6 rule-sub pt-4 space-y-2">
@@ -190,7 +218,7 @@ export const PostDetail = () => {
                         </a>
                         , where I'll start cross-posting.
                     </p>
-                    <BackLink />
+                    <BackLink turnKey={slug} />
                 </footer>
             </article>
         </Shell>

@@ -4,7 +4,13 @@
 // Every claim on the site is a CHALLENGE with a RESPONSE beside it, joined by
 // leader dots. That row is the atom; sections, headers and notices are built
 // from it. Nothing here is decorative — colour means state.
+//
+// Two of these components move, and both move for the same reason: a checklist
+// is run, not displayed. The check is made when the row is read; the gauge
+// takes its reading when you look at it. See src/lib/motion.js.
 // ─────────────────────────────────────────────────────────────────────────────
+
+import { useSeen, shouldAnimate } from "@/lib/motion";
 
 /* ── CHALLENGE ·········· RESPONSE ─────────────────────────────────────────── */
 export const Row = ({ label, children, size = "default", className = "" }) => (
@@ -15,32 +21,42 @@ export const Row = ({ label, children, size = "default", className = "" }) => (
   </div>
 );
 
-/* ── The check itself: the one authored motion in the build ───────────────── */
-export const Check = ({ className = "" }) => (
-  <svg
-    viewBox="0 0 24 24"
-    className={`w-4 h-4 shrink-0 ${className}`}
-    fill="none"
-    aria-hidden="true"
-  >
-    <path
-      d="M4 12.5 L9.5 18 L20 6"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="square"
-      className="check-mark"
-    />
-  </svg>
-);
+/* ── The check itself: the signature motion of the build ──────────────────── */
+// It draws at the moment the row comes into view. Previously it drew at first
+// paint, which meant the one authored moment in the system was spent below the
+// fold on every instance the visitor had not reached yet.
+export const Check = ({ className = "" }) => {
+  const [ref, seen] = useSeen();
+  return (
+    <svg
+      ref={ref}
+      viewBox="0 0 24 24"
+      className={`w-4 h-4 shrink-0 ${className}`}
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M4 12.5 L9.5 18 L20 6"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="square"
+        className="check-mark"
+        // No attribute at all when motion is off — the check is simply drawn.
+        data-draw={shouldAnimate() ? (seen ? "run" : "pending") : undefined}
+      />
+    </svg>
+  );
+};
 
 /* ── Arrow: drawn, not a Unicode glyph standing in for an icon ────────────── */
+// Direction is a class rather than an inline transform, so the 2px hover nudge
+// can compose with the mirror instead of being overwritten by it.
 export const Arrow = ({ dir = "right", className = "" }) => (
   <svg
     viewBox="0 0 16 16"
-    className={`w-3.5 h-3.5 shrink-0 ${className}`}
+    className={`arrow ${dir === "left" ? "arrow--left" : ""} w-3.5 h-3.5 shrink-0 ${className}`}
     fill="none"
     aria-hidden="true"
-    style={dir === "left" ? { transform: "scaleX(-1)" } : undefined}
   >
     <path
       d="M2 8 H13 M9 4 L13 8 L9 12"
@@ -106,15 +122,28 @@ export const Status = ({ kind = "standby", children }) => {
 };
 
 /* ── Gauge: a measured bar, not a decorative sparkline ────────────────────── */
-export const Gauge = ({ pct, kind = "active", label }) => {
+// The bar sweeps to its reading once, the first time it is looked at — an
+// instrument taking a measurement, which is what this thing claims to be. The
+// width is always the true value; only a scaleX transform moves, so the sweep
+// costs no layout and `aria-valuenow` never lies mid-animation.
+//
+// `run` lets a parent own the trigger when the gauge is part of a larger
+// instrument (the sprint summary reads out and sweeps as one thing).
+export const Gauge = ({ pct, kind = "active", label, run }) => {
+  const owned = run !== undefined;
+  const [ref, seen] = useSeen(!owned);
+  const swept = owned ? run : seen;
+
   const fill =
     kind === "verified"
       ? "bg-verified"
       : kind === "active"
       ? "bg-caution"
       : "bg-ink-faint";
+
   return (
     <div
+      ref={ref}
       role="progressbar"
       aria-valuenow={pct}
       aria-valuemin={0}
@@ -122,7 +151,11 @@ export const Gauge = ({ pct, kind = "active", label }) => {
       aria-label={label}
       className="h-1.5 w-full bg-rule"
     >
-      <div className={`h-full ${fill}`} style={{ width: `${pct}%` }} />
+      <div
+        className={`gauge__fill h-full ${fill}`}
+        style={{ width: `${pct}%` }}
+        data-sweep={shouldAnimate() && !swept ? "pending" : undefined}
+      />
     </div>
   );
 };

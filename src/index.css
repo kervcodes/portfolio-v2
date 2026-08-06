@@ -157,6 +157,11 @@
     border-top: 3px solid var(--color-rule-strong);
     padding-top: 0.75rem;
   }
+  /* The same rule on charcoal, so the Contact head is the same object as the
+     other four rather than a hand-rolled border. */
+  .rule-head--panel {
+    border-top-color: var(--color-panel-ink);
+  }
   .rule-sub {
     border-top: 1px solid var(--color-rule-strong);
     padding-top: 0.5rem;
@@ -206,6 +211,25 @@
   }
 
   /* ── Tab strip: an actual divider tab, with a shoulder at rest ───────── */
+  /* The strip carries a single amber marker that travels between tabs as you
+     scroll, rather than one bar per tab blinking on and off. Amber means
+     state, and "you are here" is the state — so the pointer gets a neutral
+     indicator (below) and amber is never spent on a hover. */
+  .tabstrip {
+    position: relative;
+  }
+  .tabstrip__marker {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 1px;
+    height: 3px;
+    background: var(--color-caution);
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
   .tab {
     position: relative;
     font-family: var(--font-mono);
@@ -230,6 +254,7 @@
     outline: none;
     box-shadow: inset 0 0 0 2px var(--color-caution);
   }
+  /* Pointer indicator: neutral, because hovering a tab is not a state. */
   .tab::after {
     content: "";
     position: absolute;
@@ -237,7 +262,7 @@
     right: 0.5rem;
     bottom: 0;
     height: 3px;
-    background: var(--color-caution);
+    background: var(--color-panel-muted);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -248,11 +273,14 @@
     background: color-mix(in srgb, var(--color-panel-2) 70%, var(--color-panel-ink));
   }
   .tab:hover::after,
-  .tab:focus-visible::after,
-  .tab[aria-current="true"]::after {
+  .tab:focus-visible::after {
     transform: scaleX(1);
   }
-  /* The strip reports where you are, not only where the pointer is. */
+  /* The strip reports where you are, not only where the pointer is. The amber
+     marker already sits under this tab; a grey bar behind it is noise. */
+  .tab[aria-current="true"]::after {
+    display: none;
+  }
   .tab[aria-current="true"] {
     color: var(--color-panel-ink);
   }
@@ -265,7 +293,22 @@
 }
 
 @layer utilities {
-  /* ── Motion: one authored moment — the check being made ──────────────── */
+  /* ─────────────────────────────────────────────────────────────────────
+     MOTION
+     A checklist is something you run, not something you display. Every
+     animation here is one of three events and nothing else:
+       · an item being CHECKED, at the moment it is read;
+       · an instrument taking its READING, when you look at it;
+       · an action reporting that it COMMITTED.
+     Two rules hold throughout. The finished state is always the default —
+     nothing is hidden behind a trigger that might not fire. And no animation
+     touches a layout property; transform, opacity and stroke only.
+     ───────────────────────────────────────────────────────────────────── */
+
+  /* ── The check being made — the signature moment ─────────────────────── */
+  /* It draws when the row enters the viewport, not at first paint: a check
+     made three screens below the fold is a check nobody saw. `pending` is set
+     by JS only once it knows motion is wanted, so the default is drawn. */
   @keyframes check-draw {
     from {
       stroke-dashoffset: 24;
@@ -276,8 +319,84 @@
   }
   .check-mark {
     stroke-dasharray: 24;
+    stroke-dashoffset: 0;
+  }
+  .check-mark[data-draw="pending"] {
     stroke-dashoffset: 24;
-    animation: check-draw 420ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+  .check-mark[data-draw="run"] {
+    animation: check-draw 420ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
+
+  /* ── The gauge taking its reading ────────────────────────────────────── */
+  /* An instrument sweeps to its value once, when it is first looked at — the
+     same event as the check, applied to a number instead of a claim. scaleX
+     on the fill, so the sweep never reflows the row beside it. */
+  .gauge__fill {
+    transform-origin: left;
+    transform: scaleX(1);
+    transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .gauge__fill[data-sweep="pending"] {
+    transform: scaleX(0);
+  }
+
+  /* ── Committed: the sending key ──────────────────────────────────────── */
+  /* An indeterminate bar under the key while the message is in flight. On the
+     amber key the bar is ink, so the in-progress state reads on its own
+     ground. Bounded by the request; it cannot outlive the submit. */
+  @keyframes key-sweep {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(286%);
+    }
+  }
+  .key-working::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 35%;
+    height: 2px;
+    background: currentColor;
+    animation: key-sweep 1.05s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
+  /* ── The mobile sheet opening ────────────────────────────────────────── */
+  /* Grid rows carry the reveal: nothing is measured, no height is animated,
+     and the closed sheet occupies no space. Out is faster than in. */
+  .menu-sheet {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 170ms ease-in, opacity 120ms ease-in;
+  }
+  .menu-sheet > * {
+    overflow: hidden;
+  }
+  .menu-sheet.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition: grid-template-rows 260ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 180ms ease-out;
+  }
+
+  /* ── The arrow, moving the way it points ─────────────────────────────── */
+  .arrow {
+    transition: transform 150ms ease-out;
+  }
+  .arrow--left {
+    transform: scaleX(-1);
+  }
+  a:hover .arrow,
+  a:focus-visible .arrow {
+    transform: translateX(2px);
+  }
+  a:hover .arrow--left,
+  a:focus-visible .arrow--left {
+    transform: scaleX(-1) translateX(2px);
   }
 
   @keyframes settle {
@@ -290,8 +409,11 @@
       transform: translateY(0);
     }
   }
+  /* 520ms is the entrance for non-critical content. An answer the visitor is
+     waiting on sets --settle-dur shorter; it is a result, not an arrival. */
   .animate-settle {
-    animation: settle 520ms cubic-bezier(0.2, 0.9, 0.25, 1) both;
+    animation: settle var(--settle-dur, 520ms) cubic-bezier(0.2, 0.9, 0.25, 1)
+      both;
   }
 
   /* Legacy name kept so unmounted sections still compile. */
@@ -331,6 +453,97 @@
   }
 }
 
+/* ── The section rule ruling itself in ─────────────────────────────────────
+   A handbook draws the heavy bar above a procedure as it reaches it. This is
+   the one place motion is tied to scroll position, because the arrival IS the
+   scroll. It is scroll-driven CSS: no observer, no main-thread work, and no
+   text is hidden — only the 3px bar moves. Where the browser cannot drive an
+   animation from scroll, the border is simply already drawn, which is why the
+   fallback lives on `.rule-head` itself and the enhancement overrides it.
+   ──────────────────────────────────────────────────────────────────────── */
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .rule-head {
+      position: relative;
+      border-top-color: transparent;
+    }
+    .rule-head::before {
+      content: "";
+      position: absolute;
+      inset: -3px 0 auto 0;
+      height: 3px;
+      background: var(--color-rule-strong);
+      transform-origin: left;
+      animation: rule-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    .rule-head--panel::before {
+      background: var(--color-panel-ink);
+    }
+  }
+}
+
+/* ── The page turn ─────────────────────────────────────────────────────────
+   Leaving one procedure for another. The page itself is only a hand-off — it
+   goes out on opacity in 120ms and comes back on the same 6px rise `settle`
+   uses, because out is faster than in everywhere in this build. The authored
+   part is the pair: the note entry you clicked carries `note-stamp` and
+   `note-entry`, and so does the header of the article you land on, so the
+   entry travels and grows into the heading instead of being replaced by it.
+   Named groups are lifted out of the root snapshot, so the page cross-fade
+   below never touches them.
+
+   Where the browser has no View Transitions the JS never starts one and the
+   route simply changes — see usePageTurn in src/lib/motion.js.
+   ──────────────────────────────────────────────────────────────────────── */
+@keyframes turn-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes turn-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The strip is the one thing that outlives the page under it, so it is
+     captured as its own group and holds still while the page turns. Without a
+     name it would be part of the root snapshot and fade with the content it
+     is supposed to be fixed above. */
+  .strip {
+    view-transition-name: strip;
+  }
+  ::view-transition-old(root) {
+    animation: turn-out 120ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+  ::view-transition-new(root) {
+    animation: turn-in 260ms cubic-bezier(0.2, 0.9, 0.25, 1) both;
+  }
+  /* The entry moving between its two sizes — the one thing that is the same
+     object on both pages, so it gets the longest reading of the three. */
+  ::view-transition-group(note-stamp),
+  ::view-transition-group(note-entry),
+  ::view-transition-image-pair(note-stamp),
+  ::view-transition-image-pair(note-entry) {
+    animation-duration: 320ms;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -343,7 +556,17 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .check-mark {
+  /* Every armed state settles to its finished value. JS also refuses to arm
+     them under this preference — this is the belt to that pair of braces. */
+  .check-mark,
+  .check-mark[data-draw="pending"] {
     stroke-dashoffset: 0;
+  }
+  .gauge__fill,
+  .gauge__fill[data-sweep="pending"] {
+    transform: scaleX(1);
+  }
+  .key-working::after {
+    display: none;
   }
 }

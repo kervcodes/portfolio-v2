@@ -8,10 +8,25 @@
 import { Link } from "react-router-dom";
 import { POSTS } from "@/data/posts";
 import { SectionHead, Status, Arrow } from "@/components/Checklist";
+import { usePageTurn, useTurnKey } from "@/lib/motion";
+
+// A modified click is the visitor asking the browser for a second tab, not for
+// this page to turn. Leave those to the anchor.
+const opensElsewhere = (e) =>
+    e.defaultPrevented ||
+    e.button !== 0 ||
+    e.metaKey ||
+    e.ctrlKey ||
+    e.shiftKey ||
+    e.altKey;
 
 export const Posts = () => {
     const published = POSTS.filter((p) => !p.comingSoon);
     const upcoming = POSTS.filter((p) => p.comingSoon);
+    // The entry becomes the procedure: while this card is the one being turned
+    // to, its stamp and title carry the same names as the article's header.
+    const turn = usePageTurn();
+    const turning = useTurnKey();
 
     return (
         <section id="posts" className="py-16 md:py-24 scroll-mt-20">
@@ -25,30 +40,47 @@ export const Posts = () => {
                 {/* Published — the finished work carries the weight */}
                 {published.length > 0 && (
                     <div className="mt-10 space-y-4">
-                        {published.map((post) => (
-                            <Link
-                                key={post.slug}
-                                to={`/posts/${post.slug}`}
-                                className="sheet block p-5 md:p-7 group hover:border-ink transition-colors"
-                            >
-                                <div className="flex flex-wrap items-baseline justify-between gap-3">
-                                    <p className="placard nums text-ink-faint">
-                                        {post.date} · {post.readTime}
+                        {published.map((post) => {
+                            const to = `/posts/${post.slug}`;
+                            const paired = turning === post.slug;
+                            return (
+                                <Link
+                                    key={post.slug}
+                                    to={to}
+                                    onClick={(e) => {
+                                        if (opensElsewhere(e)) return;
+                                        e.preventDefault();
+                                        turn(to, post.slug);
+                                    }}
+                                    className="sheet block p-5 md:p-7 group hover:border-ink transition-colors"
+                                >
+                                    {/* Paired with the article's header while
+                                        this is the entry being turned to. */}
+                                    <div
+                                        className="flex flex-wrap items-baseline justify-between gap-3"
+                                        style={paired ? { viewTransitionName: "note-stamp" } : undefined}
+                                    >
+                                        <p className="placard nums text-ink-faint">
+                                            {post.date} · {post.readTime}
+                                        </p>
+                                        <Status kind="verified">Published</Status>
+                                    </div>
+                                    <h3
+                                        className="mt-3 text-xl md:text-2xl font-bold text-ink leading-snug tracking-tight max-w-[34ch]"
+                                        style={paired ? { viewTransitionName: "note-entry" } : undefined}
+                                    >
+                                        {post.title}
+                                    </h3>
+                                    <p className="mt-3 text-sm text-ink-muted leading-relaxed max-w-[62ch]">
+                                        {post.excerpt}
                                     </p>
-                                    <Status kind="verified">Published</Status>
-                                </div>
-                                <h3 className="mt-3 text-xl md:text-2xl font-bold text-ink leading-snug tracking-tight max-w-[34ch]">
-                                    {post.title}
-                                </h3>
-                                <p className="mt-3 text-sm text-ink-muted leading-relaxed max-w-[62ch]">
-                                    {post.excerpt}
-                                </p>
-                                <p className="mt-5 rule-sub pt-3 placard text-ink group-hover:text-caution-ink transition-colors inline-flex items-center gap-2">
-                                    Read it
-                                    <Arrow />
-                                </p>
-                            </Link>
-                        ))}
+                                    <p className="mt-5 rule-sub pt-3 placard text-ink group-hover:text-caution-ink transition-colors inline-flex items-center gap-2">
+                                        Read it
+                                        <Arrow />
+                                    </p>
+                                </Link>
+                            );
+                        })}
                     </div>
                 )}
 

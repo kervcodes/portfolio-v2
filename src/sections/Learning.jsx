@@ -1,4 +1,4 @@
-// ─────────────────────────────────────────────────────────────────────────────
+﻿// ─────────────────────────────────────────────────────────────────────────────
 // Learning.jsx — AI Engineer Sprint
 //
 // HOW TO UPDATE AS YOU PROGRESS:
@@ -12,6 +12,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { SectionHead, Status, Gauge, Check, Row, Notice } from "@/components/Checklist";
+import { useSeen, useCountUp } from "@/lib/motion";
 
 const COURSES = [
     {
@@ -19,7 +20,7 @@ const COURSES = [
         name: "AI Builder: n8n Agents & Voice Agents",
         hours: 14.5,
         status: "completed", // "standby" | "active" | "completed"
-        pct: 41,
+        pct: 0,
         tags: ["n8n", "Voice Agents", "Automation"],
     },
     {
@@ -27,14 +28,14 @@ const COURSES = [
         name: "AI Engineer Agentic Track",
         hours: 21,
         status: "active",
-        pct: 9,
+        pct: 0,
         tags: ["Agents", "MCP", "LangGraph", "CrewAI"],
     },
     {
         id: "traversy",
         name: "Coding With AI — Planning To Production",
         hours: 16.5,
-        status: "active",
+        status: "standby",
         pct: 47,
         tags: ["AI Tools", "Cursor", "Workflow"],
     },
@@ -42,24 +43,24 @@ const COURSES = [
         id: "core",
         name: "AI Engineer Core Track",
         hours: 33.5,
-        status: "active",
-        pct: 7,
+        status: "standby",
+        pct: 0,
         tags: ["LLMs", "RAG", "QLoRA", "Embeddings"],
     },
     {
         id: "prod",
         name: "AI Engineer Production Track",
         hours: 18.5,
-        status: "active",
-        pct: 30,
+        status: "standby",
+        pct: 0,
         tags: ["AWS Bedrock", "Lambda", "Deploy at Scale"],
     },
     {
         id: "coder",
         name: "AI Coder: Claude Code & Coding Agents",
         hours: 16.5,
-        status: "active",
-        pct: 14,
+        status: "standby",
+        pct: 0,
         tags: ["Claude Code", "Coding Agents", "MCP"],
     },
 ];
@@ -106,6 +107,59 @@ const doneMilestones = PROJECTS.reduce(
     0
 );
 
+// ─── The one instrument on the page ───────────────────────────────────────────
+// The readout and the bar report the same measurement, so they take it as one
+// event: both settle when the card is first looked at, not on a timer and not
+// on load. This is the only count-up in the build — the sprint percentage is
+// the site's live claim, and a figure that arrives rather than sitting there
+// says it was measured. Tabular numerals mean the digits never reflow, and the
+// value is the true one the instant motion is unavailable or unwanted.
+const SprintSummary = () => {
+    const [ref, seen] = useSeen();
+    const readout = useCountUp(overallPct, seen);
+
+    return (
+        <div ref={ref} className="sheet p-5 md:p-6 mt-6">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+                <div>
+                    <p className="placard text-ink-faint">Sprint progress</p>
+                    <p className="mt-1 text-3xl md:text-4xl font-bold text-ink nums">
+                        {readout}%
+                    </p>
+                </div>
+                <p className="text-sm text-ink-muted">
+                    <span className="nums">{hoursDone.toFixed(1)}</span> of{" "}
+                    <span className="nums">{totalHours}</span> course hours
+                </p>
+            </div>
+
+            <div className="mt-4">
+                <Gauge
+                    pct={overallPct}
+                    kind="active"
+                    label="Overall sprint progress"
+                    run={seen}
+                />
+            </div>
+
+            <div className="mt-5 rule-sub pt-4 grid gap-2 sm:grid-cols-3">
+                <Row label="Complete">
+                    <span className="nums">{completedCourses}</span>/
+                    <span className="nums">{COURSES.length}</span>
+                </Row>
+                <Row label="Active">
+                    <span className="nums">{activeCourses}</span>/
+                    <span className="nums">{COURSES.length}</span>
+                </Row>
+                <Row label="Milestones">
+                    <span className="nums">{doneMilestones}</span>/
+                    <span className="nums">{totalMilestones}</span>
+                </Row>
+            </div>
+        </div>
+    );
+};
+
 // ─── Section ──────────────────────────────────────────────────────────────────
 export const Learning = ({ showHeader = true }) => (
     <section id="learning" className="py-16 md:py-24 scroll-mt-20">
@@ -132,39 +186,7 @@ export const Learning = ({ showHeader = true }) => (
             </Notice>
 
             {/* ── Summary: one number, honestly derived ── */}
-            <div className="sheet p-5 md:p-6 mt-6">
-                <div className="flex flex-wrap items-end justify-between gap-4">
-                    <div>
-                        <p className="placard text-ink-faint">Sprint progress</p>
-                        <p className="mt-1 text-3xl md:text-4xl font-bold text-ink nums">
-                            {overallPct}%
-                        </p>
-                    </div>
-                    <p className="text-sm text-ink-muted">
-                        <span className="nums">{hoursDone.toFixed(1)}</span> of{" "}
-                        <span className="nums">{totalHours}</span> course hours
-                    </p>
-                </div>
-
-                <div className="mt-4">
-                    <Gauge pct={overallPct} kind="active" label="Overall sprint progress" />
-                </div>
-
-                <div className="mt-5 rule-sub pt-4 grid gap-2 sm:grid-cols-3">
-                    <Row label="Complete">
-                        <span className="nums">{completedCourses}</span>/
-                        <span className="nums">{COURSES.length}</span>
-                    </Row>
-                    <Row label="Active">
-                        <span className="nums">{activeCourses}</span>/
-                        <span className="nums">{COURSES.length}</span>
-                    </Row>
-                    <Row label="Milestones">
-                        <span className="nums">{doneMilestones}</span>/
-                        <span className="nums">{totalMilestones}</span>
-                    </Row>
-                </div>
-            </div>
+            <SprintSummary />
 
             {/* ── Courses: a numbered procedure, one column ── */}
             <div className="mt-10">

@@ -1,6 +1,6 @@
 import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { Button } from "@/components/Button";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 // Section tabs, in scroll order. Root-relative so they work from /sprint and
 // /posts/:slug, where the anchors do not exist on the page.
@@ -14,6 +14,12 @@ const navLinks = [
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [current, setCurrent] = useState(null);
+  const stripRef = useRef(null);
+  const markerRef = useRef(null);
+  // The marker must not slide in from the strip's left edge the first time it
+  // is placed — it appears where it belongs, then travels from there.
+  const placed = useRef(false);
+  const lastLeft = useRef(0);
 
   // A handbook divider tells you which section you are in. The strip reports
   // position rather than only responding to a pointer.
@@ -37,6 +43,52 @@ export const Navbar = () => {
     return () => io.disconnect();
   }, []);
 
+  // One marker travels between tabs rather than four bars blinking on and off:
+  // the strip reads as a single index moving down a handbook, and the movement
+  // itself says the two tabs are positions in one thing. Measured, because the
+  // tabs are text-width and the font arrives after first paint.
+  useLayoutEffect(() => {
+    const strip = stripRef.current;
+    const marker = markerRef.current;
+    if (!strip || !marker) return;
+
+    const measure = () => {
+      const tab = strip.querySelector('[aria-current="true"]');
+
+      if (!tab) {
+        // Nothing is current — top of the page, or a route with no sections on
+        // it. The marker retracts where it stands instead of sliding home.
+        marker.style.transform = `translateX(${lastLeft.current}px) scaleX(0)`;
+        return;
+      }
+
+      // Matches the tab's own 0.5rem inset, so the marker sits inside the
+      // chamfered shoulder rather than running under it.
+      lastLeft.current = tab.offsetLeft + 8;
+      const width = Math.max(0, tab.offsetWidth - 16);
+      const next = `translateX(${lastLeft.current}px) scaleX(${width})`;
+
+      if (placed.current) {
+        marker.style.transform = next;
+        return;
+      }
+      // First placement: appear, do not travel.
+      marker.style.transitionProperty = "none";
+      marker.style.transform = next;
+      void marker.offsetWidth; // commit the jump before transitions resume
+      marker.style.transitionProperty = "";
+      placed.current = true;
+    };
+
+    measure();
+    // Tabs are text-width and B612 arrives after first paint, so the strip is
+    // re-measured rather than trusted once.
+    const ro = new ResizeObserver(measure);
+    ro.observe(strip);
+    document.fonts?.ready.then(measure).catch(() => {});
+    return () => ro.disconnect();
+  }, [current]);
+
   // The panel is a sheet over the page; the page beneath it must not scroll,
   // and Escape must close it.
   useEffect(() => {
@@ -52,7 +104,7 @@ export const Navbar = () => {
   }, [isMobileMenuOpen]);
 
   return (
-    <header className="on-panel fixed top-0 left-0 right-0 z-50 bg-panel text-panel-ink">
+    <header className="strip on-panel fixed top-0 left-0 right-0 z-50 bg-panel text-panel-ink">
       <nav
         aria-label="Sections"
         className="max-w-5xl mx-auto px-5 md:px-6 flex items-stretch justify-between gap-4"
@@ -74,7 +126,7 @@ export const Navbar = () => {
         </a>
 
         {/* Desktop tabs */}
-        <div className="hidden md:flex items-stretch pt-2">
+        <div ref={stripRef} className="tabstrip hidden md:flex items-stretch pt-2">
           {navLinks.map((link) => {
             const id = link.href.split("#")[1];
             const isCurrent = current === id;
@@ -89,6 +141,10 @@ export const Navbar = () => {
               </a>
             );
           })}
+          {/* Painted after the tabs so it sits above the pointer indicator.
+              Positioned imperatively — its transform is measured layout, not
+              rendered state, and it should not cost a render to move. */}
+          <span ref={markerRef} aria-hidden="true" className="tabstrip__marker" />
           <span className="w-px bg-panel-2 mx-3 my-3" aria-hidden="true" />
           <span className="flex items-center py-2.5">
             <Button href="/#contact" variant="panel" size="sm">
@@ -110,10 +166,21 @@ export const Navbar = () => {
         </button>
       </nav>
 
-      {/* Mobile sheet — full-width rows, not centred text */}
-      {isMobileMenuOpen && (
-        <div id="mobile-menu" className="md:hidden bg-panel border-t border-panel-2">
-          <ul className="max-w-5xl mx-auto px-5 pb-4">
+      {/* Mobile sheet — full-width rows, not centred text.
+          Kept mounted so it closes as deliberately as it opens; `inert` takes
+          it out of the tab order and the accessibility tree while shut, so a
+          collapsed sheet is not a keyboard trap. */}
+      <div
+        id="mobile-menu"
+        inert={!isMobileMenuOpen}
+        className={`menu-sheet md:hidden bg-panel ${
+          isMobileMenuOpen ? "is-open" : ""
+        }`}
+      >
+        {/* The clipping row. The rule lives inside it, so a closed sheet does
+            not leave a stray line under the strip. */}
+        <div>
+          <ul className="border-t border-panel-2 max-w-5xl mx-auto px-5 pb-4">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
@@ -142,7 +209,7 @@ export const Navbar = () => {
             </li>
           </ul>
         </div>
-      )}
+      </div>
     </header>
   );
 };

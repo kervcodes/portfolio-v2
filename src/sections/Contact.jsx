@@ -82,7 +82,7 @@ export const Contact = () => {
       className="on-panel bg-panel text-panel-ink py-16 md:py-24 scroll-mt-20"
     >
       <div className="max-w-5xl mx-auto px-5 md:px-6">
-        <header className="border-t-3 border-panel-ink pt-3">
+        <header className="rule-head rule-head--panel">
           <div className="flex items-baseline gap-3">
             <span className="placard text-panel-muted nums" aria-hidden="true">
               05
@@ -116,7 +116,7 @@ export const Contact = () => {
                   type="text"
                   required
                   autoComplete="name"
-                  placeholder="Alex Rivera"
+                  placeholder="Steve Jobs"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className={FIELD}
@@ -163,9 +163,12 @@ export const Contact = () => {
               </div>
             </div>
 
+            {/* The key reports that it committed: an indeterminate bar runs
+                under it while the message is in flight, so the wait has a
+                visible cause and not just a changed word. */}
             <div className="mt-6 border-t border-panel-2 pt-5">
               <Button
-                className="w-full"
+                className={`w-full ${isLoading ? "key-working" : ""}`}
                 type="submit"
                 variant="panel"
                 size="lg"
@@ -180,7 +183,10 @@ export const Contact = () => {
               {submitStatus.type && (
                 <div
                   role={submitStatus.type === "error" ? "alert" : "status"}
-                  className={`notice mt-5 ${
+                  // An answer the visitor is waiting on, not an arrival: it
+                  // settles in a quarter of the entrance duration.
+                  style={{ "--settle-dur": "240ms" }}
+                  className={`notice animate-settle mt-5 ${
                     submitStatus.type === "success"
                       ? "notice--verified"
                       : "notice--warning"

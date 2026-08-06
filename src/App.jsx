@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useNavigationContinuity } from "@/lib/motion";
 import { Navbar } from "@/layout/Navbar";
 import { Hero } from "@/sections/Hero";
 import { About } from "@/sections/About";
@@ -44,6 +45,10 @@ const HomePage = () => (
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 function App() {
+  // Where a route lands: top of the new page, back to the offset you left, or
+  // on the section a deep link named. Mounted once, above the routes.
+  useNavigationContinuity();
+
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />

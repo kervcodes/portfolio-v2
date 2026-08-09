@@ -2,6 +2,7 @@ import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { Button } from "@/components/Button";
 import { Check } from "@/components/Checklist";
+import { Run, Step } from "@/lib/sequence";
 
 // Contact runs on the charcoal panel: the OWN-WORLD promises placard charcoal
 // owning full-width bands, and the page's closing conversion is the right one
@@ -206,8 +207,8 @@ export const Contact = () => {
           {/* Direct route, for anyone who would rather not use a form. */}
           <aside className="lg:col-span-5 lg:pl-8 lg:border-l lg:border-panel-2">
             <p className="placard text-panel-muted">Direct</p>
-            <ul className="mt-4 space-y-4 text-sm">
-              <li>
+            <Run as="ul" className="mt-4 space-y-4 text-sm">
+              <Step as="li">
                 <p className="placard text-panel-muted">Email</p>
                 <a
                   href="mailto:kervcodes@gmail.com"
@@ -215,19 +216,19 @@ export const Contact = () => {
                 >
                   kervcodes@gmail.com
                 </a>
-              </li>
-              <li>
+              </Step>
+              <Step as="li">
                 <p className="placard text-panel-muted">Based</p>
                 <p className="text-panel-ink font-bold">Boston, Massachusetts</p>
-              </li>
-              <li>
+              </Step>
+              <Step as="li">
                 <p className="placard text-panel-muted">Availability</p>
                 <p className="inline-flex items-center gap-2 text-verified-panel font-bold">
                   <Check className="text-verified-panel" />
                   Open to full-time roles
                 </p>
-              </li>
-            </ul>
+              </Step>
+            </Run>
           </aside>
         </div>
       </div>

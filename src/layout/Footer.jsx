@@ -1,5 +1,6 @@
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { AnimatedLogo } from "@/components/AnimatedLogo";
+import { useSectionLink } from "@/lib/motion";
 
 const socialLinks = [
   { icon: FaGithub, href: "https://github.com/kervcodes", label: "GitHub" },
@@ -18,6 +19,9 @@ const footerLinks = [
 // The revision block at the foot of a handbook page.
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  // The footer sits on every route, so these five were the most-repeated
+  // full-document reload in the build.
+  const go = useSectionLink();
 
   return (
     <footer className="on-panel bg-panel text-panel-ink">
@@ -25,6 +29,7 @@ export const Footer = () => {
         <div className="flex flex-wrap items-start justify-between gap-8">
           <a
             href="/"
+            onClick={(e) => go(e, "/")}
             aria-label="Kervintz Noel — back to home"
             className="flex items-center gap-3"
           >
@@ -45,6 +50,7 @@ export const Footer = () => {
                 <li key={link.href}>
                   <a
                     href={link.href}
+                    onClick={(e) => go(e, link.href)}
                     className="placard text-panel-muted hover:text-panel-ink transition-colors"
                   >
                     {link.label}

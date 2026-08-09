@@ -1,4 +1,5 @@
 import { SectionHead, Status } from "@/components/Checklist";
+import { Entry } from "@/lib/sequence";
 
 // NOTE: product names stay out of this file until domains and trademarks are
 // secured. Describe the work, not the brands.
@@ -61,10 +62,15 @@ export const Experience = () => (
       />
 
       {/* Each role is an entry in the record: the period is the response, the
-          role is the challenge, and every line below it is checkable. */}
+          role is the challenge, and every line below it is checkable.
+
+          The column is taller than the viewport, so each entry arms itself
+          rather than sharing one trigger — an entry arrives when it is
+          actually reached, which on a twelve-year record is the whole point. */}
       <ol className="mt-10">
         {experiences.map((exp, idx) => (
-          <li
+          <Entry
+            as="li"
             key={idx}
             className="grid md:grid-cols-12 gap-x-8 gap-y-3 py-7 border-t border-rule first:border-t-0 md:first:pt-0"
           >
@@ -102,7 +108,7 @@ export const Experience = () => (
                 ))}
               </ul>
             </div>
-          </li>
+          </Entry>
         ))}
       </ol>
     </div>

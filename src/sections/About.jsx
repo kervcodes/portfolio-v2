@@ -1,5 +1,6 @@
 import { Button } from "@/components/Button";
 import { SectionHead, Row } from "@/components/Checklist";
+import { Run, Step } from "@/lib/sequence";
 
 const tools = [
   "React", "Next.js", "Node.js", "TypeScript",
@@ -66,15 +67,27 @@ export const About = () => (
         {/* The facts, as responses. */}
         <aside className="lg:col-span-5 lg:pl-8 lg:border-l lg:border-rule">
           <p className="placard text-ink-faint">Particulars</p>
-          <div className="mt-4 space-y-3">
-            <Row label="Based">Boston, MA</Row>
-            <Row label="Degree">B.S. Computer Science</Row>
-            <Row label="School">Boston University</Row>
-            <Row label="Fellowship">
-              Hack.Diversity <span className="nums">2022</span>
-            </Row>
-            <Row label="From">Haiti</Row>
-          </div>
+          {/* Five short rows read as one block, so they run as one block —
+              this is the cluster case, not the long-list case. */}
+          <Run className="mt-4 space-y-3">
+            <Step>
+              <Row label="Based">Boston, MA</Row>
+            </Step>
+            <Step>
+              <Row label="Degree">B.S. Computer Science</Row>
+            </Step>
+            <Step>
+              <Row label="School">Boston University</Row>
+            </Step>
+            <Step>
+              <Row label="Fellowship">
+                Hack.Diversity <span className="nums">2022</span>
+              </Row>
+            </Step>
+            <Step>
+              <Row label="From">Haiti</Row>
+            </Step>
+          </Run>
 
           <p className="placard text-ink-faint mt-8">Working set</p>
           <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">

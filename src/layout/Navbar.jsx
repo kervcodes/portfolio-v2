@@ -1,5 +1,6 @@
 import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { Button } from "@/components/Button";
+import { useSectionLink } from "@/lib/motion";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 // Section tabs, in scroll order. Root-relative so they work from /sprint and
@@ -14,6 +15,11 @@ const navLinks = [
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [current, setCurrent] = useState(null);
+  // On the homepage these hrefs are a fragment away and the browser scrolls
+  // there smoothly. From /sprint or a note they used to be a full document
+  // load — the strip's own marker travels between these four tabs to say they
+  // are positions in one document, and then the tab threw the document away.
+  const go = useSectionLink();
   const stripRef = useRef(null);
   const markerRef = useRef(null);
   // The marker must not slide in from the strip's left edge the first time it
@@ -111,6 +117,7 @@ export const Navbar = () => {
       >
         <a
           href="/"
+          onClick={(e) => go(e, "/")}
           className="flex items-center gap-3 py-3 shrink-0"
           aria-label="Kervintz Noel — home"
         >
@@ -134,6 +141,7 @@ export const Navbar = () => {
               <a
                 href={link.href}
                 key={link.href}
+                onClick={(e) => go(e, link.href)}
                 aria-current={isCurrent ? "true" : undefined}
                 className="tab flex items-center"
               >
@@ -147,7 +155,12 @@ export const Navbar = () => {
           <span ref={markerRef} aria-hidden="true" className="tabstrip__marker" />
           <span className="w-px bg-panel-2 mx-3 my-3" aria-hidden="true" />
           <span className="flex items-center py-2.5">
-            <Button href="/#contact" variant="panel" size="sm">
+            <Button
+              href="/#contact"
+              onClick={(e) => go(e, "/#contact")}
+              variant="panel"
+              size="sm"
+            >
               Contact
             </Button>
           </span>
@@ -185,7 +198,10 @@ export const Navbar = () => {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    setIsMobileMenuOpen(false);
+                    go(e, link.href);
+                  }}
                   className="chk py-3.5 border-b border-panel-2"
                 >
                   <span className="chk__label text-panel-muted">{link.label}</span>
@@ -202,7 +218,10 @@ export const Navbar = () => {
                 href="/#contact"
                 variant="panel"
                 className="w-full"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => {
+                  setIsMobileMenuOpen(false);
+                  go(e, "/#contact");
+                }}
               >
                 Contact
               </Button>

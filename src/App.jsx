@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { LazyMotion, MotionConfig, domAnimation } from "motion/react";
 import { useNavigationContinuity } from "@/lib/motion";
 import { Navbar } from "@/layout/Navbar";
 import { Hero } from "@/sections/Hero";
@@ -50,11 +51,24 @@ function App() {
   useNavigationContinuity();
 
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/sprint" element={<SprintPage />} />
-      <Route path="/posts/:slug" element={<PostDetail />} />
-    </Routes>
+    // `domAnimation` is the transform/opacity feature set and nothing else —
+    // no layout projection, no drag, no 3D — because that is all this build
+    // animates, and it is a third of the full bundle. `strict` makes importing
+    // the eager `motion` component a build error, so the lean set cannot be
+    // quietly undone by one import in one section later.
+    //
+    // `reducedMotion="user"` is the library's half of the preference; the
+    // components in lib/sequence.jsx skip their observers entirely under it,
+    // so the guard is a pair rather than a single point of failure.
+    <LazyMotion features={domAnimation} strict>
+      <MotionConfig reducedMotion="user">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/sprint" element={<SprintPage />} />
+          <Route path="/posts/:slug" element={<PostDetail />} />
+        </Routes>
+      </MotionConfig>
+    </LazyMotion>
   );
 }
 

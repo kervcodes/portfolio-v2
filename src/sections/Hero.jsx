@@ -7,6 +7,10 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 // The first viewport is the checklist card itself: identity block, then four
 // challenge/response rows already answered. The CV is not a button floating
 // under a headline — it is the response on the last line of the card.
+//
+// The card is RUN rather than revealed: `.run__body` cascades the leader dots
+// row by row with an amber tracer down the margin, and the Status check lands
+// with its own row. No word is ever hidden — see The Run in src/index.css.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const socials = [
@@ -46,14 +50,14 @@ const ResumeRow = () => {
 };
 
 export const Hero = () => (
-  <section className="relative pt-24 md:pt-28 pb-16 md:pb-20">
+  <section className="run relative pt-24 md:pt-28 pb-16 md:pb-20">
     <div className="max-w-5xl mx-auto px-5 md:px-6 relative z-10">
       <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-        {/* ── The card. No entrance animation: the first viewport must be
-             legible at first paint, not after half a second of blank. ── */}
+        {/* ── The card. Nothing here fades in: every word is legible at first
+             paint, and what moves is the checklist apparatus around it. ── */}
         <div className="lg:col-span-8 sheet">
           {/* Card header: the title block of a checklist */}
-          <div className="border-b border-rule px-5 md:px-8 pt-6 md:pt-8 pb-5">
+          <div className="run__head border-b border-rule px-5 md:px-8 pt-6 md:pt-8 pb-5">
             <div className="flex items-baseline justify-between gap-4 flex-wrap">
               <p className="placard text-ink-muted">Proc. 00 — Identity</p>
               <p className="placard text-ink-faint nums">Rev. 2026-08</p>
@@ -69,8 +73,10 @@ export const Hero = () => (
           </div>
 
           {/* Card body: the responses. The CV is the response on the last
-              row — not a button parked underneath the card. */}
-          <div className="px-5 md:px-8 py-6 md:py-7 space-y-4">
+              row — not a button parked underneath the card.
+              Row order is load-bearing: the leader dots and the check are
+              staggered by :nth-child, so inserting a row shifts the cascade. */}
+          <div className="run__body px-5 md:px-8 py-6 md:py-7 space-y-4">
             <Row label="Location" size="lg">
               Boston, Massachusetts
             </Row>

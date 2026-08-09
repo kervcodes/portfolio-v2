@@ -328,6 +328,97 @@
     animation: check-draw 420ms cubic-bezier(0.65, 0, 0.35, 1) both;
   }
 
+  /* ── The card being run — the first viewport ─────────────────────────── */
+  /* The hero does not fade in and never did: every word is legible at first
+     paint. What moves is the checklist APPARATUS. The leader dots draw row by
+     row in the order a checklist is run, an amber tracer walks the left margin
+     while the run is in progress (amber, because in progress is a state), and
+     the Status check lands with its own row instead of three rows ahead of it.
+     Remove every rule below and the card is simply already run — which is why
+     the whole block sits inside the no-preference guard rather than relying on
+     the reduce block to unwind delays. */
+  @media (prefers-reduced-motion: no-preference) {
+    .run .run__head {
+      position: relative;
+      border-bottom-color: transparent;
+    }
+    .run .run__head::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 1px;
+      background: var(--color-rule);
+      transform-origin: left;
+      animation: run-bar 520ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+    }
+
+    .run .run__body {
+      position: relative;
+    }
+    /* the pen running the procedure; it retracts by fading, not by rewinding */
+    .run .run__body::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--color-caution);
+      transform-origin: top;
+      animation: run-trace 970ms cubic-bezier(0.4, 0, 0.2, 1) 120ms both;
+    }
+
+    .run .run__body > .chk > .chk__lead {
+      transform-origin: left center;
+      animation: run-lead 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .run .run__body > .chk:nth-child(1) > .chk__lead { animation-delay: 120ms; }
+    .run .run__body > .chk:nth-child(2) > .chk__lead { animation-delay: 210ms; }
+    .run .run__body > .chk:nth-child(3) > .chk__lead { animation-delay: 300ms; }
+    .run .run__body > .chk:nth-child(4) > .chk__lead { animation-delay: 390ms; }
+    .run .run__body > .chk:nth-child(5) > .chk__lead { animation-delay: 480ms; }
+
+    /* the check is made when its row is read — row 4, half a beat in */
+    .run .run__body .check-mark {
+      animation-delay: 650ms;
+    }
+  }
+
+  @keyframes run-lead {
+    from {
+      transform: translateY(-0.15em) scaleX(0);
+    }
+    to {
+      transform: translateY(-0.15em) scaleX(1);
+    }
+  }
+
+  @keyframes run-bar {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes run-trace {
+    0% {
+      transform: scaleY(0);
+      opacity: 1;
+    }
+    72% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scaleY(1);
+      opacity: 0;
+    }
+  }
+
   /* ── The gauge taking its reading ────────────────────────────────────── */
   /* An instrument sweeps to its value once, when it is first looked at — the
      same event as the check, applied to a number instead of a claim. scaleX

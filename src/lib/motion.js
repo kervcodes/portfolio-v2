@@ -28,6 +28,19 @@ import {
 import { flushSync } from "react-dom";
 import { useLocation, useNavigate, useNavigationType } from "react-router-dom";
 
+/**
+ * A modified click is the visitor asking the browser for a second tab, not for
+ * this page to turn. Every link that intercepts its own navigation checks this
+ * first and otherwise leaves the anchor alone.
+ */
+export const opensElsewhere = (e) =>
+  e.defaultPrevented ||
+  e.button !== 0 ||
+  e.metaKey ||
+  e.ctrlKey ||
+  e.shiftKey ||
+  e.altKey;
+
 export const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   typeof window.matchMedia === "function" &&
@@ -182,6 +195,41 @@ export const usePageTurn = () => {
       turn.finished.catch(() => {}).finally(() => setTurnKey(null));
     },
     [navigate]
+  );
+};
+
+/**
+ * The strip's four tabs, the plate mark, and the Contact key all point at
+ * `/#section`. On the homepage that is a same-document fragment navigation and
+ * the browser's own smooth scroll is exactly right — the visitor is moving
+ * inside one page, which is the case `scroll-behavior: smooth` is for.
+ *
+ * From `/sprint` or a note, the same href was a CROSS-document navigation: the
+ * whole app tore down, went white, and re-downloaded to reach a section it was
+ * already holding. That is the one navigation in the build with no continuity
+ * at all — and it sits under a marker that travels between those four tabs
+ * precisely to claim they are positions in one document.
+ *
+ * So: same document, leave it to the browser. Different one, turn the page.
+ *
+ * Returns `go(event, href)` for an anchor's `onClick`. It only ever calls
+ * `preventDefault` on the branch it actually handles, so the anchor keeps
+ * working with JavaScript broken, middle-clicked, or opened in a new tab.
+ */
+export const useSectionLink = () => {
+  const turn = usePageTurn();
+  const { pathname } = useLocation();
+
+  return useCallback(
+    (e, href) => {
+      if (opensElsewhere(e)) return;
+      const [path] = href.split("#");
+      // Same document: the browser scrolls it, smoothly, for free.
+      if ((path || "/") === pathname) return;
+      e.preventDefault();
+      turn(href);
+    },
+    [pathname, turn]
   );
 };
 

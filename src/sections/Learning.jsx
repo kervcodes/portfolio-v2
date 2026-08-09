@@ -13,6 +13,7 @@
 
 import { SectionHead, Status, Gauge, Check, Row, Notice } from "@/components/Checklist";
 import { useSeen, useCountUp } from "@/lib/motion";
+import { Entry } from "@/lib/sequence";
 
 const COURSES = [
     {
@@ -195,7 +196,8 @@ export const Learning = ({ showHeader = true }) => (
                     {COURSES.map((course, idx) => {
                         const pct = effectivePct(course);
                         return (
-                            <li
+                            <Entry
+                                as="li"
                                 key={course.id}
                                 className="grid md:grid-cols-12 gap-x-6 gap-y-2 py-4 border-t border-rule items-baseline"
                             >
@@ -236,7 +238,7 @@ export const Learning = ({ showHeader = true }) => (
                                         kind={course.status === "completed" ? "verified" : course.status}
                                     />
                                 </div>
-                            </li>
+                            </Entry>
                         );
                     })}
                 </ol>
@@ -250,7 +252,7 @@ export const Learning = ({ showHeader = true }) => (
                 </p>
                 <div className="mt-3 space-y-6">
                     {PROJECTS.map((project) => (
-                        <article key={project.id} className="sheet p-5 md:p-6">
+                        <Entry as="article" key={project.id} className="sheet p-5 md:p-6">
                             <div className="flex flex-wrap items-baseline justify-between gap-3">
                                 <p className="placard nums text-ink-faint">{project.phase}</p>
                                 <Status kind={project.status} />
@@ -297,7 +299,7 @@ export const Learning = ({ showHeader = true }) => (
                                     </li>
                                 ))}
                             </ul>
-                        </article>
+                        </Entry>
                     ))}
                 </div>
             </div>

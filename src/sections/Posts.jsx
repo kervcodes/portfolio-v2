@@ -8,17 +8,8 @@
 import { Link } from "react-router-dom";
 import { POSTS } from "@/data/posts";
 import { SectionHead, Status, Arrow } from "@/components/Checklist";
-import { usePageTurn, useTurnKey } from "@/lib/motion";
-
-// A modified click is the visitor asking the browser for a second tab, not for
-// this page to turn. Leave those to the anchor.
-const opensElsewhere = (e) =>
-    e.defaultPrevented ||
-    e.button !== 0 ||
-    e.metaKey ||
-    e.ctrlKey ||
-    e.shiftKey ||
-    e.altKey;
+import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
+import { Entry } from "@/lib/sequence";
 
 export const Posts = () => {
     const published = POSTS.filter((p) => !p.comingSoon);
@@ -44,8 +35,13 @@ export const Posts = () => {
                             const to = `/posts/${post.slug}`;
                             const paired = turning === post.slug;
                             return (
+                                // The run-in wraps the card rather than the
+                                // card being the animated element: the paired
+                                // stamp and title inside it carry
+                                // view-transition names, and the turn should
+                                // capture them from a settled box.
+                                <Entry key={post.slug}>
                                 <Link
-                                    key={post.slug}
                                     to={to}
                                     onClick={(e) => {
                                         if (opensElsewhere(e)) return;
@@ -79,6 +75,7 @@ export const Posts = () => {
                                         <Arrow />
                                     </p>
                                 </Link>
+                                </Entry>
                             );
                         })}
                     </div>

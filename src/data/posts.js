@@ -7,6 +7,11 @@
 //   3. Update hashnodeUrl when cross-posted to Hashnode.
 //   4. That's it — the Posts section and the post page both read from here.
 //
+// HOLDING A BODY BACK:
+//   Add `visibleBlocks: N` to a post and the page renders only its first N
+//   content blocks. The rest stays in this file, unrendered. Remove the line
+//   to publish the whole body again.
+//
 // CONTENT BLOCK TYPES:
 //   { type: "paragraph", text: "..." }
 //   { type: "heading", text: "..." }
@@ -30,6 +35,9 @@ export const POSTS = [
         featured: true,
         hashnodeUrl: null, // ← set when published to Hashnode
         coverImage: "/posts/post-1/cover.png",
+        // Held back: only the opening callout is public. Nothing below is
+        // deleted — delete this one line to publish the body again.
+        visibleBlocks: 1,
         content: [
             {
                 type: "callout",

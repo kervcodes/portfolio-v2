@@ -199,8 +199,15 @@ export const PostDetail = () => {
                     />
                 )}
 
+                {/* A post may hold its body back while it is being revised.
+                    `visibleBlocks` renders the first N blocks and stops; the
+                    rest is still in posts.js, just not served. Absent, the
+                    whole body renders. */}
                 <div className="mt-10">
-                    {post.content.map((block, i) => (
+                    {(typeof post.visibleBlocks === "number"
+                        ? post.content.slice(0, post.visibleBlocks)
+                        : post.content
+                    ).map((block, i) => (
                         <ContentBlock key={i} block={block} />
                     ))}
                 </div>

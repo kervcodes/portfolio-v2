@@ -86,21 +86,22 @@ export const ProjectCaseStudy = () => {
                     >
                         {project.name}
                     </h1>
-                    <ul className="mt-6 rule-sub pt-4 flex flex-wrap gap-x-3 gap-y-1">
-                        {project.stack.map((s) => (
-                            <li
-                                key={s}
-                                className="placard text-ink-faint after:content-['·'] after:ml-3 last:after:content-['']"
-                            >
-                                {s}
-                            </li>
-                        ))}
-                    </ul>
                 </header>
 
                 <ProjectTabs project={project} />
 
-                <footer className="mt-16 rule-head flex justify-end">
+                <ul className="mt-16 flex flex-wrap gap-2">
+                    {project.stack.map((s) => (
+                        <li
+                            key={s}
+                            className="placard text-ink-faint border border-rule px-2.5 py-1"
+                        >
+                            {s}
+                        </li>
+                    ))}
+                </ul>
+
+                <footer className="mt-6 rule-head flex justify-end">
                     <BackLink turnKey={slug} />
                 </footer>
             </article>

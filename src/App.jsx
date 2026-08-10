@@ -9,6 +9,7 @@ import { Contact } from "@/sections/Contact";
 import { Footer } from "@/layout/Footer";
 import { PostDetail } from "@/pages/PostDetail";
 import { SprintPage } from "@/pages/SprintPage";
+import { ProjectCaseStudy } from "@/pages/ProjectCaseStudy";
 import { Posts } from "@/sections/Posts";
 // import { Projects } from "@/sections/Projects";
 import { Learning } from "@/sections/Learning";
@@ -66,6 +67,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/sprint" element={<SprintPage />} />
           <Route path="/posts/:slug" element={<PostDetail />} />
+          <Route path="/projects/:slug" element={<ProjectCaseStudy />} />
         </Routes>
       </MotionConfig>
     </LazyMotion>

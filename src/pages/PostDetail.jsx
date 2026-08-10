@@ -14,7 +14,7 @@ const ContentBlock = ({ block }) => {
     switch (block.type) {
         case "paragraph":
             return (
-                <p className="text-ink-muted leading-relaxed text-base mb-6 max-w-[62ch]">
+                <p className="text-ink-muted leading-relaxed text-base mb-6">
                     {block.text}
                 </p>
             );
@@ -102,7 +102,7 @@ const BackLink = ({ className = "", turnKey }) => {
 // ─── Not written yet ──────────────────────────────────────────────────────────
 const ComingSoonPage = ({ post }) => (
     <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
-        <div className="sheet max-w-2xl p-6 md:p-10">
+        <div className="sheet p-6 md:p-10">
             <Status kind="standby">Not written yet</Status>
             <h1 className="mt-4 text-2xl md:text-4xl font-bold text-ink leading-tight tracking-tight max-w-[28ch]">
                 {post.title}
@@ -123,7 +123,7 @@ const ComingSoonPage = ({ post }) => (
 // ─── 404 ──────────────────────────────────────────────────────────────────────
 const NotFoundPage = () => (
     <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
-        <div className="max-w-2xl notice notice--warning">
+        <div className="notice notice--warning">
             <p className="notice__band">No such entry</p>
             <div className="px-5 py-6">
                 <h1 className="text-2xl md:text-3xl font-bold text-ink tracking-tight">

@@ -26,10 +26,9 @@ import { Learning } from "@/sections/Learning";
 //
 // Content widths — two named roles, nothing else:
 //   prose / forms   max-w-2xl (672)
-//   page frame      max-w-5xl (1024) — every page, including full-page
-//                   articles, shares this outer width; long-form prose
-//                   inside it caps its own line length with max-w-[62ch]
-//                   rather than narrowing the frame.
+//   page frame      max-w-5xl (1024) — every page shares this outer width,
+//                   including full-page articles and their notice/error
+//                   states, so no page reads as narrower than another.
 //
 // Projects stays out until the product names are cleared — see PRODUCT.md.
 const HomePage = () => (

@@ -33,7 +33,7 @@ const BackLink = ({ className = "", turnKey }) => {
 // ─── 404 ──────────────────────────────────────────────────────────────────────
 const NotFoundPage = () => (
     <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
-        <div className="max-w-2xl notice notice--warning">
+        <div className="notice notice--warning">
             <p className="notice__band">No such project</p>
             <div className="px-5 py-6">
                 <h1 className="text-2xl md:text-3xl font-bold text-ink tracking-tight">

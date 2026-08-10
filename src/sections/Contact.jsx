@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { Button } from "@/components/Button";
 import { Check } from "@/components/Checklist";
@@ -17,6 +17,26 @@ export const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ type: null, message: "" });
+  const [noticeLeaving, setNoticeLeaving] = useState(false);
+  const dismissTimers = useRef([]);
+
+  useEffect(() => {
+    return () => dismissTimers.current.forEach(clearTimeout);
+  }, []);
+
+  // The notice is a passing acknowledgement, not a permanent fixture — it
+  // fades out on its own so the form is ready to use again.
+  useEffect(() => {
+    dismissTimers.current.forEach(clearTimeout);
+    dismissTimers.current = [];
+    if (!submitStatus.type) return;
+
+    setNoticeLeaving(false);
+    dismissTimers.current.push(
+      setTimeout(() => setNoticeLeaving(true), 4500),
+      setTimeout(() => setSubmitStatus({ type: null, message: "" }), 4900)
+    );
+  }, [submitStatus.type]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +53,7 @@ export const Contact = () => {
         setSubmitStatus({
           type: "error",
           message:
-            "The contact form isn't working right now. Please email me directly at kervcodes@gmail.com and I'll get back to you.",
+            "The contact form isn't working right now. Please use the email link in the Direct panel and I'll get back to you.",
         });
         setIsLoading(false);
         return;
@@ -60,8 +80,7 @@ export const Contact = () => {
 
       setSubmitStatus({
         type: "success",
-        message:
-          "Message sent — it's on its way to kervcodes@gmail.com. I read every one and reply personally.",
+        message: "Message sent — I read every one and reply personally.",
       });
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {
@@ -70,7 +89,7 @@ export const Contact = () => {
       setSubmitStatus({
         type: "error",
         message:
-          "Your message didn't send. Check your connection and try again — or email me directly at kervcodes@gmail.com.",
+          "Your message didn't send. Check your connection and try again — or use the email link in the Direct panel.",
       });
     } finally {
       setIsLoading(false);
@@ -187,7 +206,9 @@ export const Contact = () => {
                   // An answer the visitor is waiting on, not an arrival: it
                   // settles in a quarter of the entrance duration.
                   style={{ "--settle-dur": "240ms" }}
-                  className={`notice animate-settle mt-5 ${
+                  className={`notice mt-5 ${
+                    noticeLeaving ? "notice--leaving" : "animate-settle"
+                  } ${
                     submitStatus.type === "success"
                       ? "notice--verified"
                       : "notice--warning"

@@ -22,7 +22,7 @@ const COURSES = [
         name: "AI Builder: n8n Agents & Voice Agents",
         hours: 14.5,
         status: "completed", // "standby" | "active" | "completed"
-        pct: 0,
+        pct: 100,
         tags: ["n8n", "Voice Agents", "Automation"],
     },
     {

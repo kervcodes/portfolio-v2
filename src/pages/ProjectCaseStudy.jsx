@@ -1,35 +1,14 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
-import { FaGithub } from "react-icons/fa";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { getProjectBySlug } from "@/data/projects";
 import { Status, Arrow } from "@/components/Checklist";
+import { ProjectTabs } from "@/components/ProjectTabs";
 import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
 
 // The card lives in the Learning section, so that's where Back returns to.
 const BACK_TO = "/#learning";
 const BACK_LABEL = "Current work";
-
-// ─── Content block renderer ───────────────────────────────────────────────────
-const ContentBlock = ({ block }) => {
-    switch (block.type) {
-        case "paragraph":
-            return (
-                <p className="text-ink-muted leading-relaxed text-base mb-6">
-                    {block.text}
-                </p>
-            );
-        case "heading":
-            return (
-                <h2 className="rule-head mt-12 mb-5 text-xl md:text-2xl font-bold text-ink uppercase tracking-tight">
-                    {block.text}
-                </h2>
-            );
-        default:
-            return null;
-    }
-};
 
 // Same pairing mechanism as the Notes page turn: the slug travels with the
 // turn so the outgoing card and the incoming header can share a name.
@@ -119,61 +98,9 @@ export const ProjectCaseStudy = () => {
                     </ul>
                 </header>
 
-                <div className="mt-4">
-                    {project.content.map((block, i) => (
-                        <ContentBlock key={i} block={block} />
-                    ))}
-                </div>
+                <ProjectTabs project={project} />
 
-                <section>
-                    <h2 className="rule-head mt-12 mb-5 text-xl md:text-2xl font-bold text-ink uppercase tracking-tight">
-                        Architecture
-                    </h2>
-                    {/* Placeholder slot — sre-runbook-architecture.svg drops in here. */}
-                    <img
-                        src={project.architectureImage}
-                        alt={`${project.name} architecture diagram`}
-                        className="w-full border border-rule object-cover max-h-130"
-                    />
-                </section>
-
-                <section>
-                    <h2 className="rule-head mt-12 mb-5 text-xl md:text-2xl font-bold text-ink uppercase tracking-tight">
-                        Key decisions
-                    </h2>
-                    <ul className="space-y-6">
-                        {project.decisions.map((d) => (
-                            <li key={d.title}>
-                                <p className="font-bold text-ink">{d.title}</p>
-                                <p className="mt-1.5 text-sm text-ink-muted leading-relaxed">
-                                    {d.body}
-                                </p>
-                            </li>
-                        ))}
-                    </ul>
-                </section>
-
-                <footer className="mt-16 rule-head flex flex-wrap items-center justify-between gap-4">
-                    <div className="flex flex-wrap gap-5">
-                        <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="placard inline-flex items-center gap-2 text-ink hover:text-caution-ink transition-colors"
-                        >
-                            <FaGithub className="w-3.5 h-3.5" />
-                            Repository
-                        </a>
-                        <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="placard inline-flex items-center gap-2 text-ink hover:text-caution-ink transition-colors"
-                        >
-                            <ArrowUpRight className="w-3.5 h-3.5" />
-                            Live
-                        </a>
-                    </div>
+                <footer className="mt-16 rule-head flex justify-end">
                     <BackLink turnKey={slug} />
                 </footer>
             </article>

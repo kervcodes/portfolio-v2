@@ -16,8 +16,8 @@ const Shell = ({ children }) => (
 // <Routes> matches nothing and renders an empty page under the app shell.
 export const NotFound = () => (
     <Shell>
-        <div className="max-w-3xl mx-auto px-5 md:px-6 py-20">
-            <div className="notice notice--warning">
+        <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
+            <div className="max-w-2xl notice notice--warning">
                 <p className="notice__band">404</p>
                 <div className="px-5 py-6">
                     <h1 className="text-2xl md:text-3xl font-bold text-ink tracking-tight">

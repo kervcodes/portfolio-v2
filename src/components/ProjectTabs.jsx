@@ -7,7 +7,7 @@ export const ContentBlock = ({ block }) => {
     switch (block.type) {
         case "paragraph":
             return (
-                <p className="text-ink-muted leading-relaxed text-base mb-6">
+                <p className="text-ink-muted leading-relaxed text-base mb-6 max-w-[62ch]">
                     {block.text}
                 </p>
             );
@@ -90,7 +90,7 @@ const KeyDecisionsPanel = ({ project }) => {
             {items.map((d) => (
                 <li key={d.title}>
                     <p className="font-bold text-ink">{d.title}</p>
-                    <p className="mt-1.5 text-sm text-ink-muted leading-relaxed">
+                    <p className="mt-1.5 text-sm text-ink-muted leading-relaxed max-w-[62ch]">
                         {d.body}
                     </p>
                 </li>
@@ -109,7 +109,7 @@ const BuildLogPanel = ({ project }) => {
             {entries.map((e, i) => (
                 <li key={i} className="rule-sub pt-3">
                     <p className="placard text-ink-faint">{e.date}</p>
-                    <p className="mt-1.5 text-sm text-ink-muted leading-relaxed">
+                    <p className="mt-1.5 text-sm text-ink-muted leading-relaxed max-w-[62ch]">
                         {e.text}
                     </p>
                 </li>
@@ -161,7 +161,7 @@ const ResultPanel = ({ project }) => {
                     <p className="placard text-ink-faint mb-2">What I'd improve next</p>
                     <ul className="space-y-2 list-disc list-inside">
                         {improvements.map((text, i) => (
-                            <li key={i} className="text-sm text-ink-muted leading-relaxed">
+                            <li key={i} className="text-sm text-ink-muted leading-relaxed max-w-[62ch]">
                                 {text}
                             </li>
                         ))}

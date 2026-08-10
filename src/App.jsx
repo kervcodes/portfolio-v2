@@ -24,10 +24,12 @@ import { Learning } from "@/sections/Learning";
 //   continuation (same movement)   py-16 md:py-20
 // Learning + Posts are one movement ("what I'm doing now"), so they sit close.
 //
-// Content widths — three named roles, nothing else:
+// Content widths — two named roles, nothing else:
 //   prose / forms   max-w-2xl (672)
-//   record          max-w-3xl (768)
-//   grids           max-w-5xl (1024)
+//   page frame      max-w-5xl (1024) — every page, including full-page
+//                   articles, shares this outer width; long-form prose
+//                   inside it caps its own line length with max-w-[62ch]
+//                   rather than narrowing the frame.
 //
 // Projects stays out until the product names are cleared — see PRODUCT.md.
 const HomePage = () => (

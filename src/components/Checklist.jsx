@@ -84,7 +84,7 @@ export const SectionHead = ({ index, title, lede, id, className = "" }) => (
       </h2>
     </div>
     {lede && (
-      <p className="mt-3 max-w-[62ch] text-ink-muted leading-relaxed">{lede}</p>
+      <p className="mt-3 text-ink-muted leading-relaxed">{lede}</p>
     )}
   </header>
 );

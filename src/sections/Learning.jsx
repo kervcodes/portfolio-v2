@@ -290,7 +290,7 @@ export const Learning = ({ showHeader = true }) => {
                                     >
                                         {project.name}
                                     </h3>
-                                    <p className="mt-2 text-sm text-ink-muted leading-relaxed max-w-[62ch]">
+                                    <p className="mt-2 text-sm text-ink-muted leading-relaxed">
                                         {project.description}
                                     </p>
 

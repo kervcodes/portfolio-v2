@@ -67,7 +67,7 @@ export const Posts = () => {
                                     >
                                         {post.title}
                                     </h3>
-                                    <p className="mt-3 text-sm text-ink-muted leading-relaxed max-w-[62ch]">
+                                    <p className="mt-3 text-sm text-ink-muted leading-relaxed">
                                         {post.excerpt}
                                     </p>
                                     <p className="mt-5 rule-sub pt-3 placard text-ink group-hover:text-caution-ink transition-colors inline-flex items-center gap-2">

@@ -22,7 +22,7 @@ const SprintHero = () => (
                     <Row label="Projects">1 of 4 started</Row>
                     <Row label="Started">Jun 2026</Row>
                 </div>
-                <p className="mt-5 text-sm text-ink-muted leading-relaxed max-w-[62ch]">
+                <p className="mt-5 text-sm text-ink-muted leading-relaxed">
                     No deadline — I move course by course. This is what I'm building right
                     now, in public.
                 </p>

@@ -111,7 +111,7 @@ export const Contact = () => {
               Contact
             </h2>
           </div>
-          <p className="mt-3 max-w-[62ch] text-panel-muted leading-relaxed">
+          <p className="mt-3 text-panel-muted leading-relaxed">
             If you're hiring, tell me about the role and the team — I'd rather
             hear about the problems than the perks. If you're building something
             and want to compare notes, that works too.

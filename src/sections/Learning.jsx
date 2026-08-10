@@ -30,7 +30,7 @@ const COURSES = [
         name: "AI Engineer Agentic Track",
         hours: 21,
         status: "active",
-        pct: 0,
+        pct: 50,
         tags: ["Agents", "MCP", "LangGraph", "CrewAI"],
     },
     {

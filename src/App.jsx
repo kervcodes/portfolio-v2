@@ -10,6 +10,7 @@ import { Footer } from "@/layout/Footer";
 import { PostDetail } from "@/pages/PostDetail";
 import { SprintPage } from "@/pages/SprintPage";
 import { ProjectCaseStudy } from "@/pages/ProjectCaseStudy";
+import { NotFound } from "@/pages/NotFound";
 import { Posts } from "@/sections/Posts";
 // import { Projects } from "@/sections/Projects";
 import { Learning } from "@/sections/Learning";
@@ -68,6 +69,7 @@ function App() {
           <Route path="/sprint" element={<SprintPage />} />
           <Route path="/posts/:slug" element={<PostDetail />} />
           <Route path="/projects/:slug" element={<ProjectCaseStudy />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </MotionConfig>
     </LazyMotion>

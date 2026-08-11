@@ -1,16 +1,59 @@
-# React + Vite
+# Kervintz Noel — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio site for Kervintz Noel, software engineer. Built as a single-page app with a checklist/handbook visual theme, plus routed pages for blog posts and project case studies.
 
-Currently, two official plugins are available:
+Live: [kervintznoel.com](https://kervintznoel.com)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech stack
 
-## React Compiler
+- [React 19](https://react.dev/) + [Vite](https://vite.dev/)
+- [React Router](https://reactrouter.com/) for routing
+- [Tailwind CSS 4](https://tailwindcss.com/) (via `@tailwindcss/vite`)
+- [Motion](https://motion.dev/) for animation
+- [EmailJS](https://www.emailjs.com/) for the contact form
+- [Lucide](https://lucide.dev/) / [react-icons](https://react-icons.github.io/react-icons/) for icons
+- ESLint 10 with React Hooks + React Refresh plugins
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Routes
 
-## Expanding the ESLint configuration
+| Path | Renders |
+|---|---|
+| `/` | Home page — Hero, About, Experience, Learning, Posts, Contact |
+| `/posts/:slug` | Full blog post |
+| `/projects/:slug` | Project case study (five tabs: Problem, Architecture, Key Decisions, Build Log, Result) |
+| `/sprint` | Standalone sprint page |
+| `*` | 404 |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Content for posts and project case studies lives in `src/data/posts.js` and `src/data/projects.js` — each file is documented inline with the shape new entries should follow.
+
+## Project structure
+
+```
+src/
+  components/   Reusable UI (buttons, tag chips, checklist rows, error boundary)
+  data/         Posts and project case studies (single source of truth)
+  layout/       Navbar, Footer
+  lib/          Motion helpers, scroll/navigation continuity, tag color mapping
+  pages/        Routed pages (post detail, case study, sprint, 404)
+  sections/     Homepage sections (Hero, About, Experience, Learning, Posts, Contact)
+```
+
+## Getting started
+
+```bash
+npm install
+npm run dev
+```
+
+## Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the Vite dev server |
+| `npm run build` | Production build to `dist/` |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint |
+
+## Deployment
+
+Configured for both Netlify (`netlify.toml`) and Vercel (`vercel.json`), each set up as a single-page app with all routes rewritten to `index.html`.

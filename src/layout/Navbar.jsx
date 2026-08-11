@@ -1,4 +1,5 @@
 import { AnimatedLogo } from "@/components/AnimatedLogo";
+import { Arrow } from "@/components/Checklist";
 import { Button } from "@/components/Button";
 import { useSectionLink } from "@/lib/motion";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -20,6 +21,8 @@ export const Navbar = () => {
   // load — the strip's own marker travels between these four tabs to say they
   // are positions in one document, and then the tab threw the document away.
   const go = useSectionLink();
+  const headerRef = useRef(null);
+  const navRowRef = useRef(null);
   const stripRef = useRef(null);
   const markerRef = useRef(null);
   // The marker must not slide in from the strip's left edge the first time it
@@ -95,6 +98,25 @@ export const Navbar = () => {
     return () => ro.disconnect();
   }, [current]);
 
+  // The open mobile sheet fills the rest of the screen below this row, not
+  // just the height of its own rows — the row is measured rather than
+  // assumed, since its height shifts with font metrics and breakpoint.
+  useLayoutEffect(() => {
+    const header = headerRef.current;
+    const row = navRowRef.current;
+    if (!header || !row) return;
+
+    const measure = () => {
+      header.style.setProperty("--nav-h", `${row.offsetHeight}px`);
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(row);
+    document.fonts?.ready.then(measure).catch(() => {});
+    return () => ro.disconnect();
+  }, []);
+
   // The panel is a sheet over the page; the page beneath it must not scroll,
   // and Escape must close it.
   useEffect(() => {
@@ -110,8 +132,12 @@ export const Navbar = () => {
   }, [isMobileMenuOpen]);
 
   return (
-    <header className="strip on-panel fixed top-0 left-0 right-0 z-50 bg-panel text-panel-ink">
+    <header
+      ref={headerRef}
+      className="strip on-panel fixed top-0 left-0 right-0 z-50 bg-panel text-panel-ink"
+    >
       <nav
+        ref={navRowRef}
         aria-label="Sections"
         className="max-w-5xl mx-auto px-5 md:px-6 flex items-stretch justify-between gap-4"
       >
@@ -191,9 +217,11 @@ export const Navbar = () => {
         }`}
       >
         {/* The clipping row. The rule lives inside it, so a closed sheet does
-            not leave a stray line under the strip. */}
-        <div>
-          <ul className="border-t border-panel-2 max-w-5xl mx-auto px-5 pb-4">
+            not leave a stray line under the strip. Content fills the sheet
+            rather than sitting top-aligned above empty charcoal: the rows
+            centre in the space above the fold, the key sits at its foot. */}
+        <div className="flex flex-col max-w-5xl mx-auto w-full px-5 pb-6">
+          <ul className="flex-1 flex flex-col justify-center border-t border-panel-2">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
@@ -202,31 +230,29 @@ export const Navbar = () => {
                     setIsMobileMenuOpen(false);
                     go(e, link.href);
                   }}
-                  className="chk py-3.5 border-b border-panel-2"
+                  className="chk py-4 border-b border-panel-2"
                 >
                   <span className="chk__label text-panel-muted">{link.label}</span>
                   <span
                     className="chk__lead border-panel-2"
                     aria-hidden="true"
                   />
-                  <span className="chk__value text-panel-ink text-sm">Go</span>
+                  <Arrow className="text-panel-ink" />
                 </a>
               </li>
             ))}
-            <li className="pt-4">
-              <Button
-                href="/#contact"
-                variant="panel"
-                className="w-full"
-                onClick={(e) => {
-                  setIsMobileMenuOpen(false);
-                  go(e, "/#contact");
-                }}
-              >
-                Contact
-              </Button>
-            </li>
           </ul>
+          <Button
+            href="/#contact"
+            variant="panel"
+            className="w-full shrink-0 mt-4"
+            onClick={(e) => {
+              setIsMobileMenuOpen(false);
+              go(e, "/#contact");
+            }}
+          >
+            Contact
+          </Button>
         </div>
       </div>
     </header>

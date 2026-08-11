@@ -481,8 +481,11 @@
   }
 
   /* ── The mobile sheet opening ────────────────────────────────────────── */
-  /* Grid rows carry the reveal: nothing is measured, no height is animated,
-     and the closed sheet occupies no space. Out is faster than in. */
+  /* The reveal itself is unmeasured — grid rows carry it, and the closed
+     sheet occupies no space. But an open sheet is given the viewport height
+     minus the strip above it, so it is the whole screen below the strip
+     rather than the height of its own rows. --nav-h is the one measured
+     value here, set by Navbar from the strip's real row height. */
   .menu-sheet {
     display: grid;
     grid-template-rows: 0fr;
@@ -497,6 +500,10 @@
     opacity: 1;
     transition: grid-template-rows 260ms cubic-bezier(0.16, 1, 0.3, 1),
       opacity 180ms ease-out;
+  }
+  .menu-sheet.is-open > * {
+    height: calc(100dvh - var(--nav-h, 4rem));
+    overflow-y: auto;
   }
 
   /* ── The arrow, moving the way it points ─────────────────────────────── */

@@ -10,6 +10,29 @@ import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
 const BACK_TO = "/#learning";
 const BACK_LABEL = "Current work";
 
+// Tag identity, not status — kept out of the caution/verified/warning
+// palette on purpose. Known tools get their own brand-referenced colour;
+// anything else falls back to a stable hash so it's still consistent
+// wherever it appears, just not brand-matched.
+const KNOWN_TAG_COLORS = {
+    "Claude API": "border-tag-rust",
+    "Supabase": "border-tag-green",
+    "Tailwind CSS": "border-tag-blue",
+    "Next.js": "border-tag-violet",
+    "Vercel": "border-tag-teal",
+};
+
+const FALLBACK_TAG_COLORS = Object.values(KNOWN_TAG_COLORS);
+
+const tagBorderClass = (label) => {
+    if (KNOWN_TAG_COLORS[label]) return KNOWN_TAG_COLORS[label];
+    let hash = 0;
+    for (let i = 0; i < label.length; i++) {
+        hash = (hash * 31 + label.charCodeAt(i)) | 0;
+    }
+    return FALLBACK_TAG_COLORS[Math.abs(hash) % FALLBACK_TAG_COLORS.length];
+};
+
 // Same pairing mechanism as the Notes page turn: the slug travels with the
 // turn so the outgoing card and the incoming header can share a name.
 const BackLink = ({ className = "", turnKey }) => {
@@ -94,7 +117,7 @@ export const ProjectCaseStudy = () => {
                     {project.stack.map((s) => (
                         <li
                             key={s}
-                            className="placard text-ink-faint border border-rule px-2.5 py-1"
+                            className={`placard text-ink-faint border px-2.5 py-1 ${tagBorderClass(s)}`}
                         >
                             {s}
                         </li>

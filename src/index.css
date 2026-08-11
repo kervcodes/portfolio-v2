@@ -42,6 +42,17 @@
   --color-warning: oklch(52% 0.195 27);
   --color-warning-wash: oklch(95% 0.035 25);
 
+  /* ── Tag accents: identity, not state ──
+     Loosely traces each tool's own brand colour (Anthropic terracotta,
+     Supabase emerald, Tailwind sky) so a tag reads as that tool, not a
+     status. Kept out of the caution/verified/warning hues so it can never
+     be mistaken for one. */
+  --color-tag-rust: oklch(58% 0.13 45); /* Claude / Anthropic */
+  --color-tag-green: oklch(62% 0.15 155); /* Supabase */
+  --color-tag-blue: oklch(60% 0.14 235); /* Tailwind CSS */
+  --color-tag-violet: oklch(52% 0.14 300); /* Next.js */
+  --color-tag-teal: oklch(55% 0.11 200); /* Vercel */
+
   /* ── Legacy semantic aliases (unmounted files still reference these) ── */
   --color-background: oklch(96.8% 0.003 250);
   --color-foreground: oklch(21% 0.012 255);

@@ -251,11 +251,10 @@
     transform: scaleX(1);
   }
 
-  `@media` (prefers-reduced-motion: reduce) {
+  @media (prefers-reduced-motion: reduce) {
     .case-tab__bar {
       transition: none;
     }
-  }
   }
   .case-tab[aria-selected="true"] .case-tab__bar {
     background: var(--color-caution);

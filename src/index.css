@@ -226,6 +226,42 @@
     color: var(--color-sheet);
   }
 
+  /* ── Case-study tabs: the same wipe as the header strip's pointer
+     indicator, reused rather than invented again — it is already this
+     site's one idiom for "this is a tab, not a label." Neutral ink on
+     hover; amber stays reserved for the open tab, exactly as the header
+     strip's marker reserves it for the open section. */
+  .case-tab {
+    position: relative;
+  }
+  .case-tab__bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--color-rule-strong);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+  }
+  .case-tab:hover .case-tab__bar,
+  .case-tab:focus-visible .case-tab__bar {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .case-tab__bar {
+      transition: none;
+    }
+  }
+  .case-tab[aria-selected="true"] .case-tab__bar {
+    background: var(--color-caution);
+    transform: scaleX(1);
+    transition: none;
+  }
+
   /* ── Sheet: a page of the handbook ───────────────────────────────────── */
   .sheet {
     background: var(--color-sheet);

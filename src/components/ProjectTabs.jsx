@@ -236,13 +236,12 @@ export const ProjectTabs = ({ project }) => {
                             tabIndex={selected ? 0 : -1}
                             onClick={() => setActive(t.key)}
                             onKeyDown={(e) => onKeyDown(e, i)}
-                            className={`placard pb-3 border-b-2 -mb-px transition-colors ${
-                                selected
-                                    ? "text-ink border-caution"
-                                    : "text-ink-faint border-transparent hover:text-ink"
+                            className={`case-tab placard pb-3 transition-colors ${
+                                selected ? "text-ink" : "text-ink-faint hover:text-ink"
                             }`}
                         >
                             {t.label}
+                            <span className="case-tab__bar" aria-hidden="true" />
                         </button>
                     );
                 })}

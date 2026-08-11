@@ -16,6 +16,7 @@ import { SectionHead, Status, Gauge, Check, Row, Notice, Arrow } from "@/compone
 import { useSeen, useCountUp, usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
 import { Entry } from "@/lib/sequence";
 import { tagBorderClass } from "@/lib/tagColors";
+import { trackEvent } from "@/lib/analytics";
 
 const COURSES = [
     {
@@ -272,6 +273,7 @@ export const Learning = ({ showHeader = true }) => {
                                 <Link
                                     to={to}
                                     onClick={(e) => {
+                                        trackEvent("project_case_study_opened", { project: project.name });
                                         if (opensElsewhere(e)) return;
                                         e.preventDefault();
                                         turn(to, project.id);

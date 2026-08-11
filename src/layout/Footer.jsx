@@ -3,10 +3,11 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { useSectionLink } from "@/lib/motion";
 import { TWIN_URL } from "@/lib/twin";
+import { trackEvent } from "@/lib/analytics";
 
 const socialLinks = [
-  { icon: FaGithub, href: "https://github.com/kervcodes", label: "GitHub" },
-  { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/kervintznoel/", label: "LinkedIn" },
+  { icon: FaGithub, href: "https://github.com/kervcodes", label: "GitHub", event: "github_click" },
+  { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/kervintznoel/", label: "LinkedIn", event: "linkedin_click" },
 ];
 
 // Mirrors the tab strip, in the same order as the page scrolls.
@@ -80,6 +81,7 @@ export const Footer = () => {
                   aria-label={social.label}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent(social.event, { source: "footer" })}
                   className="min-w-11 min-h-11 flex items-center justify-center text-panel-muted hover:text-panel-ink transition-colors"
                 >
                   <social.icon className="w-4 h-4" aria-hidden="true" />

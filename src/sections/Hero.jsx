@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/Button";
 import { Row, Check, Arrow } from "@/components/Checklist";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { trackEvent } from "@/lib/analytics";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // The first viewport is the checklist card itself: identity block, then four
@@ -14,8 +15,8 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 // ─────────────────────────────────────────────────────────────────────────────
 
 const socials = [
-  { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/kervintznoel/", label: "LinkedIn" },
-  { icon: FaGithub, href: "https://github.com/kervcodes", label: "GitHub" },
+  { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/kervintznoel/", label: "LinkedIn", event: "linkedin_click" },
+  { icon: FaGithub, href: "https://github.com/kervcodes", label: "GitHub", event: "github_click" },
 ];
 
 // ─── The one row on the card the visitor can run ─────────────────────────────
@@ -34,7 +35,10 @@ const ResumeRow = () => {
         <a
           href="/resume/kervintz_noel_resume.pdf"
           download="Kervintz_Noel_Resume.pdf"
-          onClick={() => setRequested(true)}
+          onClick={() => {
+            setRequested(true);
+            trackEvent("resume_download", { file: "Kervintz_Noel_Resume.pdf" });
+          }}
           className="inline-flex items-center gap-2 text-ink underline underline-offset-4 decoration-2 decoration-caution hover:decoration-ink"
         >
           Download PDF
@@ -122,6 +126,7 @@ export const Hero = () => (
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
+                  onClick={() => trackEvent(s.event, { source: "hero" })}
                   className="min-w-11 min-h-11 flex items-center justify-center text-ink-muted hover:text-ink transition-colors"
                 >
                   <s.icon className="w-4 h-4" aria-hidden="true" />

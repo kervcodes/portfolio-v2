@@ -3,6 +3,7 @@ import emailjs from "@emailjs/browser";
 import { Button } from "@/components/Button";
 import { Check } from "@/components/Checklist";
 import { Run, Step } from "@/lib/sequence";
+import { trackEvent } from "@/lib/analytics";
 
 // Contact runs on the charcoal panel: the OWN-WORLD promises placard charcoal
 // owning full-width bands, and the page's closing conversion is the right one
@@ -82,6 +83,7 @@ export const Contact = () => {
         type: "success",
         message: "Message sent — I read every one and reply personally.",
       });
+      trackEvent("contact_form_submit");
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {
       // err.text is an EmailJS internal string — logged, never shown.

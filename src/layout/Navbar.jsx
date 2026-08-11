@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
 import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { Arrow } from "@/components/Checklist";
 import { Button } from "@/components/Button";
 import { useSectionLink } from "@/lib/motion";
+import { TWIN_URL } from "@/lib/twin";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 // Section tabs, in scroll order. Root-relative so they work from /sprint and
@@ -175,6 +177,11 @@ export const Navbar = () => {
               </a>
             );
           })}
+          {TWIN_URL && (
+            <Link to="/twin" className="tab flex items-center">
+              AI Twin
+            </Link>
+          )}
           {/* Painted after the tabs so it sits above the pointer indicator.
               Positioned imperatively — its transform is measured layout, not
               rendered state, and it should not cost a render to move. */}
@@ -241,6 +248,19 @@ export const Navbar = () => {
                 </a>
               </li>
             ))}
+            {TWIN_URL && (
+              <li>
+                <Link
+                  to="/twin"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="chk py-4 border-b border-panel-2"
+                >
+                  <span className="chk__label text-panel-muted">AI Twin</span>
+                  <span className="chk__lead border-panel-2" aria-hidden="true" />
+                  <Arrow />
+                </Link>
+              </li>
+            )}
           </ul>
           <Button
             href="/#contact"

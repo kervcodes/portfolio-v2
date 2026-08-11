@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { useSectionLink } from "@/lib/motion";
+import { TWIN_URL } from "@/lib/twin";
 
 const socialLinks = [
   { icon: FaGithub, href: "https://github.com/kervcodes", label: "GitHub" },
@@ -57,6 +59,16 @@ export const Footer = () => {
                   </a>
                 </li>
               ))}
+              {TWIN_URL && (
+                <li>
+                  <Link
+                    to="/twin"
+                    className="placard text-panel-muted hover:text-panel-ink transition-colors"
+                  >
+                    AI Twin
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
 

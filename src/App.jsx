@@ -10,6 +10,7 @@ import { Footer } from "@/layout/Footer";
 import { PostDetail } from "@/pages/PostDetail";
 import { SprintPage } from "@/pages/SprintPage";
 import { ProjectCaseStudy } from "@/pages/ProjectCaseStudy";
+import { Twin } from "@/pages/Twin";
 import { NotFound } from "@/pages/NotFound";
 import { Posts } from "@/sections/Posts";
 // import { Projects } from "@/sections/Projects";
@@ -70,6 +71,7 @@ function App() {
           <Route path="/sprint" element={<SprintPage />} />
           <Route path="/posts/:slug" element={<PostDetail />} />
           <Route path="/projects/:slug" element={<ProjectCaseStudy />} />
+          <Route path="/twin" element={<Twin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MotionConfig>

@@ -7,7 +7,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 // /posts/:slug, where the anchors do not exist on the page.
 const navLinks = [
   { href: "/#about", label: "About" },
-  { href: "/#experience", label: "Record" },
+  { href: "/#experience", label: "Experience" },
   { href: "/#learning", label: "Current" },
   { href: "/#posts", label: "Notes" },
 ];

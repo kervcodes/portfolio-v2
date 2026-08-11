@@ -10,7 +10,7 @@ const socialLinks = [
 // Mirrors the tab strip, in the same order as the page scrolls.
 const footerLinks = [
   { href: "/#about", label: "About" },
-  { href: "/#experience", label: "Record" },
+  { href: "/#experience", label: "Experience" },
   { href: "/#learning", label: "Current" },
   { href: "/#posts", label: "Notes" },
   { href: "/#contact", label: "Contact" },

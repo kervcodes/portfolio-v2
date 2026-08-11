@@ -57,3 +57,7 @@ npm run dev
 ## Deployment
 
 Configured for both Netlify (`netlify.toml`) and Vercel (`vercel.json`), each set up as a single-page app with all routes rewritten to `index.html`.
+
+## Design
+
+The visual design — the "Pre-Flight Checklist" theme (checklist rows, leader dots, placard charcoal, state-only colour) — is developed and kept consistent with Impeccable, which maintains the design system definition in `.impeccable/design.json` and critiques changes against it.

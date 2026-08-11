@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { SectionHead, Status, Gauge, Check, Row, Notice, Arrow } from "@/components/Checklist";
 import { useSeen, useCountUp, usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
 import { Entry } from "@/lib/sequence";
+import { tagBorderClass } from "@/lib/tagColors";
 
 const COURSES = [
     {
@@ -217,11 +218,11 @@ export const Learning = ({ showHeader = true }) => {
                                         <p className="text-sm font-bold text-ink leading-snug">
                                             {course.name}
                                         </p>
-                                        <ul className="mt-1 flex flex-wrap gap-x-2.5">
+                                        <ul className="mt-1.5 flex flex-wrap gap-1.5">
                                             {course.tags.map((tag) => (
                                                 <li
                                                     key={tag}
-                                                    className="placard text-ink-faint after:content-['·'] after:ml-2.5 last:after:content-['']"
+                                                    className={`placard text-ink-faint border px-2 py-0.5 ${tagBorderClass(tag)}`}
                                                 >
                                                     {tag}
                                                 </li>
@@ -319,11 +320,11 @@ export const Learning = ({ showHeader = true }) => {
                                         ))}
                                     </ul>
 
-                                    <ul className="mt-4 flex flex-wrap gap-x-3 gap-y-1">
+                                    <ul className="mt-4 flex flex-wrap gap-2">
                                         {project.stack.map((s) => (
                                             <li
                                                 key={s}
-                                                className="placard text-ink-faint after:content-['·'] after:ml-3 last:after:content-['']"
+                                                className={`placard text-ink-faint border px-2.5 py-1 ${tagBorderClass(s)}`}
                                             >
                                                 {s}
                                             </li>

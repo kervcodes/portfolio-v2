@@ -1,5 +1,6 @@
 import { SectionHead, Status } from "@/components/Checklist";
 import { Entry } from "@/lib/sequence";
+import { tagBorderClass } from "@/lib/tagColors";
 
 // NOTE: product names stay out of this file until domains and trademarks are
 // secured. Describe the work, not the brands.
@@ -97,11 +98,11 @@ export const Experience = () => (
               <p className="mt-3 text-sm text-ink-muted leading-relaxed max-w-[62ch]">
                 {exp.description}
               </p>
-              <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1">
+              <ul className="mt-3 flex flex-wrap gap-2">
                 {exp.technologies.map((tech) => (
                   <li
                     key={tech}
-                    className="placard text-ink-faint after:content-['·'] after:ml-3 last:after:content-['']"
+                    className={`placard text-ink-faint border px-2.5 py-1 ${tagBorderClass(tech)}`}
                   >
                     {tech}
                   </li>

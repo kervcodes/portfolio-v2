@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button";
 import { SectionHead, Row } from "@/components/Checklist";
 import { Run, Step } from "@/lib/sequence";
+import { tagBorderClass } from "@/lib/tagColors";
 
 const tools = [
   "React", "Next.js", "Node.js", "TypeScript",
@@ -90,11 +91,11 @@ export const About = () => (
           </Run>
 
           <p className="placard text-ink-faint mt-8">Working set</p>
-          <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
+          <ul className="mt-3 flex flex-wrap gap-2">
             {tools.map((tool) => (
               <li
                 key={tool}
-                className="font-mono text-xs text-ink-muted after:content-['·'] after:ml-3 after:text-ink-faint last:after:content-['']"
+                className={`placard text-ink-faint border px-2.5 py-1 ${tagBorderClass(tool)}`}
               >
                 {tool}
               </li>

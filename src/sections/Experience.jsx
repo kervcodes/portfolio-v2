@@ -11,8 +11,8 @@ const experiences = [
     company: "Self-Directed",
     place: "Boston, MA",
     description:
-      "After my role at Liberty Mutual ended in June 2025, I kept building. Four independent products across mobile, web, and infrastructure — each owned end to end, from architecture through release — while taking contract work to stay afloat. Currently working through a self-directed AI engineering sprint: six courses, and four production projects planned, built in public.",
-    technologies: ["React Native", "Next.js", "AWS", "TypeScript", "Supabase"],
+      "Building across mobile, web, and infrastructure, with four independent products owned end to end — from architecture and implementation through testing and release. Currently expanding that work into AI engineering through a focused program of advanced coursework and production-oriented projects built in public",
+    technologies: ["React", "React Native", "Next.js", "AWS", "TypeScript", "Supabase"],
     current: true,
   },
   {

@@ -50,7 +50,7 @@ export const PROJECTS = [
                     { type: "heading", text: "Why I could build this" },
                     {
                         type: "paragraph",
-                        text: "Four years of on-call and production troubleshooting at Liberty Mutual across four SRE teams (Pulse system health, Datadog/BigPanda monitoring, incident response) means I know what a real runbook needs to contain, and where the generic version fails: unlabeled risk on suggested commands, causes that ignore the specific service, escalation guidance that's really just \"ask someone else.\"",
+                        text: "Four years of on-call and production troubleshooting at a Fortune 100 company across four SRE teams (Pulse system health, Datadog/BigPanda monitoring, incident response) means I know what a real runbook needs to contain, and where the generic version fails: unlabeled risk on suggested commands, causes that ignore the specific service, escalation guidance that's really just \"ask someone else.\"",
                     },
                 ],
             },

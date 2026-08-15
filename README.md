@@ -17,11 +17,12 @@ Live: [kervintznoel.com](https://kervintznoel.com)
 ## Routes
 
 | Path | Renders |
-|---|---|
+| --- | --- |
 | `/` | Home page — Hero, About, Experience, Learning, Posts, Contact |
 | `/posts/:slug` | Full blog post |
 | `/projects/:slug` | Project case study (five tabs: Problem, Architecture, Key Decisions, Build Log, Result) |
 | `/sprint` | Standalone sprint page |
+| `/twin` | AI digital twin page |
 | `*` | 404 |
 
 Content for posts and project case studies lives in `src/data/posts.js` and `src/data/projects.js` — each file is documented inline with the shape new entries should follow.
@@ -48,7 +49,7 @@ npm run dev
 ## Scripts
 
 | Command | Description |
-|---|---|
+| --- | --- |
 | `npm run dev` | Start the Vite dev server |
 | `npm run build` | Production build to `dist/` |
 | `npm run preview` | Preview the production build locally |

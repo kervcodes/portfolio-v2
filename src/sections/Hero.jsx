@@ -113,7 +113,7 @@ export const Hero = () => (
           </p>
           <p className="mt-4 text-sm leading-relaxed text-ink-muted">
             Years of enterprise IT and infrastructure work, then site
-            reliability engineering at Liberty Mutual — investigating
+            reliability engineering at a Fortune 100 company — investigating
             production failures across distributed cloud services. Now I build
             full-stack products end to end.
           </p>

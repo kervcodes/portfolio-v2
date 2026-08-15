@@ -43,10 +43,7 @@ export const About = () => (
             about reliability first.
           </p>
           <p className="text-ink">
-            The engineering came at Liberty Mutual, where I moved from support
-            into platform and site reliability engineering — investigating
-            production failures across distributed cloud services and building
-            the internal tooling to see them coming.
+            I grew from technical support into platform and site reliability engineering, troubleshooting production failures across distributed cloud services and building internal tools that improved visibility into system health and operational issues.
           </p>
           <p>
             Outside of code, you'll find me doing lawn care, knee-deep in a

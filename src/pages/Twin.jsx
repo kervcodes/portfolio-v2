@@ -26,6 +26,7 @@ export const Twin = () => (
             <iframe
                 src={embedSrc}
                 title="Kervintz's AI digital twin"
+                frameBorder="0"
                 className="flex-1 w-full border-0"
                 style={{ minHeight: "calc(100vh - 4rem)" }}
             />

@@ -1,4 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5a27cdc6-4cd4-4b27-bda1-916aa1fcfa4a/deploy-status)](https://app.netlify.com/projects/jovial-ptolemy-191d4d/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5a27cdc6-4cd4-4b27-bda1-916aa1fcfa4a/deploy-status)](https://app.netlify.com/projects/jovial-ptolemy-191d4d/deploys) [![Deploy to Hugging Face Space](https://github.com/kervcodes/Digital-Twin/actions/workflows/update_space.yml/badge.svg)](https://github.com/kervcodes/Digital-Twin/actions/workflows/update_space.yml)
 
 # Kervintz Noel — Portfolio
 

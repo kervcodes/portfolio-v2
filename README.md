@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5a27cdc6-4cd4-4b27-bda1-916aa1fcfa4a/deploy-status)](https://app.netlify.com/projects/jovial-ptolemy-191d4d/deploys)
+
 # Kervintz Noel — Portfolio
 
 Personal portfolio site for Kervintz Noel, software engineer. Built as a single-page app with a checklist/handbook visual theme, plus routed pages for blog posts and project case studies.

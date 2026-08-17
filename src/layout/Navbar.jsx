@@ -155,7 +155,7 @@ export const Navbar = () => {
               KERVINTZ NOEL
             </span>
             <span className="placard block text-panel-muted leading-tight">
-              Software Engineer
+              AI Solutions Engineer
             </span>
           </span>
         </a>

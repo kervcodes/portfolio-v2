@@ -334,7 +334,7 @@ export const Learning = ({ showHeader = true }) => {
                                     </ul>
 
                                     <p className="mt-5 rule-sub pt-3 placard text-ink group-hover:text-caution-ink transition-colors inline-flex items-center gap-2">
-                                        View case study
+                                        View build brief
                                         <Arrow />
                                     </p>
                                 </Link>

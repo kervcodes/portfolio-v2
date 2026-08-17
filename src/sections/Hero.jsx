@@ -72,7 +72,7 @@ export const Hero = () => (
               Noel
             </h1>
             <p className="mt-4 rule-sub placard text-ink">
-              Software Engineer — Pre-Flight Checklist
+              AI Solutions Engineer — Pre-Flight Checklist
             </p>
           </div>
 
@@ -85,7 +85,7 @@ export const Hero = () => (
               Boston, Massachusetts
             </Row>
             <Row label="Discipline" size="lg">
-              Full-stack &amp; Site Reliability
+              AI Workflows &amp; Production Reliability
             </Row>
             <Row label="Experience" size="lg">
               <span className="nums">12</span> years
@@ -109,13 +109,15 @@ export const Hero = () => (
         {/* ── The note beside the card ── */}
         <div className="lg:col-span-4">
           <p className="rule-head text-base md:text-lg leading-relaxed text-ink">
-            I ran production systems before I built them.
+            I design, implement, and stabilize AI-powered workflows for real
+            business operations.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-ink-muted">
-            Years of enterprise IT and infrastructure work, then site
-            reliability engineering at a Fortune 100 company — investigating
-            production failures across distributed cloud services. Now I build
-            full-stack products end to end.
+            I combine software engineering, production reliability, API
+            integration, and customer-facing troubleshooting to turn AI
+            prototypes into dependable systems — grounded in site reliability
+            engineering at a Fortune 100 company and years supporting
+            enterprise legal technology platforms.
           </p>
 
           <ul className="mt-6 rule-sub pt-4 flex items-center gap-4">

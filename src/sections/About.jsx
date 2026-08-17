@@ -35,15 +35,17 @@ export const About = () => (
           </blockquote>
 
           <p>
-            I built my technical foundation through years of hands-on IT and
-            systems work at Hamilton Brook Smith Reynolds, MassArt, and Brown
-            Rudnick — Active Directory, desktop infrastructure, ticketing
-            systems, Windows Server, VMware, and the full lifecycle of
-            onboarding and offboarding users. That grounding is why I think
-            about reliability first.
+            Customer support and years supporting enterprise legal technology
+            at Hamilton Brook Smith Reynolds and Brown Rudnick gave me
+            empathy for the people using what I build — I was the first call
+            when something broke for a real user. Site reliability
+            engineering at a Fortune 100 company gave me production
+            judgment: how systems actually fail, and what it takes to keep
+            them running.
           </p>
           <p className="text-ink">
-            I grew from technical support into platform and site reliability engineering, troubleshooting production failures across distributed cloud services and building internal tools that improved visibility into system health and operational issues.
+            Now I build the software and AI systems myself, so I own the
+            whole thing end to end.
           </p>
           <p>
             Outside of code, you'll find me doing lawn care, knee-deep in a

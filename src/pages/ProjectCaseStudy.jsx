@@ -75,7 +75,7 @@ export const ProjectCaseStudy = () => {
 
     const description =
         project.tabs.problem?.content?.find((b) => b.type === "paragraph")
-            ?.text ?? `${project.name} — a case study by Kervintz Noel.`;
+            ?.text ?? `${project.name} — a build brief by Kervintz Noel.`;
 
     return (
         <Shell>
@@ -91,7 +91,7 @@ export const ProjectCaseStudy = () => {
                         className="flex flex-wrap items-baseline justify-between gap-3"
                         style={paired ? { viewTransitionName: "project-stamp" } : undefined}
                     >
-                        <p className="placard nums text-ink-faint">Case study</p>
+                        <p className="placard nums text-ink-faint">Build brief</p>
                         <Status kind={project.status} />
                     </div>
                     <h1

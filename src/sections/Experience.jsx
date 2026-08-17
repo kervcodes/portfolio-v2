@@ -59,7 +59,7 @@ export const Experience = () => (
       <SectionHead
         index="02"
         title="Record"
-        lede="Twelve years from help desk to site reliability engineering — the roles where I learned how production systems actually break."
+        lede="Twelve years from help desk to site reliability engineering to independent AI and software engineering — the roles where I learned how production systems actually break, and how to build them so they don't."
       />
 
       {/* Each role is an entry in the record: the period is the response, the

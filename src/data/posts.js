@@ -32,7 +32,10 @@ export const POSTS = [
         tags: ["AI Engineering", "Career", "Building in Public"],
         readTime: "6 min read",
         comingSoon: false,
-        featured: true,
+        featured: false,
+        unlisted: true, // ← kept in the repo and reachable by direct link, just not
+                        //   shown in the Notes list — not the first thing recruiters
+                        //   should see during an active search.
         hashnodeUrl: null, // ← set when published to Hashnode
         coverImage: "/posts/post-1/cover.png",
         visibleBlocks: 1,
@@ -148,6 +151,20 @@ export const POSTS = [
                 text: "Here's to year two being different. I believe in myself and I will prevail.",
             },
         ],
+    },
+    {
+        slug: "longevity-in-ai-software-development",
+        title: "How I Think About Longevity for Software Development With AI",
+        excerpt:
+            "Notes on what \"built to last\" means when part of the system is a model, not just code.",
+        date: "Sep 2026",
+        tags: ["AI Engineering", "Software Longevity"],
+        readTime: "6 min read",
+        comingSoon: true,
+        featured: true,
+        hashnodeUrl: null,
+        coverImage: null,
+        content: [],
     },
     // {
     //     slug: "sre-runbook-ai-building-the-tool-i-wish-i-had",

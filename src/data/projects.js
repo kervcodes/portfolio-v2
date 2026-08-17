@@ -42,7 +42,7 @@ export const PROJECTS = [
                         type: "paragraph",
                         text: "On-call engineers at any team running production services with paging (Datadog, PagerDuty, CloudWatch). Teams without a dedicated incident commander feel it hardest, since there's no one to do the triage thinking for you.",
                     },
-                    { type: "heading", text: "What I built" },
+                    { type: "heading", text: "What I'm building" },
                     {
                         type: "paragraph",
                         text: "A tool that takes a raw alert (the actual payload or copied text, not a cleaned-up description) and returns a structured runbook in seconds: likely causes ranked by confidence, concrete next steps flagged by risk (safe to run vs. destructive), an escalation recommendation, and a draft status update. A second mode turns incident notes into a postmortem using the same \"structure, not prose\" approach.",

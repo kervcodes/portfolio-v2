@@ -12,8 +12,8 @@ import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
 import { Entry } from "@/lib/sequence";
 
 export const Posts = () => {
-    const published = POSTS.filter((p) => !p.comingSoon);
-    const upcoming = POSTS.filter((p) => p.comingSoon);
+    const published = POSTS.filter((p) => !p.comingSoon && !p.unlisted);
+    const upcoming = POSTS.filter((p) => p.comingSoon && !p.unlisted);
     // The entry becomes the procedure: while this card is the one being turned
     // to, its stamp and title carry the same names as the article's header.
     const turn = usePageTurn();

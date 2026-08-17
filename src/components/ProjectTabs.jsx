@@ -219,7 +219,7 @@ export const ProjectTabs = ({ project }) => {
         <div className="mt-12">
             <div
                 role="tablist"
-                aria-label={`${project.name} case study sections`}
+                aria-label={`${project.name} build brief sections`}
                 className="rule-head flex flex-wrap gap-x-6 gap-y-2"
             >
                 {TABS.map((t, i) => {

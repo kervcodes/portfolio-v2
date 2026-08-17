@@ -1,16 +1,29 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
 import App from './App.jsx'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 
-createRoot(document.getElementById('root')).render(
+const app = (
   <StrictMode>
     <ErrorBoundary>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </HelmetProvider>
     </ErrorBoundary>
-  </StrictMode>,
+  </StrictMode>
 )
+
+const root = document.getElementById('root')
+
+// Prerendered routes ship with real markup already in root — hydrate it
+// instead of wiping and re-rendering from scratch.
+if (root.hasChildNodes()) {
+  hydrateRoot(root, app)
+} else {
+  createRoot(root).render(app)
+}

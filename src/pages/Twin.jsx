@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { TWIN_URL } from "@/lib/twin";
@@ -22,6 +23,13 @@ const embedSrc = TWIN_URL
 
 export const Twin = () => (
     <Shell>
+        <Helmet>
+            <title>AI Digital Twin | Kervintz Noel</title>
+            <meta
+                name="description"
+                content="Talk to an AI-powered digital twin of Kervintz Noel — ask about his engineering background, projects, and career transition into AI."
+            />
+        </Helmet>
         {TWIN_URL ? (
             <iframe
                 src={embedSrc}

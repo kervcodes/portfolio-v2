@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { getPostBySlug } from "@/data/posts";
@@ -102,6 +103,10 @@ const BackLink = ({ className = "", turnKey }) => {
 // ─── Not written yet ──────────────────────────────────────────────────────────
 const ComingSoonPage = ({ post }) => (
     <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
+        <Helmet>
+            <title>{`${post.title} | Kervintz Noel`}</title>
+            <meta name="description" content={post.excerpt} />
+        </Helmet>
         <div className="sheet p-6 md:p-10">
             <Status kind="standby">Not written yet</Status>
             <h1 className="mt-4 text-2xl md:text-4xl font-bold text-ink leading-tight tracking-tight max-w-[28ch]">
@@ -123,6 +128,10 @@ const ComingSoonPage = ({ post }) => (
 // ─── 404 ──────────────────────────────────────────────────────────────────────
 const NotFoundPage = () => (
     <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
+        <Helmet>
+            <title>Note Not Found | Kervintz Noel</title>
+            <meta name="robots" content="noindex" />
+        </Helmet>
         <div className="notice notice--warning">
             <p className="notice__band">No such entry</p>
             <div className="px-5 py-6">
@@ -164,6 +173,10 @@ export const PostDetail = () => {
 
     return (
         <Shell>
+            <Helmet>
+                <title>{`${post.title} | Kervintz Noel`}</title>
+                <meta name="description" content={post.excerpt} />
+            </Helmet>
             <article className="max-w-5xl mx-auto px-5 md:px-6 py-12 md:py-16">
                 <BackLink className="inline-block mb-8" turnKey={slug} />
 

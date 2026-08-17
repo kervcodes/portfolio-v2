@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { Arrow } from "@/components/Checklist";
@@ -16,6 +17,10 @@ const Shell = ({ children }) => (
 // <Routes> matches nothing and renders an empty page under the app shell.
 export const NotFound = () => (
     <Shell>
+        <Helmet>
+            <title>Page Not Found | Kervintz Noel</title>
+            <meta name="robots" content="noindex" />
+        </Helmet>
         <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
             <div className="notice notice--warning">
                 <p className="notice__band">404</p>

@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { getProjectBySlug } from "@/data/projects";
@@ -34,6 +35,10 @@ const BackLink = ({ className = "", turnKey }) => {
 // ─── 404 ──────────────────────────────────────────────────────────────────────
 const NotFoundPage = () => (
     <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
+        <Helmet>
+            <title>Project Not Found | Kervintz Noel</title>
+            <meta name="robots" content="noindex" />
+        </Helmet>
         <div className="notice notice--warning">
             <p className="notice__band">No such project</p>
             <div className="px-5 py-6">
@@ -68,8 +73,16 @@ export const ProjectCaseStudy = () => {
 
     if (!project) return <Shell><NotFoundPage /></Shell>;
 
+    const description =
+        project.tabs.problem?.content?.find((b) => b.type === "paragraph")
+            ?.text ?? `${project.name} — a case study by Kervintz Noel.`;
+
     return (
         <Shell>
+            <Helmet>
+                <title>{`${project.name} | Kervintz Noel`}</title>
+                <meta name="description" content={description} />
+            </Helmet>
             <article className="max-w-5xl mx-auto px-5 md:px-6 py-12 md:py-16">
                 <BackLink className="inline-block mb-8" turnKey={slug} />
 

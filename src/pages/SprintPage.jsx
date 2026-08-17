@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { Learning } from "@/sections/Learning";
@@ -33,6 +34,13 @@ const SprintHero = () => (
 
 export const SprintPage = () => (
     <div className="min-h-screen overflow-x-hidden flex flex-col">
+        <Helmet>
+            <title>AI Engineer Sprint | Kervintz Noel</title>
+            <meta
+                name="description"
+                content="Six courses, real projects, no deadline. What I'm building right now, in public, moving from SRE into AI engineering."
+            />
+        </Helmet>
         <Navbar />
         <main className="flex-1">
             <SprintHero />

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { LazyMotion, MotionConfig, domAnimation } from "motion/react";
 import { useNavigationContinuity } from "@/lib/motion";
 import { useAnalytics } from "@/hooks/useAnalytics";
@@ -37,6 +38,13 @@ import { Learning } from "@/sections/Learning";
 // Projects stays out until the product names are cleared — see PRODUCT.md.
 const HomePage = () => (
   <div className="min-h-screen overflow-x-hidden flex flex-col">
+    <Helmet>
+      <title>Kervintz Noel | Software Engineer</title>
+      <meta
+        name="description"
+        content="Kervintz Noel — software engineer in Boston. Twelve years from enterprise IT to site reliability engineering. Open to full-time engineering roles."
+      />
+    </Helmet>
     <Navbar />
     <main className="flex-1">
       <Hero />

@@ -165,7 +165,7 @@ const SprintSummary = () => {
 };
 
 // ─── Section ──────────────────────────────────────────────────────────────────
-export const Learning = ({ showHeader = true }) => {
+export const Learning = ({ showHeader = true, showCourses = true }) => {
     // The project card becomes the case study's header the same way a Notes
     // card becomes an article's header: paired by slug, only while the turn
     // to it is in flight.
@@ -179,7 +179,11 @@ export const Learning = ({ showHeader = true }) => {
                 <SectionHead
                     index="03"
                     title="Current"
-                    lede="Six AI engineering courses, and four production projects planned — the first is underway. Started June 2026 and still running; no deadline, I move course by course."
+                    lede={
+                        showCourses
+                            ? "Six AI engineering courses, and four production projects planned — the first is underway. Started June 2026 and still running; no deadline, I move course by course."
+                            : "Four production projects planned — the first is underway. Started June 2026 and still running; no deadline."
+                    }
                 />
             )}
 
@@ -191,15 +195,18 @@ export const Learning = ({ showHeader = true }) => {
                 label="In progress"
                 className={showHeader ? "mt-10" : ""}
             >
-                Nothing in this section is finished. It's a live record of work
-                underway — the numbers below move as I go, and they're derived
-                from the same data I'm tracking, not written by hand.
+                {showCourses
+                    ? "Nothing in this section is finished. It's a live record of work underway — the numbers below move as I go, and they're derived from the same data I'm tracking, not written by hand."
+                    : "Nothing in this section is finished. It's a live record of work underway."}
             </Notice>
 
-            {/* ── Summary: one number, honestly derived ── */}
-            <SprintSummary />
+            {/* ── Summary: one number, honestly derived. Full course dashboard
+                is kept off the homepage — see the note in App.jsx — and still
+                lives in full at /sprint. ── */}
+            {showCourses && <SprintSummary />}
 
             {/* ── Courses: a numbered procedure, one column ── */}
+            {showCourses && (
             <div className="mt-10">
                 <p className="placard text-ink-faint">Courses</p>
                 <ol className="mt-3">
@@ -253,6 +260,7 @@ export const Learning = ({ showHeader = true }) => {
                     })}
                 </ol>
             </div>
+            )}
 
             {/* ── Projects ── */}
             <div className="mt-12">

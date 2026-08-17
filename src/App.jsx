@@ -50,7 +50,10 @@ const HomePage = () => (
       <Hero />
       <About />
       <Experience />
-      <Learning />
+      {/* Course dashboard (hours, sprint %, per-course bars) reads as
+          coursework-in-progress rather than evidence, so it stays off the
+          homepage. The full breakdown is still public at /sprint. */}
+      <Learning showCourses={false} />
       <Posts />
       {/* <Projects /> */}
       <Contact />

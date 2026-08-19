@@ -17,7 +17,6 @@ const template = fs.readFileSync(path.join(distDir, "index.html"), "utf-8");
 
 const routes = [
   "/",
-  "/sprint",
   "/twin",
   ...POSTS.map((p) => `/posts/${p.slug}`),
   ...PROJECTS.map((p) => `/projects/${p.slug}`),

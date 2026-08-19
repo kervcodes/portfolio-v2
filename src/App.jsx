@@ -12,7 +12,6 @@ import { Experience } from "@/sections/Experience";
 import { Contact } from "@/sections/Contact";
 import { Footer } from "@/layout/Footer";
 import { PostDetail } from "@/pages/PostDetail";
-import { SprintPage } from "@/pages/SprintPage";
 import { ProjectCaseStudy } from "@/pages/ProjectCaseStudy";
 import { Twin } from "@/pages/Twin";
 import { NotFound } from "@/pages/NotFound";
@@ -85,7 +84,6 @@ function App() {
       <MotionConfig reducedMotion="user">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/sprint" element={<SprintPage />} />
           <Route path="/posts/:slug" element={<PostDetail />} />
           <Route path="/projects/:slug" element={<ProjectCaseStudy />} />
           <Route path="/twin" element={<Twin />} />

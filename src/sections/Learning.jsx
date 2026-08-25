@@ -18,19 +18,19 @@ import { trackEvent } from "@/lib/analytics";
 
 const PROJECTS = [
     {
-        id: "sre-runbook-ai",
-        name: "SRE Runbook AI",
+        id: "local-bank-statement-analyzer",
+        name: "Local Bank Statement Analyzer",
         description:
-            "Paste an incident alert, get a structured runbook and postmortem back instantly. A Next.js app powered by the Claude API — built from five years of real incident response.",
+            "Import months or years of bank and credit-card statements and get one consolidated, local view of your finances across every account. Deterministic Python parses and reconciles the numbers; AI is used only for interpretation, and PII never leaves the machine.",
         phase: "Project 01",
         status: "active",
-        stack: ["Next.js", "Claude API", "Supabase", "Tailwind CSS", "Vercel"],
+        stack: ["Python", "uv", "PyMuPDF", "Pydantic", "Polars", "pytest", "Ruff"],
         milestones: [
-            { label: "Define alert schema and runbook output format", done: false },
-            { label: "Build Claude API integration with structured prompts", done: false },
-            { label: "Create UI: paste alert, get runbook", done: false },
-            { label: "Add postmortem generation mode", done: false },
-            { label: "Deploy with a live demo", done: false },
+            { label: "Extract raw transactions from PDF/CSV statements", done: false },
+            { label: "Define and validate a normalized transaction schema", done: false },
+            { label: "Merge multi-account, multi-month statements and reconcile against balances", done: false },
+            { label: "Detect recurring expenses, duplicates, and spending categories", done: false },
+            { label: "Strip PII and generate a consolidated financial report", done: false },
         ],
         demoUrl: null,
         githubUrl: null,

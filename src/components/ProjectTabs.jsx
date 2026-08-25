@@ -45,12 +45,6 @@ const ProblemPanel = ({ project }) => {
             {content.map((block, i) => (
                 <ContentBlock key={i} block={block} />
             ))}
-            {project.stack?.length > 0 && (
-                <p className="text-sm text-ink-faint">
-                    <span className="placard text-ink-faint mr-2">Stack</span>
-                    {project.stack.join(", ")}
-                </p>
-            )}
         </>
     );
 };

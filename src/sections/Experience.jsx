@@ -1,6 +1,6 @@
 import { SectionHead, Status } from "@/components/Checklist";
 import { Entry } from "@/lib/sequence";
-import { tagBorderClass } from "@/lib/tagColors";
+import { Tag } from "@/components/Tag";
 
 // NOTE: product names stay out of this file until domains and trademarks are
 // secured. Describe the work, not the brands.
@@ -100,12 +100,7 @@ export const Experience = () => (
               </p>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {exp.technologies.map((tech) => (
-                  <li
-                    key={tech}
-                    className={`placard text-ink-faint border px-2.5 py-1 ${tagBorderClass(tech)}`}
-                  >
-                    {tech}
-                  </li>
+                  <Tag key={tech} label={tech} />
                 ))}
               </ul>
             </div>

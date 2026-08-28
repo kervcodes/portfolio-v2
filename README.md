@@ -39,11 +39,26 @@ src/
   components/   Reusable UI (buttons, tag chips, checklist rows, error boundary)
   data/         Posts and project case studies (single source of truth)
   layout/       Navbar, Footer
-  lib/          Motion helpers, scroll/navigation continuity, tag color mapping
+  lib/          Motion helpers, scroll/navigation continuity, tag color + glossary
   pages/        Routed pages (post detail, case study, sprint, 404)
   sections/     Homepage sections (Hero, About, Experience, Learning, Posts, Contact)
   entry-server.jsx  SSR entry used only by the prerender step (not shipped to the browser)
 ```
+
+## Tag chips
+
+Tech/skill tags render through one component, `src/components/Tag.jsx`:
+
+- **Colour** comes from `src/lib/tagColors.js` — a fixed colour for known
+  tools, a stable hash for anything else. Identity, not status.
+- **Definition** comes from `src/lib/tagGlossary.js` — a one-line description
+  shown on hover or keyboard focus. Tags without an entry there still render;
+  they just have no tooltip.
+
+The project cards in the Current section use plain chips instead of `Tag`:
+the whole card is a link, and a focusable tooltip trigger nested inside an
+`<a>` is invalid content. Those same tags show tooltips on the case study
+page, where they aren't inside a link.
 
 ## Getting started
 

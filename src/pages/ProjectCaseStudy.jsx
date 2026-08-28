@@ -5,8 +5,8 @@ import { Footer } from "@/layout/Footer";
 import { getProjectBySlug } from "@/data/projects";
 import { Status, Arrow } from "@/components/Checklist";
 import { ProjectTabs } from "@/components/ProjectTabs";
+import { Tag } from "@/components/Tag";
 import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
-import { tagBorderClass } from "@/lib/tagColors";
 
 // The card lives in the Learning section, so that's where Back returns to.
 const BACK_TO = "/#learning";
@@ -106,12 +106,7 @@ export const ProjectCaseStudy = () => {
 
                 <ul className="mt-16 flex flex-wrap gap-2">
                     {project.stack.map((s) => (
-                        <li
-                            key={s}
-                            className={`placard text-ink-faint border px-2.5 py-1 ${tagBorderClass(s)}`}
-                        >
-                            {s}
-                        </li>
+                        <Tag key={s} label={s} />
                     ))}
                 </ul>
 

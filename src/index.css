@@ -262,6 +262,57 @@
     transition: none;
   }
 
+  /* ── Tag glossary tooltip: a definition card pinned above the tag it
+     defines. Comes up on hover or keyboard focus (the host holds :focus-within
+     so tabbing to the chip inside is enough), never intercepts the pointer,
+     and collapses out of the layout when hidden. Prose, not a placard — so it
+     drops the mono caps and letter-spacing the chip carries. ─────────────── */
+  .tag-host {
+    position: relative;
+  }
+  .tag-tip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.5rem);
+    z-index: 40;
+    width: max-content;
+    max-width: 16rem;
+    padding: 0.5rem 0.625rem;
+    border: 1px solid var(--color-rule-strong);
+    background: var(--color-sheet);
+    color: var(--color-ink-muted);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: normal;
+    text-transform: none;
+    text-align: left;
+    box-shadow:
+      0 1px 1px color-mix(in srgb, var(--color-ink) 4%, transparent),
+      0 8px 20px -10px color-mix(in srgb, var(--color-ink) 22%, transparent);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(0.15rem);
+    transition:
+      opacity 140ms ease-out,
+      transform 140ms ease-out,
+      visibility 0s linear 140ms;
+  }
+  .tag-host:hover .tag-tip,
+  .tag-host:focus-within .tag-tip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    transition-delay: 0s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tag-tip {
+      transition: none;
+      transform: translateX(-50%);
+    }
+  }
+
   /* ── Sheet: a page of the handbook ───────────────────────────────────── */
   .sheet {
     background: var(--color-sheet);

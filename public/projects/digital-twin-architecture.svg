@@ -1,0 +1,70 @@
+<svg viewBox="0 0 1000 480" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,'Segoe UI',sans-serif">
+  <rect width="1000" height="480" fill="#fbfbfc"/>
+
+  <!-- ================= REQUEST PATH ================= -->
+  <text x="24" y="34" fill="#5b5f68" font-size="11" font-weight="700" letter-spacing="2">REQUEST PATH</text>
+
+  <!-- Visitor -->
+  <rect x="24" y="54" width="150" height="72" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="99" y="95" text-anchor="middle" fill="#1c1f26" font-size="15" font-weight="700">Visitor</text>
+
+  <path d="M174 90 H206" stroke="#1c1f26" stroke-width="1.5"/>
+  <path d="M203 85 L211 90 L203 95 Z" fill="#1c1f26"/>
+
+  <!-- Portfolio SPA -->
+  <rect x="212" y="54" width="200" height="72" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="312" y="87" text-anchor="middle" fill="#1c1f26" font-size="14" font-weight="700">kervintznoel.com/twin</text>
+  <text x="312" y="106" text-anchor="middle" fill="#5b5f68" font-size="11">portfolio-v2 &#183; React SPA</text>
+
+  <path d="M412 90 H470" stroke="#1c1f26" stroke-width="1.5"/>
+  <path d="M467 85 L475 90 L467 95 Z" fill="#1c1f26"/>
+  <text x="441" y="81" text-anchor="middle" fill="#5b5f68" font-size="10">iframe</text>
+  <text x="441" y="108" text-anchor="middle" fill="#5b5f68" font-size="10">?embedded=1</text>
+
+  <!-- HF Space container -->
+  <rect x="474" y="44" width="502" height="228" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="490" y="67" fill="#1c1f26" font-size="14" font-weight="700">Hugging Face Space</text>
+  <text x="490" y="84" fill="#5b5f68" font-size="11">Gradio &#183; app.py</text>
+
+  <rect x="490" y="96" width="470" height="46" fill="#fbfbfc" stroke="#d5d6d9" stroke-width="1"/>
+  <text x="502" y="116" fill="#1c1f26" font-size="12.5" font-weight="700">context.py</text>
+  <text x="502" y="133" fill="#5b5f68" font-size="11">linkedin.pdf + summary.txt &#8594; system prompt</text>
+
+  <rect x="490" y="150" width="470" height="46" fill="#fbfbfc" stroke="#d5d6d9" stroke-width="1"/>
+  <text x="502" y="170" fill="#1c1f26" font-size="12.5" font-weight="700">OpenAI chat.completions</text>
+  <text x="502" y="187" fill="#5b5f68" font-size="11">tool-calling loop &#8212; run tools, resend, until a plain answer</text>
+
+  <rect x="490" y="204" width="470" height="56" fill="#fbfbfc" stroke="#d5d6d9" stroke-width="1"/>
+  <text x="502" y="224" fill="#1c1f26" font-size="12.5" font-weight="700">tools.py</text>
+  <text x="502" y="241" fill="#5b5f68" font-size="11">record_user_details &#183; record_unknown_question</text>
+  <text x="502" y="255" fill="#5b5f68" font-size="11">&#8594; Pushover push notification</text>
+
+  <!-- ================= DEPLOY ================= -->
+  <line x1="24" y1="312" x2="976" y2="312" stroke="#d5d6d9" stroke-width="1"/>
+  <text x="24" y="340" fill="#5b5f68" font-size="11" font-weight="700" letter-spacing="2">DEPLOY &#8212; ON PUSH TO main</text>
+
+  <rect x="24" y="356" width="150" height="72" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="99" y="390" text-anchor="middle" fill="#1c1f26" font-size="13" font-weight="700">push to main</text>
+  <text x="99" y="408" text-anchor="middle" fill="#5b5f68" font-size="10.5">GitHub repo</text>
+
+  <path d="M174 392 H210" stroke="#1c1f26" stroke-width="1.5"/>
+  <path d="M207 387 L215 392 L207 397 Z" fill="#1c1f26"/>
+
+  <rect x="216" y="356" width="196" height="72" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="314" y="390" text-anchor="middle" fill="#1c1f26" font-size="13" font-weight="700">GitHub Actions</text>
+  <text x="314" y="408" text-anchor="middle" fill="#5b5f68" font-size="10.5">checkout &#183; strip .github</text>
+
+  <path d="M412 392 H448" stroke="#1c1f26" stroke-width="1.5"/>
+  <path d="M445 387 L453 392 L445 397 Z" fill="#1c1f26"/>
+
+  <rect x="454" y="356" width="214" height="72" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="561" y="390" text-anchor="middle" fill="#1c1f26" font-size="13" font-weight="700">orphan snapshot</text>
+  <text x="561" y="408" text-anchor="middle" fill="#5b5f68" font-size="10.5">squashed space-deploy branch</text>
+
+  <path d="M668 392 H704" stroke="#1c1f26" stroke-width="1.5"/>
+  <path d="M701 387 L709 392 L701 397 Z" fill="#1c1f26"/>
+
+  <rect x="710" y="356" width="266" height="72" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="843" y="390" text-anchor="middle" fill="#1c1f26" font-size="13" font-weight="700">force-push &#8594; HF Space</text>
+  <text x="843" y="408" text-anchor="middle" fill="#5b5f68" font-size="10.5">Kervcodes/kerv-digital-twin</text>
+</svg>

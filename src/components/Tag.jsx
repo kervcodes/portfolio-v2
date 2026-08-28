@@ -12,18 +12,19 @@ import { tagDescription } from "@/lib/tagGlossary";
 // brings up a one-line definition. A label with no glossary entry renders as
 // a plain chip, exactly as before.
 //
-// The definition bubble is centred on the chip, so a chip near a screen edge
-// (common on mobile) would push half the bubble past the viewport, where the
-// page's overflow guard clips it. `positionTip` measures the bubble when it
-// opens and nudges it back on-screen, and flips it below the chip when there
-// isn't room above.
+// The bubble is centred on the chip by CSS, which pushes it off-screen for a
+// chip near a viewport edge (common on mobile — the page has an overflow
+// guard that then clips it). On open, `positionTip` measures the bubble and
+// writes an explicit `left` that is clamped inside the viewport, and flips it
+// below the chip when there isn't room above. Position is set instantly with
+// no transition, so nothing can freeze it mid-animation.
 //
 // `as` controls the wrapper element — every current call site renders these
 // inside a <ul>, so the default is "li".
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Keep-on-screen margins, in px.
-const EDGE_PAD = 12;
+const EDGE_PAD = 12; // keep this far from the viewport edges
+const GAP = 8; // between chip and bubble
 const TOP_PAD = 72; // clears the sticky navbar
 
 export const Tag = ({ label, as: As = "li" }) => {
@@ -36,26 +37,21 @@ export const Tag = ({ label, as: As = "li" }) => {
         const host = tip?.parentElement;
         if (!tip || !host) return;
 
-        // Reset, then measure from the neutral position.
-        tip.style.setProperty("--tip-shift", "0px");
-        tip.dataset.place = "top";
-        const tipRect = tip.getBoundingClientRect();
-        const hostRect = host.getBoundingClientRect();
+        const h = host.getBoundingClientRect();
+        const w = tip.offsetWidth;
         const viewportW = document.documentElement.clientWidth;
 
-        let shift = 0;
-        if (tipRect.left < EDGE_PAD) {
-            shift = EDGE_PAD - tipRect.left;
-        } else if (tipRect.right > viewportW - EDGE_PAD) {
-            shift = viewportW - EDGE_PAD - tipRect.right;
-        }
-        if (shift) {
-            tip.style.setProperty("--tip-shift", `${Math.round(shift)}px`);
-        }
+        // Centre on the chip, then clamp the whole bubble into the viewport.
+        let left = h.left + h.width / 2 - w / 2;
+        left = Math.max(EDGE_PAD, Math.min(left, viewportW - EDGE_PAD - w));
 
-        if (hostRect.top - tipRect.height - 8 < TOP_PAD) {
-            tip.dataset.place = "bottom";
-        }
+        // `left` is relative to the host (the positioned ancestor). Kill the
+        // CSS centring transform now that we have an exact value.
+        tip.style.left = `${Math.round(left - h.left)}px`;
+        tip.style.transform = "none";
+
+        tip.dataset.place =
+            h.top - tip.offsetHeight - GAP < TOP_PAD ? "bottom" : "top";
     }, []);
 
     return (

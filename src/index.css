@@ -274,20 +274,21 @@
     transition: none;
   }
 
-  /* ── Tag glossary tooltip: a definition card pinned above the tag it
-     defines. Comes up on hover or keyboard focus (the host holds :focus-within
-     so tabbing to the chip inside is enough), never intercepts the pointer,
-     and collapses out of the layout when hidden. Prose, not a placard — so it
-     drops the mono caps and letter-spacing the chip carries.
+  /* ── Tag glossary tooltip: a definition card for a tech/skill chip. Comes
+     up on hover or keyboard focus (the host holds :focus-within so tabbing to
+     the chip inside is enough), never intercepts the pointer, and collapses
+     out of the layout when hidden. Prose, not a placard — so it drops the
+     mono caps and letter-spacing the chip carries.
 
-     `--tip-shift` is set by Tag.jsx to slide the bubble back on-screen when
-     the chip sits near a viewport edge; `[data-place="bottom"]` flips it under
-     the chip when there is no room above. ───────────────────────────────── */
+     CSS centres it on the chip; Tag.jsx then overwrites `left` / `transform`
+     with an exact value clamped inside the viewport, and sets
+     `[data-place="bottom"]` when there's no room above. Only `opacity`
+     transitions — position is set instantly, so it can't freeze
+     mid-animation off-screen. ─────────────────────────────────────────────── */
   .tag-host {
     position: relative;
   }
   .tag-tip {
-    --tip-shift: 0px;
     position: absolute;
     left: 50%;
     bottom: calc(100% + 0.5rem);
@@ -311,10 +312,9 @@
       0 8px 20px -10px color-mix(in srgb, var(--color-ink) 22%, transparent);
     opacity: 0;
     visibility: hidden;
-    transform: translateX(calc(-50% + var(--tip-shift))) translateY(0.15rem);
+    transform: translateX(-50%);
     transition:
       opacity 140ms ease-out,
-      transform 140ms ease-out,
       visibility 0s linear 140ms;
   }
   .tag-tip[data-place="bottom"] {
@@ -325,13 +325,11 @@
   .tag-host:focus-within .tag-tip {
     opacity: 1;
     visibility: visible;
-    transform: translateX(calc(-50% + var(--tip-shift))) translateY(0);
     transition-delay: 0s;
   }
   @media (prefers-reduced-motion: reduce) {
     .tag-tip {
       transition: none;
-      transform: translateX(calc(-50% + var(--tip-shift)));
     }
   }
 

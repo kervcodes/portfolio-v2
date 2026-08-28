@@ -8,19 +8,24 @@ rather than by release version.
 
 ### Added
 
+- **Experimental: tinted project cards.** Each project card in the Current
+  section gets a faint background colour, picked by a hash of its id the same
+  way tag chips pick their border colour. New `--color-tint-*` tokens (the
+  tag-accent hues at ~97% lightness) and `src/lib/projectTint.js`. Only the
+  Learning-section cards are affected; case study pages are untouched.
+
+## 2026-08
+
 - **Glossary tooltips on tech/skill tags.** Hovering — or keyboard-focusing —
   a tag chip in the About section, the Experience section, or a project case
-  study now shows a one-line definition of that technology. Definitions live
-  in `src/lib/tagGlossary.js`; the shared chip is `src/components/Tag.jsx`;
-  the tooltip styling is `.tag-tip` in `src/index.css`.
+  study shows a one-line definition of that technology. Definitions live in
+  `src/lib/tagGlossary.js`; the shared chip is `src/components/Tag.jsx`; the
+  tooltip styling is `.tag-tip` in `src/index.css`.
   - The project cards in the Current section keep **plain** chips. The whole
     card is a link, so a focusable tooltip trigger inside it would nest
     interactive elements. The same tags carry tooltips on the case study
     page, where they are not inside a link.
   - A tag with no glossary entry renders exactly as before, with no tooltip.
-
-## 2026-08
-
 - Added the **AI Digital Twin** as a shipped project: a full case study at
   `/projects/digital-twin` (with an architecture diagram) and a "Shipped"
   list at the top of the Current section.

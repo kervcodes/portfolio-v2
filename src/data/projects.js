@@ -66,6 +66,111 @@ export const PROJECTS = [
             result: {},
         },
     },
+    {
+        slug: "digital-twin",
+        name: "AI Digital Twin",
+        status: "verified", // shipped and live at /twin
+        stack: [
+            "Python",
+            "OpenAI API",
+            "Gradio",
+            "Hugging Face Spaces",
+            "GitHub Actions",
+            "uv",
+            "Pushover",
+        ],
+        tabs: {
+            problem: {
+                content: [
+                    { type: "heading", text: "The problem" },
+                    {
+                        type: "paragraph",
+                        text: "A portfolio makes a recruiter or potential client do the work: read the About section, open a case study, cross-reference the resume, guess whether a specific background fits their role. Most visitors have about a minute and a narrow question they never get to ask.",
+                    },
+                    { type: "heading", text: "Who feels it" },
+                    {
+                        type: "paragraph",
+                        text: "Recruiters, hiring managers, and prospective clients screening for a specific fit — cloud, reliability, AI engineering, implementation work — who want a direct answer rather than a tour of the site.",
+                    },
+                    { type: "heading", text: "What I built" },
+                    {
+                        type: "paragraph",
+                        text: "An AI assistant that answers questions about my background, experience, and projects in my own framing. It is grounded in a curated professional summary and my LinkedIn export, refuses to invent anything it wasn't told, captures contact details when a visitor wants a follow-up, and flags any question it couldn't answer so I can improve the source material. It runs as its own page and embeds directly into the portfolio at /twin.",
+                    },
+                    { type: "heading", text: "What it demonstrates" },
+                    {
+                        type: "paragraph",
+                        text: "A deployed LLM application end to end: system-prompt grounding, an OpenAI tool-calling loop, function tools wired to a real notification channel, standalone and embedded delivery, and a push-to-deploy pipeline to Hugging Face Spaces. It is a course exercise taken past the course — its own repo, its own docs, its own CI/CD.",
+                    },
+                ],
+            },
+            architecture: {
+                images: [
+                    {
+                        src: "/projects/digital-twin-architecture.svg",
+                        alt: "Request path from visitor through the portfolio SPA and an embedded iframe into a Gradio Hugging Face Space running context, an OpenAI tool-calling loop, and notification tools; plus the push-to-main deploy pipeline through GitHub Actions to the Space.",
+                        caption:
+                            "The portfolio embeds the Space in an iframe with ?embedded=1, which tells the Gradio app to drop its own chrome. Every push to main triggers a GitHub Action that strips .github, squashes the tree onto an orphan branch, and force-pushes that snapshot to the Space.",
+                    },
+                ],
+            },
+            keyDecisions: {
+                items: [
+                    {
+                        title: "Curated context in the system prompt, not RAG",
+                        body: "The knowledge base is one person's bio: a hand-written summary plus a LinkedIn PDF. context.py builds a single system prompt from both at startup. A vector store would add infrastructure and retrieval failure modes to solve a problem this corpus doesn't have — it fits in the prompt.",
+                    },
+                    {
+                        title: "Record the gap instead of guessing",
+                        body: "When the twin doesn't know something, it calls record_unknown_question rather than filling the space with a plausible answer. A recruiter-facing assistant that invents a credential is worse than one that says it will find out, so the honest path is the one wired to a tool.",
+                    },
+                    {
+                        title: "Tools reach a channel I actually watch",
+                        body: "record_user_details and record_unknown_question send Pushover notifications, not database rows. For a single-user side project the goal is that I see a hot lead or a missing answer the same day — a push notification does that; a table I have to remember to check does not.",
+                    },
+                    {
+                        title: "Embed by contract, not by restyling",
+                        body: "Adding ?embedded=1 to the Space URL switches the Gradio app to a layout with no topbar, so the portfolio's own nav is the only one on the page. The portfolio side documents this contract in Twin.jsx so the two repos stay in sync.",
+                    },
+                    {
+                        title: "One repo, deploy by snapshot",
+                        body: "GitHub Actions checks out the repo, removes .github, commits the rest to an orphan branch, and force-pushes a squashed snapshot to the Space. The Space history stays a clean single commit, the CI token is the only secret in transit, and there is no gradio deploy step to break.",
+                    },
+                ],
+            },
+            buildLog: {
+                entries: [
+                    {
+                        date: "Aug 2026",
+                        text: "Code-review pass on the shipped app. Logged the next hardening scope: no error handling around the OpenAI and Pushover calls, no per-session rate limit on a public endpoint, and tool-call results being dropped from the model's conversation state between turns. Scoped as a timeboxed follow-up, explicitly not a rebuild.",
+                    },
+                    {
+                        date: "Aug 2026",
+                        text: "Replaced the default Hugging Face README with real project docs and wrote up the GitHub Actions deploy workflow — checkout, strip .github, squash onto an orphan branch, force-push to the Space.",
+                    },
+                    {
+                        date: "Aug 2026",
+                        text: "Reskinned the Gradio UI to match the portfolio's design system and added embedded mode. Pinned the app shell to the exact viewport height to kill a double scrollbar inside the iframe.",
+                    },
+                    {
+                        date: "Jul 2026",
+                        text: "First working version: Gradio chat interface with an OpenAI tool-calling loop, system prompt assembled from summary.txt and linkedin.pdf, and the two capture tools wired to Pushover.",
+                    },
+                ],
+            },
+            result: {
+                liveUrl: "https://www.kervintznoel.com/twin",
+                githubUrl: "https://github.com/kervcodes/Digital-Twin",
+                improvements: [
+                    "Wrap the OpenAI and Pushover calls so a rate limit or upstream error returns a graceful message instead of a raw traceback in the chat window.",
+                    "Add structured logging — request, latency, tool calls, errors — so there is an actual record of how the service behaves in production.",
+                    "Add a per-session rate limit; the endpoint is public and runs on a personal API key.",
+                    "Separate display history from model history so a turn where a tool ran is still remembered on the next turn, without showing the tool noise to the visitor.",
+                    "Persist unanswered questions somewhere queryable instead of only firing a notification.",
+                ],
+            },
+        },
+    },
 ];
 
 export const getProjectBySlug = (slug) => PROJECTS.find((p) => p.slug === slug);

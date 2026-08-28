@@ -127,6 +127,10 @@ const ProjectCard = ({ project }) => {
                     ))}
                 </ul>
 
+                {/* Plain chips here, not the <Tag> glossary tooltip: the whole
+                    card is a link, so a focusable tooltip trigger inside it
+                    would nest interactive elements. The same stack renders
+                    with working tooltips on the case study page. */}
                 <ul className="mt-4 flex flex-wrap gap-2">
                     {project.stack.map((s) => (
                         <li

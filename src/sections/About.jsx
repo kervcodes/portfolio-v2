@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import { SectionHead, Row } from "@/components/Checklist";
 import { Run, Step } from "@/lib/sequence";
-import { tagBorderClass } from "@/lib/tagColors";
+import { Tag } from "@/components/Tag";
 
 const tools = [
   "React", "Next.js", "Node.js", "TypeScript",
@@ -92,12 +92,7 @@ export const About = () => (
           <p className="placard text-ink-faint mt-8">Working set</p>
           <ul className="mt-3 flex flex-wrap gap-2">
             {tools.map((tool) => (
-              <li
-                key={tool}
-                className={`placard text-ink-faint border px-2.5 py-1 ${tagBorderClass(tool)}`}
-              >
-                {tool}
-              </li>
+              <Tag key={tool} label={tool} />
             ))}
           </ul>
         </aside>

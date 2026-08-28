@@ -18,6 +18,7 @@ import { SectionHead, Status, Check, Notice, Arrow } from "@/components/Checklis
 import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
 import { Entry } from "@/lib/sequence";
 import { tagBorderClass } from "@/lib/tagColors";
+import { projectTintClass } from "@/lib/projectTint";
 import { trackEvent } from "@/lib/analytics";
 
 const PROJECTS = [
@@ -87,7 +88,7 @@ const ProjectCard = ({ project }) => {
                     e.preventDefault();
                     turn(to, project.id);
                 }}
-                className="sheet block p-5 md:p-6 group hover:border-ink transition-colors"
+                className={`sheet block p-5 md:p-6 group hover:border-ink transition-colors ${projectTintClass(project.id)}`}
             >
                 <div
                     className="flex flex-wrap items-baseline justify-between gap-3"

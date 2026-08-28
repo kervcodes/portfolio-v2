@@ -53,6 +53,18 @@
   --color-tag-violet: oklch(52% 0.14 300); /* Next.js */
   --color-tag-teal: oklch(55% 0.11 200); /* Vercel */
 
+  /* ── Card tints: the tag hues at a whisper, used as a fill ──
+     A project card gets one of these as its background, picked by a hash of
+     its id (see lib/projectTint.js) — same "identity, not state" idea as the
+     tag accents, one family. Kept near white so ink-muted body text still
+     clears 4.5:1 and the state pills (caution amber, verified green) stay
+     legible on top. EXPERIMENTAL — on trial in the Current section. */
+  --color-tint-rust: oklch(97% 0.017 45);
+  --color-tint-green: oklch(97% 0.019 155);
+  --color-tint-blue: oklch(97% 0.019 235);
+  --color-tint-violet: oklch(97% 0.017 300);
+  --color-tint-teal: oklch(97% 0.017 200);
+
   /* ── Legacy semantic aliases (unmounted files still reference these) ── */
   --color-background: oklch(96.8% 0.003 250);
   --color-foreground: oklch(21% 0.012 255);

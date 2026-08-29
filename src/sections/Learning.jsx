@@ -47,7 +47,7 @@ const SHIPPED = [
         id: "digital-twin",
         name: "AI Digital Twin",
         description:
-            "An AI assistant that answers questions about my background, experience, and projects in my own framing. Grounded in a curated summary and my LinkedIn export, it captures contact details from interested visitors, flags anything it couldn't answer, and embeds directly into this site at /twin.",
+            "An AI assistant that answers questions about my background, experience, and projects in my own framing. Grounded in a curated summary and my LinkedIn export, it captures contact details from interested visitors, flags anything it couldn't answer, and embeds directly into this site at /twin. As a public endpoint it degrades gracefully on provider errors, logs every turn, and rate-limits abusive clients.",
         phase: "Shipped · Aug 2026",
         status: "verified",
         cta: "Read the case study",
@@ -65,6 +65,7 @@ const SHIPPED = [
             { label: "Capture leads and flag unanswered questions via push notification", done: true },
             { label: "Ship a standalone UI and a portfolio-embedded mode", done: true },
             { label: "Automate push-to-deploy to Hugging Face Spaces", done: true },
+            { label: "Harden for public traffic — graceful fallbacks, structured logging, rate limit", done: true },
         ],
     },
 ];

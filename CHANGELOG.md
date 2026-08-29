@@ -6,23 +6,29 @@ rather than by release version.
 
 ## Unreleased
 
-### Fixed
-
-- **Tag definition tooltips no longer run off-screen on mobile.** The bubble
-  is measured when it opens and slid back inside the viewport when the chip
-  sits near an edge, and it flips below the chip when there isn't room above.
-  `max-width` is also capped to the viewport width. (`src/components/Tag.jsx`,
-  `.tag-tip` in `src/index.css`)
-
 ### Changed
 
-- **Defined tags now show a dotted underline.** Chips that have a glossary
-  definition carry the leader-dot underline used elsewhere on the site, so
-  it's visible that they can be hovered or tapped; the underline turns amber
-  while the definition is open. Chips with no definition are unchanged.
+- **AI Digital Twin case study reflects the hardening pass.** The upstream
+  repo added error handling, a capped tool loop, structured JSON logging, and
+  a per-session rate limit. The case study's "what it demonstrates" now names
+  the operational layer, a "harden with the standard library" key decision
+  and an Aug 2026 build-log entry were added, the architecture diagram shows
+  the rate-limit gate and the log line, and the three shipped items dropped
+  off "what I'd improve next" (leaving model-context carry-over, a queryable
+  store for unanswered questions, and the `@spaces.GPU` check). The Current-
+  section card gains a matching sixth milestone.
 
 ## 2026-08
 
+- **Tag definition tooltips no longer run off-screen on mobile.** The bubble
+  is measured when it opens and given an explicit `left` clamped inside the
+  viewport, and flips below the chip when there isn't room above. `max-width`
+  is capped to the viewport width. (`src/components/Tag.jsx`, `.tag-tip` in
+  `src/index.css`)
+- **Defined tags show a dotted underline.** Chips that have a glossary
+  definition carry the leader-dot underline used elsewhere on the site, so
+  it's visible that they can be hovered or tapped; the underline turns amber
+  while the definition is open. Chips with no definition are unchanged.
 - **Experimental: tinted project cards.** Each project card in the Current
   section gets a faint background colour, picked by a hash of its id the same
   way tag chips pick their border colour. New `--color-tint-*` tokens and

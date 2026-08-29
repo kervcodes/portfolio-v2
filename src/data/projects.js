@@ -100,7 +100,7 @@ export const PROJECTS = [
                     { type: "heading", text: "What it demonstrates" },
                     {
                         type: "paragraph",
-                        text: "A deployed LLM application end to end: system-prompt grounding, an OpenAI tool-calling loop, function tools wired to a real notification channel, standalone and embedded delivery, and a push-to-deploy pipeline to Hugging Face Spaces. It is a course exercise taken past the course — its own repo, its own docs, its own CI/CD.",
+                        text: "A deployed LLM application end to end: system-prompt grounding, an OpenAI tool-calling loop, function tools wired to a real notification channel, standalone and embedded delivery, and a push-to-deploy pipeline to Hugging Face Spaces. Because it is a public endpoint on a personal API key, it also carries the operational layer — graceful degradation on provider errors, a capped tool loop, structured per-request logging, and a per-session rate limit. It is a course exercise taken well past the course: its own repo, its own docs, its own CI/CD.",
                     },
                 ],
             },
@@ -108,9 +108,9 @@ export const PROJECTS = [
                 images: [
                     {
                         src: "/projects/digital-twin-architecture.svg",
-                        alt: "Request path from visitor through the portfolio SPA and an embedded iframe into a Gradio Hugging Face Space running context, an OpenAI tool-calling loop, and notification tools; plus the push-to-main deploy pipeline through GitHub Actions to the Space.",
+                        alt: "Request path from visitor through the portfolio SPA and an embedded iframe into a Gradio Hugging Face Space: a per-session rate-limit gate, then context building, an OpenAI tool-calling loop with graceful error fallback, notification tools, and one JSON log line per turn; plus the push-to-main deploy pipeline through GitHub Actions to the Space.",
                         caption:
-                            "The portfolio embeds the Space in an iframe with ?embedded=1, which tells the Gradio app to drop its own chrome. Every push to main triggers a GitHub Action that strips .github, squashes the tree onto an orphan branch, and force-pushes that snapshot to the Space.",
+                            "The portfolio embeds the Space in an iframe with ?embedded=1, which tells the Gradio app to drop its own chrome. Inside, every turn passes a per-session rate limit, runs a capped tool loop that falls back to a calm message on any provider error, and emits one structured log line. Every push to main triggers a GitHub Action that strips .github, squashes the tree onto an orphan branch, and force-pushes that snapshot to the Space.",
                     },
                 ],
             },
@@ -136,10 +136,18 @@ export const PROJECTS = [
                         title: "One repo, deploy by snapshot",
                         body: "GitHub Actions checks out the repo, removes .github, commits the rest to an orphan branch, and force-pushes a squashed snapshot to the Space. The Space history stays a clean single commit, the CI token is the only secret in transit, and there is no gradio deploy step to break.",
                     },
+                    {
+                        title: "Harden with the standard library, not a platform",
+                        body: "The reliability pass is roughly 80 lines of stdlib: a JSON-per-line logger writing to stdout (which the Space already captures) and an in-memory sliding-window rate limit. No new dependency, no datastore, nothing to operate. The in-memory state resets on restart and isn't shared across replicas — for a single-replica personal Space that's the right trade, and both limits are env-tunable without a redeploy.",
+                    },
                 ],
             },
             buildLog: {
                 entries: [
+                    {
+                        date: "Aug 2026",
+                        text: "Hardening pass, timeboxed. Wrapped the OpenAI and Pushover calls so any provider error — rate limit, timeout, bad response — shows a calm fallback in the chat instead of a traceback; capped the tool loop at five rounds; made the model id a required env var so a misconfig fails at startup, not per visitor. Added JSON-per-line request logging (latency, tool calls, tokens, correlated by request id) and a per-session sliding-window rate limit with unit tests. Also repaired the tool-call retry, which had been dropping its generation settings.",
+                    },
                     {
                         date: "Aug 2026",
                         text: "Code-review pass on the shipped app. Logged the next hardening scope: no error handling around the OpenAI and Pushover calls, no per-session rate limit on a public endpoint, and tool-call results being dropped from the model's conversation state between turns. Scoped as a timeboxed follow-up, explicitly not a rebuild.",
@@ -162,11 +170,9 @@ export const PROJECTS = [
                 liveUrl: "https://www.kervintznoel.com/twin",
                 githubUrl: "https://github.com/kervcodes/Digital-Twin",
                 improvements: [
-                    "Wrap the OpenAI and Pushover calls so a rate limit or upstream error returns a graceful message instead of a raw traceback in the chat window.",
-                    "Add structured logging — request, latency, tool calls, errors — so there is an actual record of how the service behaves in production.",
-                    "Add a per-session rate limit; the endpoint is public and runs on a personal API key.",
-                    "Separate display history from model history so a turn where a tool ran is still remembered on the next turn, without showing the tool noise to the visitor.",
-                    "Persist unanswered questions somewhere queryable instead of only firing a notification.",
+                    "Carry tool-call and tool-result messages into the next turn's model context — held in a gr.State separate from the displayed chat — so a visitor who gives their email and then changes the subject isn't asked for it again.",
+                    "Persist unanswered questions somewhere queryable instead of only firing a push notification.",
+                    "Confirm the @spaces.GPU decorator is actually needed; if the Space doesn't require ZeroGPU it's requesting an unused allocation per request.",
                 ],
             },
         },

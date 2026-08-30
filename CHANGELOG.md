@@ -4,9 +4,23 @@ Notable changes to the portfolio, newest first. This site deploys
 continuously, so entries are grouped by the date they landed on `master`
 rather than by release version.
 
-## Unreleased
+## 2026-08-30
 
-### Changed
+- **Local Bank Statement Analyzer case study filled from the architecture
+  design pass.** The Architecture, Key decisions, and Build log tabs, until
+  now placeholders, are written up from the pre-implementation design: a
+  seven-zone pipeline diagram (`public/projects/bank-statement-analyzer-architecture.svg`),
+  ten key decisions (upload vs. validation failure, queue carries a
+  reference, independent per-statement jobs, OCR as fallback, parsing stops
+  at the canonical schema, validation as the trust gate, deterministic code
+  owns the numbers, the Privacy Gateway, conservative deduplication,
+  temporary PDFs vs. permanent provenance), and two Aug 2026 build-log
+  entries. Nothing is built yet, so the Result tab stays empty.
+- **Architecture-tab images render at full height.** The case-study
+  architecture image dropped `object-cover max-h-130` for `h-auto`, so a
+  tall diagram shows in full instead of being cropped. (`src/components/ProjectTabs.jsx`)
+
+## 2026-08-29
 
 - **AI Digital Twin case study reflects the hardening pass.** The upstream
   repo added error handling, a capped tool loop, structured JSON logging, and
@@ -18,7 +32,7 @@ rather than by release version.
   store for unanswered questions, and the `@spaces.GPU` check). The Current-
   section card gains a matching sixth milestone.
 
-## 2026-08
+## 2026-08-28
 
 - **Tag definition tooltips no longer run off-screen on mobile.** The bubble
   is measured when it opens and given an explicit `left` clamped inside the
@@ -46,8 +60,17 @@ rather than by release version.
 - Added the **AI Digital Twin** as a shipped project: a full case study at
   `/projects/digital-twin` (with an architecture diagram) and a "Shipped"
   list at the top of the Current section.
+
+## 2026-08-25
+
 - Replaced SRE Runbook AI with the **Local Bank Statement Analyzer** as the
   active project in the Current section.
+
+## 2026-08-19
+
 - Removed the public course dashboard and the `/sprint` page from the
   homepage.
+
+## 2026-08-16
+
 - Reworked the hero positioning around AI Solutions Engineering.

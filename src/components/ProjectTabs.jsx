@@ -61,7 +61,7 @@ const ArchitecturePanel = ({ project }) => {
                     <img
                         src={img.src}
                         alt={img.alt ?? `${project.name} architecture diagram`}
-                        className="w-full border border-rule object-cover max-h-130"
+                        className="w-full h-auto border border-rule"
                     />
                     {img.caption && (
                         <figcaption className="mt-2 text-sm text-ink-faint">

@@ -1,0 +1,111 @@
+<svg viewBox="0 0 1000 1090" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,'Segoe UI',sans-serif">
+  <rect width="1000" height="1090" fill="#fbfbfc"/>
+
+  <!-- ===== LOCAL / PRIVATE ENVELOPE ===== -->
+  <rect x="12" y="44" width="976" height="1034" fill="none" stroke="#1c1f26" stroke-width="1.2" stroke-dasharray="4 4"/>
+  <text x="24" y="34" fill="#5b5f68" font-size="11" font-weight="700" letter-spacing="2">LOCAL &amp; PRIVATE &#8212; RAW STATEMENTS NEVER LEAVE THE MACHINE &#183; ARCHITECTURE DESIGNED BEFORE IMPLEMENTATION</text>
+
+  <!-- ================= MAIN PIPELINE ================= -->
+
+  <!-- 1 · USER / CLIENT -->
+  <rect x="210" y="58" width="500" height="86" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="230" y="83" fill="#5b5f68" font-size="10.5" font-weight="700" letter-spacing="1.5">1 &#183; USER / CLIENT</text>
+  <text x="230" y="105" fill="#1c1f26" font-size="13" font-weight="700">Select one or more PDF bank statements</text>
+  <text x="230" y="125" fill="#5b5f68" font-size="11">Multiple accounts, multiple banks, months or years at a time</text>
+
+  <path d="M460 144 V172" stroke="#1c1f26" stroke-width="1.5"/>
+  <path d="M455 169 L460 177 L465 169 Z" fill="#1c1f26"/>
+
+  <!-- 2 · INTAKE -->
+  <rect x="210" y="178" width="500" height="104" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="230" y="203" fill="#5b5f68" font-size="10.5" font-weight="700" letter-spacing="1.5">2 &#183; INTAKE</text>
+  <text x="230" y="225" fill="#1c1f26" font-size="13" font-weight="700">Upload &#8594; validate &#8594; temporary storage</text>
+  <text x="230" y="245" fill="#5b5f68" font-size="11">Create one analysis batch, then one statement job per file</text>
+  <text x="230" y="263" fill="#5b5f68" font-size="11">Upload failure &#8800; validation failure &#183; invalid files never reach the queue</text>
+
+  <path d="M460 282 V310" stroke="#1c1f26" stroke-width="1.5"/>
+  <path d="M455 307 L460 315 L465 307 Z" fill="#1c1f26"/>
+
+  <!-- 3 · BACKGROUND PROCESSING -->
+  <rect x="210" y="316" width="500" height="92" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="230" y="341" fill="#5b5f68" font-size="10.5" font-weight="700" letter-spacing="1.5">3 &#183; BACKGROUND PROCESSING</text>
+  <text x="230" y="363" fill="#1c1f26" font-size="13" font-weight="700">Job queue &#8594; worker pool &#8594; retry handling</text>
+  <text x="230" y="383" fill="#5b5f68" font-size="11">Queue carries a file reference, not the PDF bytes</text>
+  <text x="230" y="401" fill="#5b5f68" font-size="11">Retry transient failures only &#183; 3 attempts max &#183; user still holds the originals</text>
+
+  <path d="M460 408 V436" stroke="#1c1f26" stroke-width="1.5"/>
+  <path d="M455 433 L460 441 L465 433 Z" fill="#1c1f26"/>
+
+  <!-- 4 · EXTRACTION + NORMALIZATION -->
+  <rect x="210" y="442" width="500" height="132" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="230" y="467" fill="#5b5f68" font-size="10.5" font-weight="700" letter-spacing="1.5">4 &#183; EXTRACTION + NORMALIZATION</text>
+  <text x="230" y="489" fill="#1c1f26" font-size="13" font-weight="700">Usable embedded text? &#8594; native parse &#183; else OCR fallback</text>
+  <text x="230" y="509" fill="#5b5f68" font-size="11">Detect bank + account type + statement layout/version &#8594; versioned parser</text>
+  <text x="230" y="527" fill="#5b5f68" font-size="11">Parser output &#8594; canonical transaction schema &#8594; resolve account identity</text>
+  <text x="230" y="545" fill="#5b5f68" font-size="11">Financial validation: structural &#183; per-transaction &#183; balance reconciliation</text>
+  <text x="230" y="563" fill="#5b5f68" font-size="11">Parsing success &#8800; trustworthy data &#8212; validation is the trust gate</text>
+
+  <path d="M460 574 V602" stroke="#1c1f26" stroke-width="1.5"/>
+  <path d="M455 599 L460 607 L465 599 Z" fill="#1c1f26"/>
+
+  <!-- 5 · TRUSTED DATA + AGGREGATION -->
+  <rect x="210" y="608" width="500" height="92" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="230" y="633" fill="#5b5f68" font-size="10.5" font-weight="700" letter-spacing="1.5">5 &#183; TRUSTED DATA + AGGREGATION</text>
+  <text x="230" y="655" fill="#1c1f26" font-size="13" font-weight="700">Persist validated canonical data &#8594; deduplicate &#8594; unified ledger</text>
+  <text x="230" y="675" fill="#5b5f68" font-size="11">Statement- then transaction-level dedup &#183; auto-collapse only on high confidence</text>
+  <text x="230" y="693" fill="#5b5f68" font-size="11">Partial batches allowed &#8212; excluded statements always visible</text>
+
+  <path d="M460 700 V728" stroke="#1c1f26" stroke-width="1.5"/>
+  <path d="M455 725 L460 733 L465 725 Z" fill="#1c1f26"/>
+
+  <!-- 6 · ENRICHMENT + ANALYTICS + AI -->
+  <rect x="210" y="734" width="500" height="114" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="230" y="759" fill="#5b5f68" font-size="10.5" font-weight="700" letter-spacing="1.5">6 &#183; ENRICHMENT + ANALYTICS + AI</text>
+  <text x="230" y="781" fill="#1c1f26" font-size="13" font-weight="700">Deterministic analytics owns every number</text>
+  <text x="230" y="801" fill="#5b5f68" font-size="11">Merchant normalization &#8594; rule-based categorization (LLM only on low confidence)</text>
+  <text x="230" y="819" fill="#5b5f68" font-size="11">Privacy Gateway sanitizes + builds a task-specific payload for every model call</text>
+  <text x="230" y="837" fill="#5b5f68" font-size="11">Local LLM explains the results &#183; it never produces the figures</text>
+
+  <path d="M460 848 V876" stroke="#1c1f26" stroke-width="1.5"/>
+  <path d="M455 873 L460 881 L465 873 Z" fill="#1c1f26"/>
+
+  <!-- 7 · OUTPUTS + COVERAGE + CLEANUP -->
+  <rect x="210" y="882" width="500" height="104" fill="#ffffff" stroke="#1c1f26" stroke-width="1.5"/>
+  <text x="230" y="907" fill="#5b5f68" font-size="10.5" font-weight="700" letter-spacing="1.5">7 &#183; OUTPUTS + COVERAGE + CLEANUP</text>
+  <text x="230" y="929" fill="#1c1f26" font-size="13" font-weight="700">Dashboard &#183; financial report &#183; CSV / JSON export</text>
+  <text x="230" y="949" fill="#5b5f68" font-size="11">Coverage + data-quality summary shown first &#8212; never present partial as complete</text>
+  <text x="230" y="967" fill="#5b5f68" font-size="11">Raw PDFs deleted once no longer needed &#183; provenance metadata retained</text>
+
+  <!-- ================= CROSS-CUTTING RAIL ================= -->
+  <text x="744" y="34" fill="#5b5f68" font-size="10.5" font-weight="700" letter-spacing="1.5">CROSS-CUTTING</text>
+
+  <!-- Batch Coordinator -->
+  <rect x="744" y="178" width="232" height="130" fill="#fbfbfc" stroke="#d5d6d9" stroke-width="1"/>
+  <text x="760" y="200" fill="#1c1f26" font-size="12" font-weight="700">Batch Coordinator</text>
+  <text x="760" y="219" fill="#5b5f68" font-size="10.5">Tracks every job: queued /</text>
+  <text x="760" y="234" fill="#5b5f68" font-size="10.5">processing / retrying /</text>
+  <text x="760" y="249" fill="#5b5f68" font-size="10.5">completed / failed.</text>
+  <text x="760" y="270" fill="#5b5f68" font-size="10.5">Aggregation starts only once</text>
+  <text x="760" y="285" fill="#5b5f68" font-size="10.5">every job is terminal.</text>
+  <path d="M710 243 H744" stroke="#9aa0a6" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- Temporary File Storage -->
+  <rect x="744" y="442" width="232" height="110" fill="#fbfbfc" stroke="#d5d6d9" stroke-width="1"/>
+  <text x="760" y="464" fill="#1c1f26" font-size="12" font-weight="700">Temporary File Storage</text>
+  <text x="760" y="483" fill="#5b5f68" font-size="10.5">Raw PDFs only. Short-lived,</text>
+  <text x="760" y="498" fill="#5b5f68" font-size="10.5">deleted after processing.</text>
+  <text x="760" y="519" fill="#5b5f68" font-size="10.5">Same reference on retry &#8212;</text>
+  <text x="760" y="534" fill="#5b5f68" font-size="10.5">the PDF is never re-uploaded.</text>
+  <path d="M710 500 H744" stroke="#9aa0a6" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- Application Data Store -->
+  <rect x="744" y="600" width="232" height="130" fill="#fbfbfc" stroke="#d5d6d9" stroke-width="1"/>
+  <text x="760" y="622" fill="#1c1f26" font-size="12" font-weight="700">Application Data Store</text>
+  <text x="760" y="641" fill="#5b5f68" font-size="10.5">Normalized, non-raw data:</text>
+  <text x="760" y="656" fill="#5b5f68" font-size="10.5">batches, accounts, statements,</text>
+  <text x="760" y="671" fill="#5b5f68" font-size="10.5">transactions, validation</text>
+  <text x="760" y="686" fill="#5b5f68" font-size="10.5">results, analytics output.</text>
+  <text x="760" y="707" fill="#5b5f68" font-size="10.5">Persistent &#8212; powers reports</text>
+  <text x="760" y="722" fill="#5b5f68" font-size="10.5">after raw PDFs are gone.</text>
+  <path d="M710 660 H744" stroke="#9aa0a6" stroke-width="1" stroke-dasharray="3 3"/>
+</svg>

@@ -55,13 +55,70 @@ export const PROJECTS = [
                 ],
             },
             architecture: {
-                images: [],
+                images: [
+                    {
+                        src: "/projects/bank-statement-analyzer-architecture.svg",
+                        alt: "Seven-zone local pipeline for the Bank Statement Analyzer: user selects PDF statements; intake uploads, validates, and creates a batch with one job per file; a queue and worker pool process jobs with selective retries; extraction chooses native text or an OCR fallback, detects the bank and statement format, runs a versioned parser into a canonical transaction schema, resolves account identity, and runs financial validation; validated data is deduplicated into a unified ledger in the application data store; a deterministic analytics engine produces every figure while a Privacy Gateway sanitizes anything sent to a local LLM for categorization help and plain-English explanation; outputs are a dashboard, report, and CSV/JSON export with a coverage summary, after which raw PDFs are deleted. A batch coordinator, temporary file storage, and the application data store run across the pipeline.",
+                        caption:
+                            "The architecture, designed decision by decision before any code. The whole pipeline runs locally: raw statements never leave the machine, and only sanitized, task-specific payloads reach a model. Each zone was justified against three questions — what problem it solves, why it is its own responsibility, and what breaks if it is removed or merged.",
+                    },
+                ],
             },
             keyDecisions: {
-                items: [],
+                items: [
+                    {
+                        title: "Upload failure and validation failure are separate states",
+                        body: "\"We never received the file\" and \"we received it but refuse to process it\" are different problems with different user messages and different recovery. Collapsing them into one \"error\" state would hide which one happened and make the privacy boundary harder to reason about. Invalid files are rejected before any expensive or sensitive processing begins, and never enter the queue.",
+                    },
+                    {
+                        title: "The queue carries a file reference, not the PDF",
+                        body: "A user importing two years across five banks is over a hundred statements. Queue messages hold a job id, batch id, and a pointer to temporary storage — never the bytes. Putting whole PDFs in the queue creates size limits, memory pressure, and retry headaches; a small pointer avoids all of it and keeps the sensitive document in one place with one lifecycle.",
+                    },
+                    {
+                        title: "Each statement is an independent job",
+                        body: "One statement failing OCR must not destroy the successful results from other banks in the same batch. Every file becomes its own job with its own status; a batch coordinator tracks the whole set and only starts aggregation once every job is terminal. A batch with three failures out of a hundred and twenty still produces analysis — with the three exclusions shown.",
+                    },
+                    {
+                        title: "OCR is a fallback, not the default path",
+                        body: "OCR is slower, more expensive, and introduces more extraction errors than reading embedded text. The extractor first checks whether the PDF contains usable embedded text — not just any text, since a PDF can hold garbled characters — and only falls back to OCR when it doesn't.",
+                    },
+                    {
+                        title: "Bank-specific parsing stops at the canonical schema",
+                        body: "Chase, Bank of America, and Capital One expose transactions in different layouts, so each needs its own parser — versioned independently of the bank name, because a bank can redesign its statements. But every parser must emit the same normalized transaction shape. After that boundary, nothing downstream knows or cares which bank a transaction came from, which keeps analytics from turning into a chain of per-bank special cases.",
+                    },
+                    {
+                        title: "Validation is the trust gate, separate from extraction confidence",
+                        body: "\"Did we extract the fields correctly?\" and \"does the resulting financial data make sense?\" are different questions. A parser can be confident and still produce numbers that don't reconcile. Validation runs structural checks, per-transaction checks, and balance reconciliation, and returns VALID / WARNING / FAILED rather than a single pass/fail — so a lone low-confidence transaction is treated differently from a closing balance that is off by thousands.",
+                    },
+                    {
+                        title: "Deterministic code owns the numbers; the LLM only explains them",
+                        body: "Every figure — monthly spend, net cash flow, recurring charges, category and merchant totals — comes from application logic, not a model. The LLM sits after the analytics engine and turns structured facts into plain English. It never calculates financial truth, so a hallucinated number can't reach the report.",
+                    },
+                    {
+                        title: "The Privacy Gateway is a mandatory gateway, not a late-stage box",
+                        body: "Both paths that reach a model — low-confidence categorization and analytics explanation — go through one sanitizer that strips account numbers, names, addresses, and identifiers and builds a task-specific payload with the minimum data required. Model location isn't the privacy control; sanitization is. Swapping a local model for a hosted API later wouldn't change the boundary.",
+                    },
+                    {
+                        title: "Conservative deduplication",
+                        body: "Bank statements often lack timestamps, so dedup matches on the strongest combination of fields available. Transactions are removed automatically only when confidence is high; ambiguous matches are kept and flagged. Deleting a real $500 transaction is worse than briefly showing a possible duplicate, and every transaction stays traceable to its source statement and page.",
+                    },
+                    {
+                        title: "Raw PDFs are temporary; provenance is permanent",
+                        body: "Raw statements are processing artifacts with a defined lifecycle — deleted once the canonical data is persisted, unless the user chooses to keep them. Non-sensitive provenance metadata (source statement, page, parser version) is retained, so a user questioning a number can still trace it back after the original PDF is gone.",
+                    },
+                ],
             },
             buildLog: {
-                entries: [],
+                entries: [
+                    {
+                        date: "Aug 2026",
+                        text: "Architecture design pass, before writing code. Walked the full path from upload to report in thirteen layers, forcing each component to justify itself against three questions: what problem it solves, why it exists as its own responsibility, and what breaks if it is removed or merged. Settled the intake boundary, the queue, background workers and selective retries, the extraction strategy, the canonical schema, account identity, financial validation, cross-statement aggregation and deduplication, categorization, the LLM privacy boundary, and the output and cleanup zones — then grouped them into seven zones and locked the invariants each one enforces.",
+                    },
+                    {
+                        date: "Aug 2026",
+                        text: "Scoped v1 to keep the design defensible rather than impressive. PDF bank statements only — images, CSV imports, OFX/QFX, and direct bank connections are explicitly out of scope. No dead-letter queues or complex backoff yet; three attempts per statement is enough because the user still holds the originals. Storage stays an abstraction — temporary file storage for raw PDFs, an application data store for normalized data — with no database chosen until there is a reason to.",
+                    },
+                ],
             },
             result: {},
         },

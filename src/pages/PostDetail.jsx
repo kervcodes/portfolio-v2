@@ -21,7 +21,7 @@ const ContentBlock = ({ block }) => {
             );
         case "heading":
             return (
-                <h2 className="rule-head mt-12 mb-5 text-xl md:text-2xl font-bold text-ink uppercase tracking-tight">
+                <h2 className="mt-12 mb-5 text-xl md:text-2xl font-bold text-ink uppercase tracking-tight">
                     {block.text}
                 </h2>
             );
@@ -58,11 +58,11 @@ const ContentBlock = ({ block }) => {
                 </ol>
             );
         case "divider":
-            return <hr className="border-0 border-t border-rule my-10" />;
+            return <hr className="my-10 border-0" />;
         case "callout":
             return (
-                <blockquote className="my-10 rule-head">
-                    <p className="text-xl md:text-2xl font-bold text-ink leading-snug max-w-[34ch]">
+                <blockquote className="my-10">
+                    <p className="text-xl md:text-2xl font-bold text-ink leading-snug">
                         {block.text}
                     </p>
                 </blockquote>

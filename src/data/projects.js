@@ -28,7 +28,7 @@ export const PROJECTS = [
         slug: "local-bank-statement-analyzer",
         name: "Local Bank Statement Analyzer",
         status: "active", // "standby" | "active" | "completed" — maps to <Status>
-        stack: ["Python", "uv", "PyMuPDF", "Pydantic", "Polars", "pytest", "Ruff"],
+        stack: ["Electron", "React", "TypeScript", "FastAPI", "Python", "SQLModel", "pdfplumber", "Tailwind CSS", "pytest"],
         tabs: {
             problem: {
                 content: [
@@ -45,7 +45,7 @@ export const PROJECTS = [
                     { type: "heading", text: "What I'm building" },
                     {
                         type: "paragraph",
-                        text: "A local personal bank statement analysis tool that imports multiple months or years of bank and credit-card statements, extracts and normalizes transactions, and gives one consolidated view of finances across multiple accounts and institutions. Extraction and every calculation run on deterministic Python logic; AI is used only where interpretation adds value, and anything sent to an LLM is stripped or tokenized of PII first, so raw statements and sensitive financial data never leave the machine.",
+                        text: "A downloadable, local-first desktop app (Electron + a Python backend) that imports multiple months or years of bank and credit-card statements, extracts and normalizes transactions, and gives one consolidated view of finances across multiple accounts and institutions. Extraction and every calculation run on deterministic Python logic; AI is used only where interpretation adds value, and anything sent to an LLM is stripped of PII first through a dedicated Privacy Gateway, so raw statements and sensitive financial data never leave the machine.",
                     },
                     { type: "heading", text: "What success looks like" },
                     {
@@ -60,7 +60,7 @@ export const PROJECTS = [
                         src: "/projects/bank-statement-analyzer-architecture.svg",
                         alt: "Seven-zone local pipeline for the Bank Statement Analyzer: user selects PDF statements; intake uploads, validates, and creates a batch with one job per file; a queue and worker pool process jobs with selective retries; extraction chooses native text or an OCR fallback, detects the bank and statement format, runs a versioned parser into a canonical transaction schema, resolves account identity, and runs financial validation; validated data is deduplicated into a unified ledger in the application data store; a deterministic analytics engine produces every figure while a Privacy Gateway sanitizes anything sent to a local LLM for categorization help and plain-English explanation; outputs are a dashboard, report, and CSV/JSON export with a coverage summary, after which raw PDFs are deleted. A batch coordinator, temporary file storage, and the application data store run across the pipeline.",
                         caption:
-                            "The architecture, designed decision by decision before any code. The whole pipeline runs locally: raw statements never leave the machine, and only sanitized, task-specific payloads reach a model. Each zone was justified against three questions — what problem it solves, why it is its own responsibility, and what breaks if it is removed or merged.",
+                            "The architecture, designed decision by decision before any code. The whole pipeline runs locally: raw statements never leave the machine, and only sanitized, task-specific payloads reach a model. Each zone was justified against three questions — what problem it solves, why it is its own responsibility, and what breaks if it is removed or merged. The seven zones still hold; the concrete stack has since locked in as an Electron desktop app with a FastAPI sidecar (see Build log), which this diagram doesn't show yet.",
                     },
                 ],
             },
@@ -106,10 +106,26 @@ export const PROJECTS = [
                         title: "Raw PDFs are temporary; provenance is permanent",
                         body: "Raw statements are processing artifacts with a defined lifecycle — deleted once the canonical data is persisted, unless the user chooses to keep them. Non-sensitive provenance metadata (source statement, page, parser version) is retained, so a user questioning a number can still trace it back after the original PDF is gone.",
                     },
+                    {
+                        title: "It ships as a desktop app, not a CLI or a hosted service",
+                        body: "A single local user running background jobs across a hundred-plus statements needs a persistent, responsive UI while processing continues — not a terminal session or a server to operate. Electron pairs a React renderer with a Python backend spawned as a local sidecar, which keeps the deterministic pipeline in Python while giving the app a real interface, packaged as a Windows (and later macOS) installer with no hosting bill.",
+                    },
+                    {
+                        title: "The LLM sits behind a hosted API, not a local model",
+                        body: "Model location was never the privacy control — the Privacy Gateway's sanitization is. That decoupling means a hosted API can be used without weakening the privacy story. Claude and OpenAI are both supported behind one provider interface, bring-your-own-key, so nothing routes through infrastructure I'd have to operate or pay for.",
+                    },
+                    {
+                        title: "PyMuPDF dropped for a licensing reason, not a capability one",
+                        body: "PyMuPDF (fitz) is faster and more convenient, but it's AGPL-licensed or requires a paid commercial license from Artifex. That's a non-issue for code run on my own server; it's a real question for a binary handed to someone else to install. Extraction moved to the permissively-licensed pdfplumber, with an explicit note that the AGPL terms would've been a reasonable call to make consciously — just not by accident.",
+                    },
                 ],
             },
             buildLog: {
                 entries: [
+                    {
+                        date: "Sep 2026",
+                        text: "Replaced the single design-review doc with four focused ones — requirements, design-notes, techstack, build-plan — plus project-level Claude instructions, and locked two decisions the original design pass had left open: the app ships as a downloadable Electron desktop app (not a CLI), and the LLM layer calls a hosted Claude/OpenAI API behind the Privacy Gateway rather than a local model. Confirmed the first wave of institutions to build parsers for — five banks, six credit-card issuers — and sequenced the first ten build prompts, starting with the canonical schema and extraction pipeline before any UI. Still no application code; this was a second design pass, not implementation.",
+                    },
                     {
                         date: "Aug 2026",
                         text: "Architecture design pass, before writing code. Walked the full path from upload to report in thirteen layers, forcing each component to justify itself against three questions: what problem it solves, why it exists as its own responsibility, and what breaks if it is removed or merged. Settled the intake boundary, the queue, background workers and selective retries, the extraction strategy, the canonical schema, account identity, financial validation, cross-statement aggregation and deduplication, categorization, the LLM privacy boundary, and the output and cleanup zones — then grouped them into seven zones and locked the invariants each one enforces.",

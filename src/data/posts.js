@@ -27,10 +27,10 @@ export const POSTS = [
         slug: "build-log-2-the-tests-passed-and-the-schema-was-wrong",
         title: "Build Log #2: The Tests Passed and the Schema Was Wrong",
         excerpt:
-            "Two tests, green in 0.32 seconds. The schema underneath them was broken in three separate ways — and the one mechanism built to catch bad numbers would have laundered them instead.",
+            "Two tests, green in 0.32 seconds. The schema underneath them was broken in three separate ways — and the one check built to catch bad numbers would have laundered them instead.",
         date: "Sep 2026",
         tags: ["AI Engineering", "Claude Code", "Building in Public", "Python"],
-        readTime: "5 min read",
+        readTime: "4 min read",
         comingSoon: false,
         featured: true,
         hashnodeUrl: null, // ← set when published to Hashnode
@@ -38,147 +38,168 @@ export const POSTS = [
         content: [
             {
                 type: "paragraph",
-                text: "Two tests, green in 0.32 seconds. The database open in DB Browser showing four clean tables. Both of those things were true, and the schema underneath them was broken in three separate ways.",
+                text: "Two tests, green in 0.32 seconds. Four clean tables in the database browser.",
             },
             {
                 type: "paragraph",
-                text: "This is the second post on a local-first desktop app that turns years of bank statement PDFs into a financial picture you can trust. The last one covered the skeleton — one HTTP call crossing the seam between an Electron front end and a Python backend. This one is the canonical data model: Batch, Statement, Transaction, Account. The shape every later stage has to fit into.",
+                text: "Both true. The schema underneath was broken in three separate ways.",
             },
             {
                 type: "paragraph",
-                text: "It's the least visible work in the project and the most expensive to get wrong, because every parser, every validation rule, and every number on the eventual dashboard inherits whatever decisions get baked in here.",
+                text: "This is post two on a local-first desktop app that turns years of bank statement PDFs into a financial picture you can trust. Post one was the skeleton. This one is the data model every later stage has to fit into — the least visible work in the project, and the most expensive to get wrong.",
+            },
+            {
+                type: "divider",
             },
             {
                 type: "heading",
-                text: "The bug that passing tests can't see",
+                text: "Three bugs a green test run can't see",
             },
             {
                 type: "paragraph",
-                text: "Money was typed as Python Decimal and stored in SQLite as NUMERIC. That reads correctly. It isn't.",
+                text: "I found all three in about twenty minutes, by feeding the schema things that should have been impossible.",
+            },
+            {
+                type: "list",
+                items: [
+                    "Money lost precision. Amounts were stored as SQLite NUMERIC, which is a type affinity, not a type. The value is kept as a binary float.",
+                    "Foreign keys weren't enforced. SQLite defaults PRAGMA foreign_keys to OFF. I inserted a transaction pointing at a statement ID that didn't exist. It committed without complaint.",
+                    "State columns were free text. direction = \"NOT_A_REAL_DIRECTION\" was accepted. Amounts were documented as always positive, with nothing enforcing it.",
+                ],
             },
             {
                 type: "paragraph",
-                text: "stored Decimal(\"12345678.91\") → read back Decimal(\"12345678.9100000001\"); stored Decimal(\"0.10\") → read back Decimal(\"0.1000000000\"); raw SQLite: typeof(amount) = real",
+                text: "The declared foreign keys were documentation, not constraints.",
+            },
+            {
+                type: "divider",
+            },
+            {
+                type: "heading",
+                text: "The money bug, measured",
+            },
+            {
+                type: "list",
+                items: [
+                    "12345678.91 → came back as 12345678.9100000001",
+                    "0.10 → came back as 0.10",
+                    "typeof(amount) in SQLite → real",
+                ],
             },
             {
                 type: "paragraph",
-                text: "SQLite has no exact decimal type. NUMERIC is a type affinity, not a type — the value gets stored as a binary float. Small amounts survive the round trip. Large ones don't.",
+                text: "Small amounts survive. Large ones don't.",
             },
             {
                 type: "paragraph",
-                text: "That detail is the whole problem. The corruption is magnitude-dependent, so a test using 15.99 passes while the representation is already broken, and it only starts lying on real statements with five-figure balances. DB Browser reports NUMERIC because that's what was declared, not what's stored.",
+                text: "That's what makes it dangerous. The corruption is magnitude-dependent, so a test using 15.99 passes while the storage is already broken. It starts lying only on real statements with five-figure balances.",
             },
             {
                 type: "paragraph",
-                text: "Two things in this system depend on amounts comparing exactly. Duplicate detection matches transactions on account, date, amount, direction, and description — a freshly parsed 12345678.91 no longer equals the stored 12345678.9100000001, so overlapping statements would quietly produce duplicate transactions. And every statement is supposed to reconcile: opening balance plus credits minus debits equals closing balance.",
+                text: "Two things in this app depend on amounts comparing exactly:",
+            },
+            {
+                type: "list",
+                items: [
+                    "Duplicate detection matches on account, date, amount, direction and description. A freshly parsed 12345678.91 no longer equals the stored value, so overlapping statements would quietly produce duplicates.",
+                    "Reconciliation checks that opening balance plus credits minus debits equals closing balance.",
+                ],
             },
             {
                 type: "paragraph",
-                text: "Here's the part that bothers me most. The reconciliation check allows a small rounding tolerance, because real statements have real quirks. That tolerance would have absorbed the float drift and reported VALID.",
+                text: "And here is the part that bothers me. Reconciliation allows a small rounding tolerance, because real statements have real quirks. That tolerance would have absorbed the drift and reported VALID.",
             },
             {
                 type: "callout",
-                text: "The one mechanism built to catch bad numbers would have laundered them instead.",
+                text: "The one check built to catch bad numbers would have laundered them instead.",
+            },
+            {
+                type: "divider",
             },
             {
                 type: "heading",
-                text: "Two more, same category",
+                text: "Why integer cents",
             },
             {
                 type: "paragraph",
-                text: "Both found the same way — by deliberately feeding the schema things that should be impossible.",
+                text: "Money is now stored as a whole number of cents, converted in exactly one module.",
             },
             {
                 type: "paragraph",
-                text: "Foreign keys weren't enforced. SQLite defaults PRAGMA foreign_keys to OFF, per connection. I inserted a transaction pointing at statement_id=\"does-not-exist-anywhere\". It committed without complaint. The foreign keys declared in the migration were documentation, not constraints.",
+                text: "The alternative was storing the decimal as text and converting it back on read. That's also exact, keeps the Python side in Decimal, and keeps amounts readable as 15.99 in a database browser.",
             },
             {
                 type: "paragraph",
-                text: "State columns were free text. direction=\"NOT_A_REAL_DIRECTION\" was accepted. amount was documented as always positive, with nothing enforcing it.",
+                text: "I chose integer cents because of how each option fails when someone is careless six months from now.",
             },
             {
                 type: "paragraph",
-                text: "None of these were exotic. All three were found in about twenty minutes, and none of them were findable by looking at a green test run or a schema browser — because both of those only confirm that things exist. Verification that never feeds the system input that should fail can't find defects.",
+                text: "Text fails silently:",
             },
             {
-                type: "heading",
-                text: "Fixing it: choosing which way to be wrong",
-            },
-            {
-                type: "paragraph",
-                text: "Money is now stored as an integer count of cents, converted in exactly one module.",
-            },
-            {
-                type: "paragraph",
-                text: "The alternative was a Decimal-as-TEXT type decorator: store the decimal as a string, convert back on read. It's also exact, keeps the Python side in Decimal, and — not nothing — keeps amounts readable as 15.99 when I'm eyeballing the database.",
+                type: "list",
+                items: [
+                    "SUM(amount) adds strings and returns a plausible wrong number, with no error",
+                    "ORDER BY sorts \"9.00\" after \"1000.00\"",
+                    "15.9 and 15.90 are equal as numbers but different as strings, quietly breaking the exact match that duplicate detection needs",
+                ],
             },
             {
                 type: "paragraph",
-                text: "I went with integer cents because of how each option fails when someone is careless six months from now.",
-            },
-            {
-                type: "paragraph",
-                text: "The TEXT approach fails silently. SELECT SUM(amount) sums strings and returns a plausible wrong number with no error. ORDER BY sorts \"9.00\" after \"1000.00\". And correctness depends on a quantize call buried in a custom type, because Decimal(\"15.9\") and Decimal(\"15.90\") are numerically equal but store as different strings — quietly breaking the exact match dedup needs.",
-            },
-            {
-                type: "paragraph",
-                text: "Integer cents fails loudly. Its characteristic bug is an off-by-100, and a subscription showing as $1,599.00 instead of $15.99 gets caught instantly by anyone glancing at a screen.",
-            },
-            {
-                type: "paragraph",
-                text: "Performance didn't decide it — at roughly 24,000 transactions, either approach is milliseconds.",
+                text: "Integer cents fails loudly. Its typical bug is an off-by-100, and a subscription showing as $1,599.00 instead of $15.99 gets caught by anyone glancing at a screen.",
             },
             {
                 type: "callout",
-                text: "When the product's entire value is that its numbers can be trusted, prefer the option whose bugs are obvious over the option whose bugs are invisible.",
+                text: "When the whole product rests on its numbers being right, prefer the bug you can see over the bug you can't.",
             },
             {
                 type: "paragraph",
-                text: "Sub-cent input now raises rather than rounds. A parser emitting fractional cents has misread the layout, and rounding would throw away that evidence.",
+                text: "Sub-cent values are now rejected rather than rounded. A parser producing fractional cents has misread the page, and rounding throws that evidence away.",
+            },
+            {
+                type: "divider",
             },
             {
                 type: "heading",
-                text: "The fix under the fix",
+                text: "The fix that mattered most",
             },
             {
                 type: "paragraph",
-                text: "The most useful change wasn't any of the constraints. It was the test fixture.",
+                text: "Not the constraints. The test setup.",
             },
             {
                 type: "paragraph",
-                text: "The old tests built their own database engine. So if I'd enabled foreign key enforcement in the application and stopped there, the suite would have kept passing against a database where the constraint didn't exist. The tests would have been green, the app would have been fixed, and nothing would have been verifying the fix.",
+                text: "The old tests built their own database connection. So if I had turned on foreign key enforcement in the application and stopped there, the tests would have kept passing against a database where the constraint didn't exist. Green tests, fixed app, nothing actually checking the fix.",
             },
             {
                 type: "paragraph",
-                text: "The fixtures now go through the same engine configuration as the application. Then I checked the tests could actually fail: I removed the foreign-key setting, confirmed both orphan tests failed, and put it back.",
+                text: "The tests now share the application's configuration. Then I checked they could fail: I turned the foreign key setting back off, watched both tests break, and turned it on again.",
             },
             {
                 type: "callout",
                 text: "A test that can't fail isn't a test.",
             },
             {
-                type: "paragraph",
-                text: "The suite went from 2 to 29 — exact round-trip at large magnitude, reconciliation asserted with zero tolerance, orphan rejection, every constraint. Coverage sits at 92%, against a 90% floor that blocks a push locally and a merge on GitHub.",
-            },
-            {
-                type: "paragraph",
-                text: "The missing 8% is worth naming rather than rounding past: it's the FastAPI app file itself, including the /health route from post #1, which has no automated test at all. It's a handful of lines that get replaced when the real endpoints land next, and I'd rather say that than let a percentage imply more than it covers.",
+                type: "divider",
             },
             {
                 type: "heading",
-                text: "Keeping a promise from last time",
+                text: "Where it stands",
+            },
+            {
+                type: "list",
+                items: [
+                    "29 tests, up from 2 — exact round-trips at large values, reconciliation asserted with zero tolerance, orphan rejection, every constraint",
+                    "92% coverage, against a 90% floor that blocks a push locally and a merge on GitHub",
+                    "The missing 8% is the API file itself, including the /health route from post one. No test at all. Those few lines get replaced when the real endpoints land, and I'd rather name the gap than let a percentage imply more than it covers",
+                ],
             },
             {
                 type: "paragraph",
-                text: "Post #1 ended with: from the data model onward, I write down why the design is what it is before it gets built, and if a future post doesn't show that reasoning, hold it against me.",
+                text: "Post one ended with a promise: from the data model on, write the reasoning down before building, and if a post doesn't show it, hold it against me. Both decisions here are written up with the alternatives I rejected, and the spec was corrected where it had been silent and I'd been guessing.",
             },
             {
-                type: "paragraph",
-                text: "So: both decisions above are written up with their rejected alternatives — why integer cents over Decimal-as-TEXT, and why a Statement row only ever represents a document that actually parsed. The specification was updated to match, including the parts where it had been silent and I'd been guessing.",
-            },
-            {
-                type: "paragraph",
-                text: "I'm still building this with Claude Code. The division of labor hasn't changed: the architecture, the decisions, and the verification are mine, and this time the verification is what found everything worth finding.",
+                type: "divider",
             },
             {
                 type: "heading",
@@ -186,7 +207,7 @@ export const POSTS = [
             },
             {
                 type: "paragraph",
-                text: "Intake and validation — accepting PDFs, rejecting the corrupted and password-protected ones with a specific reason, and grouping them into a batch. The first stage where real files hit the system.",
+                text: "Intake and validation. Accepting PDFs, rejecting the corrupted and password-protected ones with a reason a person can act on, and grouping the rest into a batch. The first stage where real files hit the system.",
             },
         ],
     },

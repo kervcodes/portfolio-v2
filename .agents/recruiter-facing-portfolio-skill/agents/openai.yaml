@@ -1,0 +1,7 @@
+interface:
+  display_name: "Recruiter-Facing Portfolio"
+  short_description: "Make technical portfolios truthful, evidence-led, and recruiter-ready."
+  default_prompt: "Audit or implement this portfolio change using recruiter-facing evidence, truth, and minimal-change rules."
+
+policy:
+  allow_implicit_invocation: true

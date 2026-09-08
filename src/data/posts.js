@@ -24,6 +24,194 @@
 
 export const POSTS = [
     {
+        slug: "build-log-2-the-tests-passed-and-the-schema-was-wrong",
+        title: "Build Log #2: The Tests Passed and the Schema Was Wrong",
+        excerpt:
+            "Two tests, green in 0.32 seconds. The schema underneath them was broken in three separate ways — and the one check built to catch bad numbers would have laundered them instead.",
+        date: "Sep 2026",
+        tags: ["AI Engineering", "Claude Code", "Building in Public", "Python"],
+        readTime: "4 min read",
+        comingSoon: false,
+        featured: true,
+        hashnodeUrl: null, // ← set when published to Hashnode
+        coverImage: null,
+        content: [
+            {
+                type: "paragraph",
+                text: "Two tests, green in 0.32 seconds. Four clean tables in the database browser.",
+            },
+            {
+                type: "paragraph",
+                text: "Both true. The schema underneath was broken in three separate ways.",
+            },
+            {
+                type: "paragraph",
+                text: "This is post two on a local-first desktop app that turns years of bank statement PDFs into a financial picture you can trust. Post one was the skeleton. This one is the data model every later stage has to fit into — the least visible work in the project, and the most expensive to get wrong.",
+            },
+            {
+                type: "divider",
+            },
+            {
+                type: "heading",
+                text: "Three bugs a green test run can't see",
+            },
+            {
+                type: "paragraph",
+                text: "I found all three in about twenty minutes, by feeding the schema things that should have been impossible.",
+            },
+            {
+                type: "list",
+                items: [
+                    "Money lost precision. Amounts were stored as SQLite NUMERIC, which is a type affinity, not a type. The value is kept as a binary float.",
+                    "Foreign keys weren't enforced. SQLite defaults PRAGMA foreign_keys to OFF. I inserted a transaction pointing at a statement ID that didn't exist. It committed without complaint.",
+                    "State columns were free text. direction = \"NOT_A_REAL_DIRECTION\" was accepted. Amounts were documented as always positive, with nothing enforcing it.",
+                ],
+            },
+            {
+                type: "paragraph",
+                text: "The declared foreign keys were documentation, not constraints.",
+            },
+            {
+                type: "divider",
+            },
+            {
+                type: "heading",
+                text: "The money bug, measured",
+            },
+            {
+                type: "list",
+                items: [
+                    "12345678.91 → came back as 12345678.9100000001",
+                    "0.10 → came back as 0.10",
+                    "typeof(amount) in SQLite → real",
+                ],
+            },
+            {
+                type: "paragraph",
+                text: "Small amounts survive. Large ones don't.",
+            },
+            {
+                type: "paragraph",
+                text: "That's what makes it dangerous. The corruption is magnitude-dependent, so a test using 15.99 passes while the storage is already broken. It starts lying only on real statements with five-figure balances.",
+            },
+            {
+                type: "paragraph",
+                text: "Two things in this app depend on amounts comparing exactly:",
+            },
+            {
+                type: "list",
+                items: [
+                    "Duplicate detection matches on account, date, amount, direction and description. A freshly parsed 12345678.91 no longer equals the stored value, so overlapping statements would quietly produce duplicates.",
+                    "Reconciliation checks that opening balance plus credits minus debits equals closing balance.",
+                ],
+            },
+            {
+                type: "paragraph",
+                text: "And here is the part that bothers me. Reconciliation allows a small rounding tolerance, because real statements have real quirks. That tolerance would have absorbed the drift and reported VALID.",
+            },
+            {
+                type: "callout",
+                text: "The one check built to catch bad numbers would have laundered them instead.",
+            },
+            {
+                type: "divider",
+            },
+            {
+                type: "heading",
+                text: "Why integer cents",
+            },
+            {
+                type: "paragraph",
+                text: "Money is now stored as a whole number of cents, converted in exactly one module.",
+            },
+            {
+                type: "paragraph",
+                text: "The alternative was storing the decimal as text and converting it back on read. That's also exact, keeps the Python side in Decimal, and keeps amounts readable as 15.99 in a database browser.",
+            },
+            {
+                type: "paragraph",
+                text: "I chose integer cents because of how each option fails when someone is careless six months from now.",
+            },
+            {
+                type: "paragraph",
+                text: "Text fails silently:",
+            },
+            {
+                type: "list",
+                items: [
+                    "SUM(amount) adds strings and returns a plausible wrong number, with no error",
+                    "ORDER BY sorts \"9.00\" after \"1000.00\"",
+                    "15.9 and 15.90 are equal as numbers but different as strings, quietly breaking the exact match that duplicate detection needs",
+                ],
+            },
+            {
+                type: "paragraph",
+                text: "Integer cents fails loudly. Its typical bug is an off-by-100, and a subscription showing as $1,599.00 instead of $15.99 gets caught by anyone glancing at a screen.",
+            },
+            {
+                type: "callout",
+                text: "When the whole product rests on its numbers being right, prefer the bug you can see over the bug you can't.",
+            },
+            {
+                type: "paragraph",
+                text: "Sub-cent values are now rejected rather than rounded. A parser producing fractional cents has misread the page, and rounding throws that evidence away.",
+            },
+            {
+                type: "divider",
+            },
+            {
+                type: "heading",
+                text: "The fix that mattered most",
+            },
+            {
+                type: "paragraph",
+                text: "Not the constraints. The test setup.",
+            },
+            {
+                type: "paragraph",
+                text: "The old tests built their own database connection. So if I had turned on foreign key enforcement in the application and stopped there, the tests would have kept passing against a database where the constraint didn't exist. Green tests, fixed app, nothing actually checking the fix.",
+            },
+            {
+                type: "paragraph",
+                text: "The tests now share the application's configuration. Then I checked they could fail: I turned the foreign key setting back off, watched both tests break, and turned it on again.",
+            },
+            {
+                type: "callout",
+                text: "A test that can't fail isn't a test.",
+            },
+            {
+                type: "divider",
+            },
+            {
+                type: "heading",
+                text: "Where it stands",
+            },
+            {
+                type: "list",
+                items: [
+                    "29 tests, up from 2 — exact round-trips at large values, reconciliation asserted with zero tolerance, orphan rejection, every constraint",
+                    "92% coverage, against a 90% floor that blocks a push locally and a merge on GitHub",
+                    "The missing 8% is the API file itself, including the /health route from post one. No test at all. Those few lines get replaced when the real endpoints land, and I'd rather name the gap than let a percentage imply more than it covers",
+                ],
+            },
+            {
+                type: "paragraph",
+                text: "Post one ended with a promise: from the data model on, write the reasoning down before building, and if a post doesn't show it, hold it against me. Both decisions here are written up with the alternatives I rejected, and the spec was corrected where it had been silent and I'd been guessing.",
+            },
+            {
+                type: "divider",
+            },
+            {
+                type: "heading",
+                text: "Next",
+            },
+            {
+                type: "paragraph",
+                text: "Intake and validation. Accepting PDFs, rejecting the corrupted and password-protected ones with a reason a person can act on, and grouping the rest into a batch. The first stage where real files hit the system.",
+            },
+        ],
+    },
+    {
         slug: "build-log-1-a-window-that-says-ok",
         title: "Build Log #1: A Window That Says OK",
         excerpt:
@@ -34,11 +222,19 @@ export const POSTS = [
         comingSoon: false,
         featured: true,
         hashnodeUrl: null, // ← set when published to Hashnode
-        coverImage: "/posts/post-2/first-window.png",
+        // No cover: the header image renders decorative (alt="", aria-hidden), and
+        // this post's screenshot is the subject, not decoration — so it runs inline
+        // below with a caption instead.
+        coverImage: null,
         content: [
             {
                 type: "paragraph",
                 text: "I'm building a local-first desktop app that takes years of bank and credit card statement PDFs and turns them into a financial picture you can actually trust. Here is everything it does today:",
+            },
+            {
+                type: "image",
+                src: "/posts/post-2/first-window.png",
+                caption: "The first Electron window. A card, and two words of JSON.",
             },
             {
                 type: "paragraph",

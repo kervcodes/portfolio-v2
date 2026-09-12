@@ -4,6 +4,67 @@ Notable changes to the portfolio, newest first. This site deploys
 continuously, so entries are grouped by the date they landed on `master`
 rather than by release version.
 
+## 2026-09-12
+
+- **Nine missing Build Log posts published, closing the gap between the
+  public blog and the case study.** An audit found the "Notes" series stuck
+  at Build Log #2 (the schema, Sep 4) while the repo had since shipped
+  intake/extraction, the job queue, the Santander parser, dedup, analytics,
+  categorization, the Privacy Gateway, an off-plan orphaned-job fix, and all
+  six UI screens (build-plan #9 closed, `a1d9b72`). Added Build Log #3
+  through #11 — one milestone each, kept short on purpose rather than one
+  long retrospective — sourced from `docs/activity.md` in the analyzer
+  repo, not estimated. (`src/data/posts.js`)
+- **Build Log posts now form a navigable series.** Posts #1–#11 carry
+  `series` / `seriesIndex` / `projectSlug`; `PostDetail` renders a "Part N
+  of 11 · View the full case study" line under the header and a real
+  Previous/Next nav between entries (`src/pages/PostDetail.jsx`). The case
+  study's Build Log tab links each dated entry straight to its matching
+  post via a new `postSlug` field, rendered as a "Full write-up →" link
+  (`src/components/ProjectTabs.jsx`, `src/data/projects.js`). All 11 posts
+  remain fully listed on the homepage Notes feed (not `unlisted`) — worth
+  revisiting if 13 published posts reads as too much scroll.
+- **A "Toward v1" roadmap replaces the empty Result tab.** Ten items
+  pulled directly from the analyzer repo's `requirements.md` §20
+  Definition of Done, each marked verified / in-progress / not-started
+  against what `docs/activity.md` actually confirms — not a guess. Reuses
+  the existing `Status` pill component (`src/components/ProjectTabs.jsx`,
+  `src/data/projects.js`).
+- **Three inaccuracies in the case study fixed.** The "95% extraction
+  accuracy" claim wasn't traceable to anything in the analyzer repo —
+  replaced with the actual enforced mechanism (zero-tolerance
+  reconciliation). The key-decisions entry overstated LLM provider
+  symmetry ("Claude and OpenAI both supported") when the repo's locked
+  decision is OpenAI primary, Anthropic as a failure-only fallback — wording
+  corrected. `stack` was missing Alembic and Recharts, both real
+  dependencies referenced elsewhere in the case study's own text.
+  (`src/data/projects.js`)
+- **Tag glossary gaps closed.** `Electron`, `FastAPI`, `SQLModel`, and
+  `pdfplumber` had no hover-definition despite being this project's core
+  stack; added alongside new entries for `Alembic` and `Recharts`.
+  (`src/lib/tagGlossary.js`)
+
+- **Local Bank Statement Analyzer build log caught up to the actual
+  implementation.** The case study's newest entry still ended with "still
+  no application code; this was a second design pass, not implementation"
+  while the upstream repo had finished build-plan #2 through #9 — schema,
+  intake, extraction, job queue, the first bank parser, deduplication,
+  analytics, categorization, the Privacy Gateway, and all six UI screens.
+  Added ten short entries covering those milestones, dated from the repo's
+  `docs/activity.md` rather than estimated, and deliberately kept brief
+  instead of one long block. Includes the off-plan orphaned-job fix and
+  states the known gap (thin built-in merchant rules leave a large first
+  review queue) rather than omitting it. `status` stays `active`; no
+  completion language added. (`src/data/projects.js`)
+- **Build-log entries can carry screenshots.** `buildLog.entries[]` now
+  takes an optional `images` array (`{ src, alt?, caption? }`), rendered
+  under the entry text with the same figure/caption markup the
+  architecture tab already used. Four labeled screenshots are wired in at
+  `public/projects/bank-statement-analyzer-{dashboard,history,review,settings}.png`
+  — the live UI's real balances, merchant names, and Zelle counterparty
+  details are redacted. (`src/components/ProjectTabs.jsx`,
+  `src/data/projects.js`, `public/projects/`)
+
 ## 2026-09-04
 
 - **Build Log #1 published, and the post-body renderer's separators

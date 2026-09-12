@@ -22,6 +22,8 @@ export const TAG_GLOSSARY = {
     "Tailwind CSS": "Utility-class CSS framework for styling directly in the markup.",
     Gradio: "Python library that turns a function into a shareable web UI, used for ML demos.",
     Expo: "Toolchain and runtime that simplifies building and shipping React Native apps.",
+    Electron: "Framework for building cross-platform desktop apps with a Node.js backend and a web-based UI.",
+    Recharts: "Charting library for React, used for dashboard-style data visualization.",
 
     // ── Backend / data / language ──────────────────────────────────────────
     "Node.js": "JavaScript runtime used for servers, tooling, and build pipelines.",
@@ -35,6 +37,10 @@ export const TAG_GLOSSARY = {
     pytest: "The standard testing framework for Python.",
     Ruff: "Fast Python linter and code formatter.",
     uv: "Fast Python package installer and virtual-environment manager.",
+    FastAPI: "Python web framework for building APIs, with automatic validation and docs.",
+    SQLModel: "Python library combining SQLAlchemy and Pydantic for typed, validated database models.",
+    Alembic: "Database migration tool used with SQLAlchemy/SQLModel schemas.",
+    pdfplumber: "Python library for extracting text, tables, and layout from PDF files.",
 
     // ── AI / LLM ───────────────────────────────────────────────────────────
     "OpenAI API": "Hosted API for OpenAI's language models, including tool calling.",

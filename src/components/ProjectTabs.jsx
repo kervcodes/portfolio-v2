@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
+import { Status, Arrow } from "@/components/Checklist";
 
 // ─── Content block renderer — shared by any tab that holds free-form prose ──
 export const ContentBlock = ({ block }) => {
@@ -106,6 +108,34 @@ const BuildLogPanel = ({ project }) => {
                     <p className="mt-1.5 text-sm text-ink-muted leading-relaxed">
                         {e.text}
                     </p>
+                    {(e.images ?? []).length > 0 && (
+                        <div className="mt-4 space-y-4">
+                            {e.images.map((img, j) => (
+                                <figure key={j}>
+                                    <img
+                                        src={img.src}
+                                        alt={img.alt ?? ""}
+                                        loading="lazy"
+                                        className="w-full h-auto border border-rule"
+                                    />
+                                    {img.caption && (
+                                        <figcaption className="mt-2 text-sm text-ink-faint">
+                                            {img.caption}
+                                        </figcaption>
+                                    )}
+                                </figure>
+                            ))}
+                        </div>
+                    )}
+                    {e.postSlug && (
+                        <Link
+                            to={`/posts/${e.postSlug}`}
+                            className="mt-2 placard inline-flex items-center gap-1.5 text-ink hover:text-caution-ink transition-colors"
+                        >
+                            Full write-up
+                            <Arrow />
+                        </Link>
+                    )}
                 </li>
             ))}
         </ul>
@@ -115,8 +145,13 @@ const BuildLogPanel = ({ project }) => {
 const ResultPanel = ({ project }) => {
     const result = project.tabs?.result ?? {};
     const improvements = result.improvements ?? [];
+    const roadmap = result.roadmap ?? [];
     const hasResult =
-        result.liveUrl || result.githubUrl || improvements.length > 0 || result.status;
+        result.liveUrl ||
+        result.githubUrl ||
+        improvements.length > 0 ||
+        roadmap.length > 0 ||
+        result.status;
 
     if (!hasResult) {
         return <Placeholder>Result write-up in progress.</Placeholder>;
@@ -148,6 +183,23 @@ const ResultPanel = ({ project }) => {
                             Live
                         </a>
                     )}
+                </div>
+            )}
+            {roadmap.length > 0 && (
+                <div>
+                    <p className="placard text-ink-faint mb-3">
+                        Toward v1 — what's done, what's left
+                    </p>
+                    <ul className="space-y-3">
+                        {roadmap.map((item, i) => (
+                            <li key={i} className="flex items-start gap-3">
+                                <Status kind={item.status} />
+                                <span className="text-sm text-ink-muted leading-relaxed">
+                                    {item.label}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             )}
             {improvements.length > 0 && (

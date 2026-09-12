@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
-import { getPostBySlug } from "@/data/posts";
+import { getPostBySlug, POSTS } from "@/data/posts";
 import { Status, Row, Arrow } from "@/components/Checklist";
 import { usePageTurn, useTurnKey } from "@/lib/motion";
 
@@ -171,6 +171,21 @@ export const PostDetail = () => {
     if (!post) return <Shell><NotFoundPage /></Shell>;
     if (post.comingSoon) return <Shell><ComingSoonPage post={post} /></Shell>;
 
+    // A post in a series (e.g. one project's build log) links to its
+    // siblings by seriesIndex, not array order — array order is "newest
+    // first" for the homepage feed, which is the reverse of reading order.
+    const seriesPosts = post.series
+        ? POSTS.filter((p) => p.series === post.series).sort(
+              (a, b) => a.seriesIndex - b.seriesIndex,
+          )
+        : [];
+    const seriesPos = seriesPosts.findIndex((p) => p.slug === post.slug);
+    const prevPost = seriesPos > 0 ? seriesPosts[seriesPos - 1] : null;
+    const nextPost =
+        seriesPos !== -1 && seriesPos < seriesPosts.length - 1
+            ? seriesPosts[seriesPos + 1]
+            : null;
+
     return (
         <Shell>
             <Helmet>
@@ -199,6 +214,19 @@ export const PostDetail = () => {
                     <div className="mt-6 rule-sub pt-4 space-y-2">
                         <Row label="Author">Kervintz Noel</Row>
                         <Row label="Filed under">{post.tags.join(" · ")}</Row>
+                        {post.projectSlug && (
+                            <Row label="Series">
+                                {seriesPos !== -1 && (
+                                    <>Part {seriesPos + 1} of {seriesPosts.length} · </>
+                                )}
+                                <Link
+                                    to={`/projects/${post.projectSlug}`}
+                                    className="text-ink font-bold underline underline-offset-4 decoration-rule hover:decoration-ink"
+                                >
+                                    View the full case study
+                                </Link>
+                            </Row>
+                        )}
                     </div>
                 </header>
 
@@ -224,6 +252,53 @@ export const PostDetail = () => {
                         <ContentBlock key={i} block={block} />
                     ))}
                 </div>
+
+                {(prevPost || nextPost) && (
+                    // grid, not flex — a fixed two-column layout can't ever
+                    // wrap the two links onto separate lines the way a
+                    // flex-wrap row can once a long title is involved.
+                    <nav
+                        aria-label="Series navigation"
+                        className="mt-16 grid grid-cols-2 gap-3"
+                    >
+                        <div>
+                            {prevPost && (
+                                <Link
+                                    to={`/posts/${prevPost.slug}`}
+                                    className="group flex items-center gap-2.5 border border-rule px-4 py-3 hover:border-ink transition-colors"
+                                >
+                                    <Arrow dir="left" className="shrink-0 text-ink-faint" />
+                                    <span className="min-w-0">
+                                        <span className="placard block text-ink-faint">
+                                            Previous
+                                        </span>
+                                        <span className="block mt-0.5 text-sm font-bold text-ink truncate">
+                                            {prevPost.title}
+                                        </span>
+                                    </span>
+                                </Link>
+                            )}
+                        </div>
+                        <div>
+                            {nextPost && (
+                                <Link
+                                    to={`/posts/${nextPost.slug}`}
+                                    className="group flex items-center justify-end gap-2.5 border border-rule px-4 py-3 hover:border-ink transition-colors text-right"
+                                >
+                                    <span className="min-w-0">
+                                        <span className="placard block text-ink-faint">
+                                            Next
+                                        </span>
+                                        <span className="block mt-0.5 text-sm font-bold text-ink truncate">
+                                            {nextPost.title}
+                                        </span>
+                                    </span>
+                                    <Arrow dir="right" className="shrink-0 text-ink-faint" />
+                                </Link>
+                            )}
+                        </div>
+                    </nav>
+                )}
 
                 <footer className="mt-16 rule-head flex flex-wrap items-center justify-between gap-4">
                     <p className="text-sm text-ink-muted max-w-[46ch]">

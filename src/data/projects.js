@@ -15,7 +15,10 @@
 //                                tags at the bottom of the page.
 //   tabs.architecture.images  — [{ src, alt?, caption? }]
 //   tabs.keyDecisions.items   — [{ title, body }]
-//   tabs.buildLog.entries     — [{ date, text }], newest first
+//   tabs.buildLog.entries     — [{ date, text, images? }], newest first.
+//                                images is optional: [{ src, alt?, caption? }],
+//                                rendered under the entry's text. Use it for
+//                                screenshots of what that milestone produced.
 //   tabs.result               — { liveUrl?, githubUrl?, improvements?: [] }
 //
 // CONTENT BLOCK TYPES (used in `tabs.problem.content`):
@@ -28,7 +31,7 @@ export const PROJECTS = [
         slug: "local-bank-statement-analyzer",
         name: "Local Bank Statement Analyzer",
         status: "active", // "standby" | "active" | "completed" — maps to <Status>
-        stack: ["Electron", "React", "TypeScript", "FastAPI", "Python", "SQLModel", "pdfplumber", "Tailwind CSS", "pytest"],
+        stack: ["Electron", "React", "TypeScript", "FastAPI", "Python", "SQLModel", "Alembic", "pdfplumber", "Recharts", "Tailwind CSS", "pytest"],
         tabs: {
             problem: {
                 content: [
@@ -50,7 +53,7 @@ export const PROJECTS = [
                     { type: "heading", text: "What success looks like" },
                     {
                         type: "paragraph",
-                        text: "Extracting at least 95% of transactions accurately, with amounts as close to 100% accurate as possible, across multiple statements from multiple banks and accounts. Months or years of statements combine into one normalized dataset that surfaces recurring expenses and how long they've been active, top merchants, fees, income, spending categories, and monthly trends. Duplicate or overlapping transactions get caught, and extracted totals reconcile against the statement balances.",
+                        text: "Every statement's extracted transactions reconcile exactly against its own opening balance, credits, debits, and closing balance — zero tolerance, not an approximate match — across multiple statements from multiple banks and accounts. Months or years of statements combine into one normalized dataset that surfaces recurring expenses and how long they've been active, top merchants, fees, income, spending categories, and monthly trends. Duplicate or overlapping transactions get caught without deleting anything on ambiguous evidence.",
                     },
                 ],
             },
@@ -112,7 +115,7 @@ export const PROJECTS = [
                     },
                     {
                         title: "The LLM sits behind a hosted API, not a local model",
-                        body: "Model location was never the privacy control — the Privacy Gateway's sanitization is. That decoupling means a hosted API can be used without weakening the privacy story. Claude and OpenAI are both supported behind one provider interface, bring-your-own-key, so nothing routes through infrastructure I'd have to operate or pay for.",
+                        body: "Model location was never the privacy control — the Privacy Gateway's sanitization is. That decoupling means a hosted API can be used without weakening the privacy story. OpenAI is the primary provider with Anthropic as an automatic fallback that fires only on a provider failure, not a weak answer, behind one provider interface, bring-your-own-key, so nothing routes through infrastructure I'd have to operate or pay for.",
                     },
                     {
                         title: "PyMuPDF dropped for a licensing reason, not a capability one",
@@ -122,6 +125,82 @@ export const PROJECTS = [
             },
             buildLog: {
                 entries: [
+                    {
+                        date: "Sep 11, 2026",
+                        text: "Accounts and Settings finished the UI — all six screens are now real. API keys are encrypted with Electron's safeStorage and passed to the backend as environment variables at spawn, so the Python side never persists a secret and the renderer only ever sees a hasKey boolean. The raw-PDF retention toggle is actually enforced: a job's PDF is deleted once it reaches a terminal status unless retention is on. Known gap before packaging: the built-in merchant rules are thin, so a first import still leaves a large review queue.",
+                        postSlug: "build-log-11-the-key-the-app-never-writes-to-disk-in-plain-text",
+                        images: [
+                            {
+                                src: "/projects/bank-statement-analyzer-settings.png",
+                                alt: "Settings screen of the Bank Statement Analyzer",
+                                caption: "Settings — LLM provider, test-before-save key entry, retention toggle, category rules.",
+                            },
+                        ],
+                    },
+                    {
+                        date: "Sep 11, 2026",
+                        text: "Dashboard and Review went in, plus a linkable transaction drawer used as the drill-through from every clickable number. Every total on the Dashboard is shown next to a coverage summary — statements included versus excluded, and the ledger's real date span — because a spending figure computed over an unknown slice of the data isn't worth showing. Review is one inbox for possible duplicates, low-confidence categorizations, and failed statements.",
+                        postSlug: "build-log-10-a-number-you-cant-click-through-isnt-trustworthy",
+                        images: [
+                            {
+                                src: "/projects/bank-statement-analyzer-dashboard.png",
+                                alt: "Dashboard of the Bank Statement Analyzer showing cash flow and spending by category",
+                                caption: "Dashboard — cash flow, spending by category, recurring charges, each chart with a table fallback.",
+                            },
+                            {
+                                src: "/projects/bank-statement-analyzer-review.png",
+                                alt: "Review queue of the Bank Statement Analyzer",
+                                caption: "Review — transactions the rules couldn't place confidently, batched by merchant.",
+                            },
+                        ],
+                    },
+                    {
+                        date: "Sep 11, 2026",
+                        text: "Fixed a bug found by running the app rather than the tests: a job left in PROCESSING when the backend died was never picked up again, so the batch sat unfinished forever. Orphaned jobs are now recovered on worker startup.",
+                        postSlug: "build-log-9-the-batch-that-got-stuck-at-zero-of-six",
+                    },
+                    {
+                        date: "Sep 8, 2026",
+                        text: "First UI slice: app shell, an Import screen that surfaces the backend's per-file accept/reject reason instead of one batch-level error, and a History screen listing every batch and the validation status of each statement inside it.",
+                        postSlug: "build-log-8-the-backend-had-been-invisible-for-a-month",
+                        images: [
+                            {
+                                src: "/projects/bank-statement-analyzer-history.png",
+                                alt: "History screen of the Bank Statement Analyzer listing imported batches",
+                                caption: "History — batches expand to show each statement and whether it reconciled.",
+                            },
+                        ],
+                    },
+                    {
+                        date: "Sep 8, 2026",
+                        text: "Categorization and the Privacy Gateway. Categories resolve through a fixed hierarchy — user override, saved merchant rule, deterministic keyword map, then one LLM call only for merchants the rules can't place — and a prediction is used only above a 0.75 confidence gate; below it the transaction goes to Review rather than getting a label it can't defend. The automated guess is stored separately from the override, so deleting a rule restores it without a bulk rewrite. The gateway is an allowlist, not a scrubber: exactly four fields leave the machine, built from primitives so a raw transaction object can't be serialized by accident, and it fails closed to Review on anything it can't sanitize.",
+                        postSlug: "build-log-7-the-gateway-that-only-lets-four-fields-through",
+                    },
+                    {
+                        date: "Sep 8, 2026",
+                        text: "Deduplication and the analytics engine. Identical re-uploads collapse automatically and partial overlaps — a \"last 90 days\" statement crossing monthly ones — get flagged rather than merged; nothing is ever deleted, a duplicate row just stops counting toward the ledger. Analytics computes cash flow, categories, recurring charges and trends in deterministic Python over that ledger, money in integer cents, no LLM anywhere near a number.",
+                        postSlug: "build-log-6-nothing-gets-deleted-on-a-guess",
+                    },
+                    {
+                        date: "Sep 8, 2026",
+                        text: "First parser end to end: Santander checking, regression-tested against real statements. The bank, account type and layout version are detected from the statement's content rather than its filename, with a confidence score — below threshold the job is marked unsupported and produces no statement at all. Anything that does parse has to reconcile to the cent (opening + credits − debits == closing) before it's trusted.",
+                        postSlug: "build-log-5-teaching-the-app-to-read-one-real-bank-statement",
+                    },
+                    {
+                        date: "Sep 6, 2026",
+                        text: "Background job queue — one job per statement, backed by SQLite with no external broker. One file failing OCR can't take down the other statements in the same import, and a coordinator only closes the batch once every job is terminal, marking it completed-with-warnings if anything was excluded.",
+                        postSlug: "build-log-4-one-statement-cant-take-down-the-batch",
+                    },
+                    {
+                        date: "Sep 5, 2026",
+                        text: "Intake validation and extraction. Each uploaded file is validated independently with a specific rejection reason (not a PDF, corrupted, password-protected, too large, too many pages) and tracked from submission onward. Extraction reads native PDF text with pdfplumber and falls back to OCR only per-page, when a page has no usable embedded text.",
+                        postSlug: "build-log-3-the-encrypted-pdf-that-wasnt-password-protected",
+                    },
+                    {
+                        date: "Sep 4, 2026",
+                        text: "Implementation started. Monorepo scaffolded — Electron spawns the FastAPI backend as a local sidecar — and the canonical schema built on SQLModel with migrations, money as integer cents, and constraints enforced at the database level rather than trusted to application code. Backend tests run against a 90% coverage floor that fails the suite, the pre-push hook, and CI.",
+                        postSlug: "build-log-1-a-window-that-says-ok",
+                    },
                     {
                         date: "Sep 2026",
                         text: "Replaced the single design-review doc with four focused ones — requirements, design-notes, techstack, build-plan — plus project-level Claude instructions, and locked two decisions the original design pass had left open: the app ships as a downloadable Electron desktop app (not a CLI), and the LLM layer calls a hosted Claude/OpenAI API behind the Privacy Gateway rather than a local model. Confirmed the first wave of institutions to build parsers for — five banks, six credit-card issuers — and sequenced the first ten build prompts, starting with the canonical schema and extraction pipeline before any UI. Still no application code; this was a second design pass, not implementation.",
@@ -136,7 +215,53 @@ export const PROJECTS = [
                     },
                 ],
             },
-            result: {},
+            result: {
+                // Sourced from the repo's own requirements.md §20 "v1 Definition of
+                // Done" checklist, cross-checked against docs/activity.md for what's
+                // actually been built and verified vs. only tested vs. not started.
+                roadmap: [
+                    {
+                        label: "Drop in PDFs for a confirmed institution and reach a working Dashboard end to end, no manual steps outside the app.",
+                        status: "verified",
+                    },
+                    {
+                        label: "Coverage, warnings, and excluded statements are visible on the Dashboard without digging into logs.",
+                        status: "verified",
+                    },
+                    {
+                        label: "A batch with a corrupted or password-protected PDF still processes every other valid statement in it.",
+                        status: "verified",
+                    },
+                    {
+                        label: "Reconciliation validation flags a statement where the numbers don't add up.",
+                        status: "verified",
+                    },
+                    {
+                        label: "Deduplication auto-collapses a true duplicate and flags — without deleting — a genuinely ambiguous match.",
+                        status: "verified",
+                    },
+                    {
+                        label: "The app works fully — analytics, categorization, the dashboard — with no LLM key configured.",
+                        status: "verified",
+                    },
+                    {
+                        label: "With a provider key configured, the AI summary renders visibly separate from computed figures.",
+                        status: "active",
+                    },
+                    {
+                        label: "Every reported number is clickable through to its source transactions and statement page.",
+                        status: "verified",
+                    },
+                    {
+                        label: "Raw PDFs are actually deleted from disk after processing, unless retention is turned on.",
+                        status: "active",
+                    },
+                    {
+                        label: "The app packages into a Windows installer that runs on a machine with no Python or Node installed.",
+                        status: "standby",
+                    },
+                ],
+            },
         },
     },
     {

@@ -14,6 +14,7 @@ import { Footer } from "@/layout/Footer";
 import { PostDetail } from "@/pages/PostDetail";
 import { ProjectCaseStudy } from "@/pages/ProjectCaseStudy";
 import { Twin } from "@/pages/Twin";
+import { Ride } from "@/pages/Ride";
 import { NotFound } from "@/pages/NotFound";
 import { Posts } from "@/sections/Posts";
 // import { Projects } from "@/sections/Projects";
@@ -87,6 +88,7 @@ function App() {
           <Route path="/posts/:slug" element={<PostDetail />} />
           <Route path="/projects/:slug" element={<ProjectCaseStudy />} />
           <Route path="/twin" element={<Twin />} />
+          <Route path="/ride" element={<Ride />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MotionConfig>

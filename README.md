@@ -26,23 +26,29 @@ Live: [kervintznoel.com](https://kervintznoel.com)
 | `/projects/:slug` | Project case study (five tabs: Problem, Architecture, Key Decisions, Build Log, Result) |
 | `/sprint` | Standalone sprint page |
 | `/twin` | AI digital twin page |
+| `/ride` | Passive iPad kiosk — see [The ride kiosk](#the-ride-kiosk) |
 | `*` | 404 |
 
 Content for posts and project case studies lives in `src/data/posts.js` and `src/data/projects.js` — each file is documented inline with the shape new entries should follow. Every route above is prerendered at build time (see [Prerendering](#prerendering)), so a new post or project slug needs a rebuild before it ships as static HTML.
 
 ## Project structure
 
-```
+```text
 scripts/
-  prerender.js      Post-build step — renders every route to static HTML in dist/
+  prerender.js        Post-build step — renders every route to static HTML in dist/
+  generate-ride-qr.js One-time generator for /ride's QR codes (see below)
 src/
-  components/   Reusable UI (buttons, tag chips, checklist rows, error boundary)
-  data/         Posts and project case studies (single source of truth)
-  layout/       Navbar, Footer
-  lib/          Motion helpers, scroll/navigation continuity, tag color + glossary
-  pages/        Routed pages (post detail, case study, sprint, 404)
-  sections/     Homepage sections (Hero, About, Experience, Learning, Posts, Contact)
-  entry-server.jsx  SSR entry used only by the prerender step (not shipped to the browser)
+  components/     Reusable UI (buttons, tag chips, checklist rows, error boundary)
+  components/ride/    /ride-only UI (welcome, selected work, experience, connect, QR card)
+  data/           Posts and project case studies (single source of truth)
+  layout/         Navbar, Footer
+  lib/            Motion helpers, scroll/navigation continuity, tag color + glossary
+  lib/ride.js         /ride's inactivity-timer hook and reduced-motion-aware scroll
+  lib/rideLinks.js     Single source of truth for /ride's 4 QR/Connect destinations
+  pages/          Routed pages (post detail, case study, sprint, ride kiosk, 404)
+  sections/       Homepage sections (Hero, About, Experience, Learning, Posts, Contact)
+  test/           Vitest setup (jsdom polyfills, RTL auto-cleanup)
+  entry-server.jsx    SSR entry used only by the prerender step (not shipped to the browser)
 ```
 
 ## Tag chips
@@ -60,6 +66,35 @@ the whole card is a link, and a focusable tooltip trigger nested inside an
 `<a>` is invalid content. Those same tags show tooltips on the case study
 page, where they aren't inside a link.
 
+## The `/ride` kiosk
+
+`/ride` is a standalone, passive kiosk page meant to stay open on an iPad
+mounted in the car while driving for Uber — not a page in the primary nav.
+One scrollable page (welcome → selected work → experience → connect), no
+Navbar/Footer, no forms, no camera/mic/location access, and after 90
+seconds of no touch/pointer/keyboard/scroll activity it smoothly scrolls
+itself back to the top (`src/lib/ride.js`'s `useInactivityReset`,
+skipped in favor of an instant jump under `prefers-reduced-motion`).
+
+Selected work features exactly the two projects in `src/data/projects.js`
+that have real, verified case-study content — adding a third card means
+adding real evidence to that file first, not just a kiosk-side entry.
+
+The four Connect QR codes are **static SVGs generated once at build
+time**, not rendered at runtime:
+
+1. Add or edit a destination in `src/lib/rideLinks.js` (the single source
+   of truth both the generator and the page import, so the code and its
+   text fallback link can never point two different places).
+2. Run `npm run generate:ride-qr` to regenerate `public/ride/qr/*.svg`.
+3. Commit the regenerated SVGs.
+
+Every destination carries `utm_source=uber_kiosk&utm_medium=qr&utm_campaign=ride_portfolio`
+plus a per-destination `utm_content`, and "viewed" analytics events fire
+once per QR code via the same `useSeen()` intersection observer the rest
+of the site uses — not on click, since nobody taps a QR code with a
+touchscreen.
+
 ## Getting started
 
 ```bash
@@ -75,6 +110,8 @@ npm run dev
 | `npm run build` | Client build → SSR build → prerender every route to static HTML in `dist/` |
 | `npm run preview` | Preview the production build locally |
 | `npm run lint` | Run ESLint |
+| `npm run test` | Run the Vitest suite once |
+| `npm run generate:ride-qr` | Regenerate `/ride`'s QR SVGs after a URL changes in `src/lib/rideLinks.js` |
 
 ## Prerendering
 

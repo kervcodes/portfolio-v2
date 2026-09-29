@@ -20,9 +20,773 @@
 //   { type: "list", items: ["...", "..."] }
 //   { type: "divider" }
 //   { type: "callout", text: "..." }   ← bold pull-quote style
+//   { type: "code", language: "python", code: "...", caption?, filename? }
+//
+// CODE BLOCKS:
+//   `language` defaults to "python"; aliases sh/shell/py/text are accepted.
+//   The theme is deliberately monochrome-plus-one — colour on this site means
+//   state (amber/green/red), so a stock rainbow theme is not an option. See
+//   components/CodeBlock.jsx before changing it.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const POSTS = [
+    {
+        // DRAFT — previewable, unlisted.
+        //   unlisted: true   → hidden from both the published and pipeline lists,
+        //                      but the page renders at /posts/<slug> so you can
+        //                      read it while you fill in the outputs.
+        //   TO PUBLISH:      → replace every RERUN CHECKPOINT callout with real
+        //                      output, delete the callouts, then remove the
+        //                      `unlisted` line. That is the only change needed.
+        // Note: unlisted pages are still prerendered into dist/, so the URL is
+        // reachable if this is deployed — unlinked, not private.
+        slug: "it-parsed-it-was-wrong-anyway",
+        title: "It Parsed. It Was Wrong Anyway.",
+        excerpt:
+            "A contract-extraction pipeline returned a valid Pydantic object with every field present — and a date of 9992-09-20. A follow-along lab on why parse success and accuracy are different measurements.",
+        date: "Sep 2026",
+        tags: ["AI Engineering", "LLM Evaluation", "Structured Outputs", "Python", "Pydantic"],
+        readTime: "12 min read",
+        comingSoon: false,
+        unlisted: false,
+        featured: false,
+        // Long follow-along post: fold each h2 into a collapsible section so a
+        // reader can close a step once they have worked through it.
+        collapsibleSections: true,
+        hashnodeUrl: null,
+        coverImage: null,
+        content: [
+            {
+                type: "paragraph",
+                text: "I built a small contract-extraction pipeline that appeared to work perfectly. The model returned a valid Pydantic object. Every required field was present. The dates were valid Python date objects. Nothing crashed.",
+            },
+            { type: "callout", text: "The data was still wrong." },
+            {
+                type: "paragraph",
+                text: "One contract said September 20, 2026. The pipeline returned 9992-09-20. Another said August 14, 2026 and came back as 8358-08-14.",
+            },
+            {
+                type: "paragraph",
+                text: "That failure changed how I think about evaluating LLM systems. A successful parse only proves that the model followed the required structure. It does not prove that the extracted information is correct.",
+            },
+            {
+                type: "paragraph",
+                text: "This post is both the story of that bug and a lab you can run yourself. While making this post, I am rerunning each stage and adding the exact outputs before I publish it. Doing that work again is part of the point: I want to understand the system, not just preserve a result I got once.",
+            },
+            { type: "divider" },
+
+            { type: "heading", text: "What you will build" },
+            {
+                type: "paragraph",
+                text: "A pipeline that extracts six fields from unstructured service contracts: client name, agreement date, service, project amount, deposit required, and completion date.",
+            },
+            {
+                type: "paragraph",
+                text: "Then you will test it at three levels:",
+            },
+            {
+                type: "list",
+                items: [
+                    "Parse success: did the API return a valid object?",
+                    "Field accuracy: did each extracted value match an answer key?",
+                    "Business validity: can a value pass type validation and still be impossible for the application?",
+                ],
+            },
+            {
+                type: "paragraph",
+                text: "The full version of my lab used ten synthetic contracts. The compact version below uses three representative cases so the important parts are easy to follow: a clean contract, a percentage deposit, and a contract with outdated values that must be ignored.",
+            },
+
+            { type: "heading", text: "Setup" },
+            {
+                type: "paragraph",
+                text: "Everything you need is in this post — copy each block in order into a file or notebook of your own and it runs top to bottom. Before you start you will need Python 3.10 or newer, and an OpenAI API key on an account with billing enabled.",
+            },
+            {
+                type: "paragraph",
+                text: "Following the compact version costs nine API calls: one baseline, one after the schema fix, three for the evaluation, two for the model comparison, and two for the grounding test. They are small requests against a cheap model, but they are not free — check your own pricing page before you start.",
+            },
+            {
+                type: "paragraph",
+                text: "I used Python, the OpenAI SDK, Pydantic, and python-dotenv. With uv, create a project and install the dependencies:",
+            },
+            {
+                type: "code",
+                language: "bash",
+                code: `uv init contract-extraction-lab
+cd contract-extraction-lab
+uv add openai pydantic python-dotenv ipykernel`,
+            },
+            {
+                type: "paragraph",
+                text: "That creates a .venv folder inside the project. ipykernel is only needed if you plan to work in a notebook — but installing it now saves a detour later, and it is the piece people most often discover they are missing.",
+            },
+
+            { type: "subheading", text: "Script or notebook — pick one" },
+            {
+                type: "paragraph",
+                text: "Every code block below works either way. The script path has fewer moving parts:",
+            },
+            {
+                type: "code",
+                language: "bash",
+                code: `# Paste the blocks into lab.py as you go, then run it:
+uv run python lab.py`,
+            },
+            {
+                type: "paragraph",
+                text: "uv run uses the project environment automatically, so there is nothing to activate and no kernel to choose. If you would rather work cell by cell, use a notebook — which does need one extra step.",
+            },
+
+            { type: "subheading", text: "Selecting the kernel in a notebook" },
+            {
+                type: "paragraph",
+                text: "A new notebook does not automatically use the environment uv just built. If you skip this, your imports fail with ModuleNotFoundError even though the packages are installed — the notebook is running against a different Python.",
+            },
+            {
+                type: "paragraph",
+                text: "In VS Code: create the notebook inside the project folder, click Select Kernel at the top right, choose Python Environments, and pick the entry pointing at .venv in your project directory. Not your system Python, and not a global conda environment.",
+            },
+            // ─── SCREENSHOT SLOTS ────────────────────────────────────────────
+            // Drop the files in public/posts/post-3/ and uncomment.
+            // Worth capturing: (1) the Select Kernel button top-right of an open
+            // notebook, (2) the Python Environments picker with the .venv entry
+            // highlighted so a reader can see which line to click.
+            // {
+            //     type: "image",
+            //     src: "/posts/post-3/select-kernel.png",
+            //     caption: "Select Kernel sits at the top right of an open notebook.",
+            // },
+            // {
+            //     type: "image",
+            //     src: "/posts/post-3/venv-kernel.png",
+            //     caption: "Pick the interpreter inside the project's own .venv — not the system Python.",
+            // },
+            {
+                type: "paragraph",
+                text: "If you prefer Jupyter in the browser, uv can launch it against the project environment in one command, and the kernel will already be correct:",
+            },
+            {
+                type: "code",
+                language: "bash",
+                code: `uv run --with jupyter jupyter lab`,
+            },
+            {
+                type: "paragraph",
+                text: "To confirm you are on the right interpreter before going further, run this in the first cell. The path it prints should be inside your project's .venv:",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `import sys
+print(sys.executable)`,
+            },
+
+            {
+                type: "paragraph",
+                text: "Store the API key in a local .env file and keep that file out of version control:",
+            },
+            {
+                type: "code",
+                language: "bash",
+                filename: ".env",
+                code: `OPENAI_API_KEY=your-key-here`,
+            },
+            {
+                type: "paragraph",
+                text: "Start the notebook or Python file with:",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `from datetime import date
+from typing import Annotated
+import re
+
+from dotenv import load_dotenv
+from openai import OpenAI
+from pydantic import BaseModel, Field, WithJsonSchema, field_validator
+
+load_dotenv(override=True)
+openai = OpenAI()`,
+            },
+            {
+                type: "callout",
+                text: "RERUN CHECKPOINT — confirm the environment loads and the client initializes without printing or committing the key.",
+            },
+            { type: "divider" },
+
+            { type: "heading", text: "Step 1: Start with the obvious schema" },
+            {
+                type: "paragraph",
+                text: "My first schema used Python date fields directly:",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `class Contract(BaseModel):
+    client_name: str
+    agreement_date: date
+    service: str
+    project_amount: float
+    deposit_required: float
+    completion_date: date`,
+            },
+            {
+                type: "paragraph",
+                text: "Use one clean contract as a baseline:",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `synthetic_contract = """
+SERVICE AGREEMENT
+
+Client: Acme Plumbing LLC
+Agreement Date: September 20, 2026
+Service: Website redesign and lead-generation setup
+Project Amount: $4,800
+Deposit Required: $2,400
+Completion Date: November 15, 2026
+"""
+
+system_prompt = """
+You are a contract data extraction assistant.
+Extract information only from the provided contract.
+Do not invent or infer information that is not present.
+"""
+
+response = openai.responses.parse(
+    model="gpt-5.4-nano",
+    input=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": synthetic_contract},
+    ],
+    text_format=Contract,
+)
+
+print(response.output_parsed)`,
+            },
+            {
+                type: "paragraph",
+                text: "My original run produced a valid object with a corrupted year. Because model behavior can change, your rerun may or may not reproduce the same failure. Record the exact model name, date, output, and generated schema instead of forcing the old result.",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `print(Contract.model_json_schema()["properties"]["agreement_date"])`,
+            },
+            {
+                type: "callout",
+                text: "RERUN CHECKPOINT — paste the baseline object and the agreement_date schema fragment here.",
+            },
+            { type: "divider" },
+
+            { type: "heading", text: "Step 2: Change what the model sees" },
+            {
+                type: "paragraph",
+                text: "The bad values were valid calendar dates, so Pydantic accepted them. Type validation had done its job: the value was a date. The business meaning was wrong.",
+            },
+            {
+                type: "paragraph",
+                text: "The LLM-facing JSON schema was the important clue. A Pydantic date added \"format\": \"date\". In this setup, that format constraint was associated with the corrupted generations. I changed the model-facing schema to a plain string while preserving Python date parsing and validation:",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `LLMDate = Annotated[
+    date,
+    WithJsonSchema({"type": "string"}),
+]
+
+DATE_HINT = (
+    "Return as YYYY-MM-DD, e.g. 2026-08-14. Slash dates like 9/2/26 are "
+    "US month/day/year, and a 2-digit year like 26 means 2026."
+)
+
+
+class Contract(BaseModel):
+    client_name: str = Field(
+        description="The business name only: the company doing the work."
+    )
+    agreement_date: LLMDate = Field(
+        description=f"Date the agreement was made. {DATE_HINT}"
+    )
+    service: str = Field(description="Short description of the work.")
+    project_amount: float = Field(
+        description="Final total price in dollars. If the price changed, "
+        "use the final agreed price."
+    )
+    deposit_required: float = Field(
+        description="Deposit in dollars. If given as a percentage, calculate "
+        "the dollar amount. Use 0 if no deposit is required."
+    )
+    completion_date: LLMDate = Field(
+        description=f"Final completion date. {DATE_HINT}"
+    )
+
+    @field_validator("agreement_date", "completion_date")
+    @classmethod
+    def year_must_be_realistic(cls, value: date) -> date:
+        if not 2000 <= value.year <= 2100:
+            raise ValueError(f"Unrealistic year {value.year} in {value}")
+        return value`,
+            },
+            {
+                type: "paragraph",
+                text: "This creates two layers of protection. Prevent: show the model a plain string field with an explicit YYYY-MM-DD instruction. Catch: convert the string to a Python date and reject years outside the application's allowed range.",
+            },
+            {
+                type: "callout",
+                text: "Schema descriptions guide the model. Validators enforce business rules after the response arrives.",
+            },
+            {
+                type: "paragraph",
+                text: "Run the clean contract again with the revised model, then inspect the value and its Python type:",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `response = openai.responses.parse(
+    model="gpt-5.4-nano",
+    input=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": synthetic_contract},
+    ],
+    text_format=Contract,
+)
+
+result = response.output_parsed
+print(result)
+print(type(result.agreement_date))`,
+            },
+            {
+                type: "callout",
+                text: "RERUN CHECKPOINT — paste the post-fix object and date type. If the baseline no longer fails, say so honestly and keep the validator as a regression guard rather than claiming the fix caused the newer result.",
+            },
+            { type: "divider" },
+
+            { type: "heading", text: "Step 3: Build a compact test set" },
+            {
+                type: "paragraph",
+                text: "A clean document can make a weak system look reliable. These three inputs increase the difficulty without making the article unreadable.",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `contract_1 = """
+Client: Boston Roofing Inc.
+Agreement Date: August 14, 2026
+Service: Roof replacement
+Project Amount: $12,750
+Deposit Required: $5,000
+Completion Date: October 1, 2026
+"""
+
+contract_2 = """
+Subject: Re: Kitchen remodel - confirming details
+
+Harbor Kitchen & Bath will handle the full kitchen remodel.
+The total comes to $18,400. We ask for a 30% deposit.
+We signed off on June 9, 2026 and will finish by August 21, 2026.
+"""
+
+contract_3 = """
+Cape Cod Decking originally quoted $15,000 for a new composite deck.
+After the customer chose a smaller layout, the final agreed price was
+reduced to $13,200. The deposit was first set at $3,000 but was lowered
+to $2,500. The agreement was signed on September 1, 2026. The original
+completion date of November 1, 2026 was pushed back, and the work must
+now be finished by November 20, 2026.
+"""
+
+contracts = [contract_1, contract_2, contract_3]`,
+            },
+            {
+                type: "paragraph",
+                text: "Write the expected values before running the evaluator. This prevents you from changing the answer key to match the model after you see its output.",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `expected_results = [
+    {
+        "client_name": "Boston Roofing Inc.",
+        "agreement_date": "2026-08-14",
+        "service": "Roof replacement",
+        "project_amount": 12750,
+        "deposit_required": 5000,
+        "completion_date": "2026-10-01",
+    },
+    {
+        "client_name": "Harbor Kitchen & Bath",
+        "agreement_date": "2026-06-09",
+        "service": "Kitchen remodel",
+        "project_amount": 18400,
+        "deposit_required": 5520,
+        "completion_date": "2026-08-21",
+    },
+    {
+        "client_name": "Cape Cod Decking",
+        "agreement_date": "2026-09-01",
+        "service": "Composite deck",
+        "project_amount": 13200,
+        "deposit_required": 2500,
+        "completion_date": "2026-11-20",
+    },
+]
+
+assert len(contracts) == len(expected_results)`,
+            },
+            {
+                type: "paragraph",
+                text: "The second contract checks whether the model can calculate a dollar deposit from a percentage. The third checks whether it can choose final values instead of earlier ones.",
+            },
+            {
+                type: "paragraph",
+                text: "My full ten-contract suite also included narrative prose, a casual text message, formal legal language, a pipe-delimited table, rushed notes, a no-deposit case, and a French-language contract.",
+            },
+
+            { type: "heading", text: "Step 4: Test the scoring logic first" },
+            {
+                type: "paragraph",
+                text: "A broken grader can produce a confident but wrong score. I used comparison rules that fit each data type:",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `SCORED_FIELDS = [
+    "client_name",
+    "agreement_date",
+    "project_amount",
+    "deposit_required",
+    "completion_date",
+]
+
+
+def normalize(text: str) -> str:
+    """Lowercase, remove punctuation, and collapse spaces."""
+    text = text.lower()
+    text = re.sub(r"[^\\w\\s]", "", text)
+    return " ".join(text.split())
+
+
+def is_match(field: str, expected, actual) -> bool:
+    """Compare one field using a rule that fits its type."""
+    if field in ("project_amount", "deposit_required"):
+        return abs(float(actual) - float(expected)) < 0.01
+
+    if field == "client_name":
+        options = expected if isinstance(expected, list) else [expected]
+        return normalize(actual) in [normalize(option) for option in options]
+
+    if field in ("agreement_date", "completion_date"):
+        if isinstance(actual, date):
+            actual = actual.isoformat()
+        return actual == expected
+
+    return actual == expected
+
+
+assert is_match("project_amount", 5520, 5520.0000001)
+assert is_match(
+    "client_name",
+    "Northeast Electrical Contractors, Inc.",
+    "northeast electrical contractors inc",
+)
+assert is_match("completion_date", "2026-10-01", date(2026, 10, 1))
+assert not is_match("deposit_required", 2500, 3000)
+print("Scoring helpers passed")`,
+            },
+            {
+                type: "paragraph",
+                text: "I left service out of the automatic score. Exact string matching is a poor measure when two descriptions can have the same meaning with different wording. In this small lab, I review that field manually.",
+            },
+            {
+                type: "callout",
+                text: "RERUN CHECKPOINT — keep the helper assertions in the published code and paste the exact confirmation line from your run.",
+            },
+            { type: "divider" },
+
+            { type: "heading", text: "Step 5: Measure parsing and accuracy separately" },
+            {
+                type: "paragraph",
+                text: "The evaluator counts a failed parse as five incorrect fields. A failed document cannot disappear from the denominator just because there is no object to compare.",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `MODEL = "gpt-5.4-nano"
+best_prompt = """
+You are a precise contract extraction system.
+
+Read the contract carefully and extract the requested structured fields.
+
+Rules:
+- Only use information explicitly written in the contract.
+- Never fabricate values.
+- Do not confuse the project amount with the deposit amount.
+- Preserve the correct client, dates, service, and monetary amounts.
+"""
+
+parsed_ok = 0
+correct_fields = 0
+total_fields = 0
+failures = []
+service_reviews = []
+
+for index, (contract_text, expected) in enumerate(
+    zip(contracts, expected_results), start=1
+):
+    try:
+        response = openai.responses.parse(
+            model=MODEL,
+            input=[
+                {"role": "system", "content": best_prompt},
+                {"role": "user", "content": contract_text},
+            ],
+            text_format=Contract,
+        )
+        result = response.output_parsed
+    except Exception as error:
+        print(f"Contract {index}: API or parse error: {error}")
+        result = None
+
+    if result is None:
+        total_fields += len(SCORED_FIELDS)
+        failures.append((index, "ALL", "parsed Contract", None))
+        continue
+
+    parsed_ok += 1
+    actual = result.model_dump()
+
+    for field in SCORED_FIELDS:
+        total_fields += 1
+        if is_match(field, expected[field], actual[field]):
+            correct_fields += 1
+        else:
+            failures.append((index, field, expected[field], actual[field]))
+
+    service_reviews.append((index, expected["service"], actual["service"]))`,
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `parse_rate = parsed_ok / len(contracts) * 100
+field_accuracy = correct_fields / total_fields * 100
+
+print(f"Parse success: {parsed_ok}/{len(contracts)} = {parse_rate:.0f}%")
+print(
+    f"Field accuracy: {correct_fields}/{total_fields} "
+    f"= {field_accuracy:.1f}%"
+)
+print("Failures:")
+for failure in failures:
+    print(failure)
+
+print("Service review:")
+for review in service_reviews:
+    print(review)`,
+            },
+            {
+                type: "callout",
+                text: "RERUN CHECKPOINT — paste the exact printed summary including any failures, then explain the first failure in plain language. Do not reuse the earlier score unless the fresh run produces it.",
+            },
+            {
+                type: "paragraph",
+                text: "In my original full evaluation, the fixed schema parsed all ten contracts and matched all 50 automatically scored fields. That was encouraging, but it was not proof of production reliability. The sample was small, synthetic, and partly written by the same person who wrote the answer key.",
+            },
+            {
+                type: "paragraph",
+                text: "The manual service review also exposed limitations that the numeric score hid:",
+            },
+            {
+                type: "list",
+                items: [
+                    "The model preserved a typo from rushed notes: central ac instalation.",
+                    "One description absorbed distractor context about an earlier price and a smaller layout.",
+                    "The French contract stayed in French, while my answer key expected an English translation.",
+                ],
+            },
+            {
+                type: "paragraph",
+                text: "That last case was an evaluator problem, not necessarily a model problem. Ground truth — the answer key used to score a system — also needs review.",
+            },
+            { type: "divider" },
+
+            { type: "heading", text: "Step 6: Compare cost only after quality" },
+            {
+                type: "paragraph",
+                text: "I compared two models on the same difficult contract. The important order is quality first, cost second.",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `def estimated_cost(usage, input_price, output_price):
+    return (
+        usage.input_tokens / 1_000_000 * input_price
+        + usage.output_tokens / 1_000_000 * output_price
+    )
+
+
+def run_model(model, input_price, output_price):
+    response = openai.responses.parse(
+        model=model,
+        input=[
+            {"role": "system", "content": best_prompt},
+            {"role": "user", "content": contract_3},
+        ],
+        text_format=Contract,
+    )
+
+    cost = estimated_cost(response.usage, input_price, output_price)
+    print(model)
+    print(f"Input tokens: {response.usage.input_tokens}")
+    print(f"Output tokens: {response.usage.output_tokens}")
+    print(f"Estimated cost per contract: \${cost:.6f}")
+    print(f"Estimated cost per 10,000: \${cost * 10_000:.2f}")
+    print(response.output_parsed)`,
+            },
+            {
+                type: "paragraph",
+                text: "Pricing changes, so look the rates up at the moment you run this rather than trusting a number copied from someone else's notebook. Leaving the placeholders as None is deliberate — the call fails loudly instead of quietly reporting a wrong cost:",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `# Look up the current per-1M-token prices first. Price both models from the
+# same source on the same day, or the comparison is not a comparison.
+NANO_INPUT, NANO_OUTPUT = None, None
+MINI_INPUT, MINI_OUTPUT = None, None
+
+run_model("gpt-5.4-nano", NANO_INPUT, NANO_OUTPUT)
+run_model("gpt-5.4-mini", MINI_INPUT, MINI_OUTPUT)`,
+            },
+            {
+                type: "paragraph",
+                text: "My earlier single-contract comparison found that both models were correct on the automatically scored fields, while the larger model cost more. One contract is not a benchmark. The useful lesson is the decision process: define the quality threshold, evaluate models against the same cases, and choose the least expensive model that meets the requirement.",
+            },
+            {
+                type: "callout",
+                text: "RERUN CHECKPOINT — paste the current pricing source, exact token counts, estimated costs, and both model outputs. If the models differ in quality, discuss that before discussing price.",
+            },
+            { type: "divider" },
+
+            { type: "heading", text: "Step 7: Make missing information predictable" },
+            {
+                type: "paragraph",
+                text: "I also removed the client's address from a contract and asked for it:",
+            },
+            {
+                type: "code",
+                language: "python",
+                code: `hallucination_contract = """
+Client: Acme Plumbing LLC
+Agreement Date: September 20, 2026
+Project Amount: $4,800
+"""
+
+question = (
+    "What is the mailing address of the client in this contract? "
+    "Give me the address."
+)
+
+grounded_prompt = """
+Answer using only facts explicitly stated in the provided contract.
+If the requested information does not appear in the contract, respond with:
+NOT PROVIDED
+Do not guess.
+"""
+
+response_a = openai.responses.create(
+    model="gpt-5.4-nano",
+    input=[
+        {"role": "user", "content": hallucination_contract},
+        {"role": "user", "content": question},
+    ],
+)
+
+response_b = openai.responses.create(
+    model="gpt-5.4-nano",
+    input=[
+        {"role": "system", "content": grounded_prompt},
+        {"role": "user", "content": hallucination_contract},
+        {"role": "user", "content": question},
+    ],
+)
+
+print("Without grounding:")
+print(response_a.output_text)
+print("With grounding:")
+print(response_b.output_text)`,
+            },
+            {
+                type: "paragraph",
+                text: "In my earlier run, the ungrounded model did not invent an address. It explained that the address was missing. The grounded version returned exactly NOT PROVIDED.",
+            },
+            {
+                type: "paragraph",
+                text: "That means I cannot honestly claim the prompt prevented a hallucination. What it improved was consistency: the missing value became a predictable, machine-readable response instead of a paragraph.",
+            },
+            {
+                type: "callout",
+                text: "RERUN CHECKPOINT — paste both responses exactly as returned. If the ungrounded response changes, report what happened without rewriting the experiment to fit the old conclusion.",
+            },
+            { type: "divider" },
+
+            { type: "heading", text: "Use the rerun as a learning exercise" },
+            {
+                type: "paragraph",
+                text: "Before looking at the old outputs, I will do four things:",
+            },
+            {
+                type: "list",
+                items: [
+                    "Predict: write down which contract I expect to fail and why.",
+                    "Explain: describe the difference between parsing, accuracy, and business validation from memory.",
+                    "Run: execute the notebook from a clean kernel in order, without skipping cells.",
+                    "Challenge: add one new adversarial contract, write its answer key first, and run the full evaluator again.",
+                ],
+            },
+            {
+                type: "paragraph",
+                text: "Good adversarial additions include an ambiguous slash date, a missing deposit, a negative amount, two companies in one document, or a completion date earlier than the agreement date.",
+            },
+            {
+                type: "paragraph",
+                text: "The last example exposes an important next step. A year-range check is useful, but it does not prove that two individually valid dates make sense together. A production model could also validate that completion_date is on or after agreement_date.",
+            },
+
+            { type: "heading", text: "What I would carry into production" },
+            {
+                type: "list",
+                items: [
+                    "Define every field before extraction. Client was initially ambiguous: did it mean the business doing the work or the customer receiving it? If the team cannot define a field, the model cannot apply the definition consistently.",
+                    "Keep parse success and accuracy separate. A valid object can contain incorrect values.",
+                    "Add business validators. Types catch malformed data; domain rules catch values that are structurally valid but impossible for the application.",
+                    "Count failures honestly. If a document does not parse, its fields still count against accuracy.",
+                    "Test the evaluator. Normalization and scoring logic need their own assertions.",
+                    "Review free text differently. Exact string matching is a poor measure for semantically equivalent descriptions.",
+                    "Compare cost only after quality. A cheap wrong answer is expensive once it enters a workflow.",
+                    "Keep adversarial cases. Short dates, percentages, conflicting values, abbreviations, missing fields, and multilingual text belong in the regression suite.",
+                ],
+            },
+
+            { type: "heading", text: "The takeaway" },
+            {
+                type: "callout",
+                text: "Parse success tells me the model followed the format. Field accuracy tells me whether it was right.",
+            },
+            {
+                type: "paragraph",
+                text: "The most useful part of the exercise was not getting a perfect score after the fix. It was watching a pipeline return polished, typed, completely believable wrong data — and then building the checks that exposed it.",
+            },
+            {
+                type: "paragraph",
+                text: "Rerunning the code before I publish this is part of the lesson. The output belongs in the post only after I can reproduce it, explain it, and say exactly what the test does not prove.",
+            },
+        ],
+    },
     {
         slug: "build-log-11-the-key-the-app-never-writes-to-disk-in-plain-text",
         title: "Build Log #11: The Key the App Never Writes to Disk in Plain Text",

@@ -6,7 +6,7 @@
 // places.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const SITE_URL = "https://kervintznoel.com";
+import { SITE_URL, LINKEDIN_URL, RESUME_PATH } from "./profile.js";
 
 const UTM = {
   utm_source: "uber_kiosk",
@@ -14,18 +14,23 @@ const UTM = {
   utm_campaign: "ride_portfolio",
 };
 
-// Only ever called with the constant URLs below — never with rider or
+// Only ever called with constant URLs — never with rider/visitor or
 // runtime-configurable input — but still built through the URL parser
 // (throws on anything malformed) rather than string concatenation.
-function buildUrl(rawUrl, contentId, hash) {
+// Exported so /career (src/lib/careerLinks.js) tags its links the same way
+// under its own campaign.
+export function buildTaggedUrl(rawUrl, utm, contentId, hash) {
   const url = new URL(rawUrl);
-  for (const [key, value] of Object.entries(UTM)) {
+  for (const [key, value] of Object.entries(utm)) {
     url.searchParams.set(key, value);
   }
   url.searchParams.set("utm_content", contentId);
   if (hash) url.hash = hash;
   return url.toString();
 }
+
+const buildUrl = (rawUrl, contentId, hash) =>
+  buildTaggedUrl(rawUrl, UTM, contentId, hash);
 
 export const RIDE_LINKS = [
   {
@@ -40,7 +45,7 @@ export const RIDE_LINKS = [
     id: "linkedin",
     label: "LinkedIn",
     detail: "linkedin.com/in/kervintznoel",
-    url: buildUrl("https://www.linkedin.com/in/kervintznoel/", "linkedin"),
+    url: buildUrl(LINKEDIN_URL, "linkedin"),
     qr: "/ride/qr/linkedin.svg",
     event: "ride_linkedin_qr_viewed",
   },
@@ -48,7 +53,7 @@ export const RIDE_LINKS = [
     id: "resume",
     label: "Résumé",
     detail: "Download PDF",
-    url: buildUrl(`${SITE_URL}/resume/kervintz_noel_resume.pdf`, "resume"),
+    url: buildUrl(`${SITE_URL}${RESUME_PATH}`, "resume"),
     qr: "/ride/qr/resume.svg",
     event: "ride_resume_qr_viewed",
   },

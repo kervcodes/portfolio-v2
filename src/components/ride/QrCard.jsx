@@ -17,20 +17,33 @@ import { trackEvent } from "@/lib/analytics";
 // destinations — even same-origin ones like the portfolio home or the
 // résumé PDF — is somewhere other than /ride, and the kiosk page must never
 // be the thing that gets replaced by a rider's tap.
+//
+// Shared with /career: `source` tags analytics with the route it came from,
+// `labelSize` enlarges the placard label for kiosks read from a distance,
+// and `action` replaces the fallback link for a card whose payload isn't a
+// URL (the career page's vCard, which is downloaded rather than opened).
 // ─────────────────────────────────────────────────────────────────────────────
 export const QrCard = ({
   link,
   size = "default",
   placement = "connect",
   tone = "light",
+  source = "ride",
+  labelSize = "",
+  action,
 }) => {
   const [ref, seen] = useSeen();
 
   useEffect(() => {
-    if (seen) trackEvent(link.event, { source: "ride", placement });
-  }, [seen, link.event, placement]);
+    if (seen) trackEvent(link.event, { source, placement });
+  }, [seen, link.event, placement, source]);
 
-  const qrBox = size === "lg" ? "w-40 h-40 md:w-44 md:h-44" : "w-28 h-28";
+  const qrBox =
+    size === "xl"
+      ? "w-52 h-52 md:w-60 md:h-60"
+      : size === "lg"
+      ? "w-40 h-40 md:w-44 md:h-44"
+      : "w-28 h-28";
   const labelClass = tone === "panel" ? "text-panel-muted" : "text-ink-muted";
   const linkClass =
     tone === "panel"
@@ -45,7 +58,7 @@ export const QrCard = ({
       <div className={`sheet p-3 ${qrBox}`}>
         <img
           src={link.qr}
-          alt={`QR code — scan to open ${link.label} on your phone`}
+          alt={link.alt ?? `QR code — scan to open ${link.label} on your phone`}
           className="w-full h-full"
           width={176}
           height={176}
@@ -53,15 +66,17 @@ export const QrCard = ({
         />
       </div>
       <div>
-        <p className={`placard ${labelClass}`}>{link.label}</p>
-        <a
-          href={link.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`mt-1 inline-flex min-h-11 items-center text-sm font-bold underline underline-offset-4 decoration-2 transition-colors ${linkClass}`}
-        >
-          {link.detail}
-        </a>
+        <p className={`placard ${labelSize} ${labelClass}`}>{link.label}</p>
+        {action ?? (
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`mt-1 inline-flex min-h-11 items-center text-sm font-bold underline underline-offset-4 decoration-2 transition-colors ${linkClass}`}
+          >
+            {link.detail}
+          </a>
+        )}
       </div>
     </div>
   );

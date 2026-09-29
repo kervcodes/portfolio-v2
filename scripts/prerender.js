@@ -19,6 +19,7 @@ const routes = [
   "/",
   "/twin",
   "/ride",
+  "/career",
   ...POSTS.map((p) => `/posts/${p.slug}`),
   ...PROJECTS.map((p) => `/projects/${p.slug}`),
 ];

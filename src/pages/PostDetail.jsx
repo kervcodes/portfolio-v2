@@ -1,9 +1,11 @@
+import { useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { getPostBySlug, POSTS } from "@/data/posts";
 import { Status, Row, Arrow } from "@/components/Checklist";
+import { CodeBlock } from "@/components/CodeBlock";
 import { usePageTurn, useTurnKey } from "@/lib/motion";
 
 // Posts are back on the homepage, so the return path is the Notes section.
@@ -67,9 +69,121 @@ const ContentBlock = ({ block }) => {
                     </p>
                 </blockquote>
             );
+        case "code":
+            return <CodeBlock block={block} />;
         default:
             return null;
     }
+};
+
+// ─── Collapsible sections ─────────────────────────────────────────────────────
+// Long follow-along posts are easier to work through when a finished step can be
+// folded away. Opt in per post with `collapsibleSections: true`.
+//
+// Splitting happens on `heading` (h2); `subheading` (h3) stays inside its
+// section. Anything before the first heading is the preamble and never folds —
+// a reader should not have to open a disclosure to find out what the post is.
+//
+// Native <details> on purpose: the content stays in the DOM, so prerendered HTML
+// still carries it for crawlers and browser find-in-page still reaches it.
+// Sections default to open, so nothing is hidden on a first read.
+const splitIntoSections = (blocks) => {
+    const preamble = [];
+    const sections = [];
+
+    for (const block of blocks) {
+        if (block.type === "heading") {
+            sections.push({ title: block.text, blocks: [] });
+        } else if (sections.length === 0) {
+            preamble.push(block);
+        } else {
+            sections[sections.length - 1].blocks.push(block);
+        }
+    }
+    return { preamble, sections };
+};
+
+const CollapsibleBody = ({ blocks }) => {
+    const containerRef = useRef(null);
+    const { preamble, sections } = splitIntoSections(blocks);
+
+    // Nothing to fold — fall back to a plain body rather than render a
+    // toggle that controls nothing.
+    if (sections.length < 2) {
+        return (
+            <div className="mt-10">
+                {blocks.map((block, i) => (
+                    <ContentBlock key={i} block={block} />
+                ))}
+            </div>
+        );
+    }
+
+    const setAll = (open) => {
+        containerRef.current
+            ?.querySelectorAll("details")
+            .forEach((node) => (node.open = open));
+    };
+
+    return (
+        <div className="mt-10">
+            {preamble.map((block, i) => (
+                <ContentBlock key={`pre-${i}`} block={block} />
+            ))}
+
+            <div className="mt-10 flex items-center justify-between gap-4 border-t border-rule pt-3">
+                <p className="placard text-ink-faint">
+                    {sections.length} sections
+                </p>
+                <div className="flex gap-5">
+                    <button
+                        type="button"
+                        onClick={() => setAll(true)}
+                        className="placard text-ink-faint transition-colors hover:text-ink focus-visible:text-ink focus-visible:outline-none"
+                    >
+                        Expand all
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => setAll(false)}
+                        className="placard text-ink-faint transition-colors hover:text-ink focus-visible:text-ink focus-visible:outline-none"
+                    >
+                        Collapse all
+                    </button>
+                </div>
+            </div>
+
+            <div ref={containerRef}>
+                {sections.map((section, i) => (
+                    <details
+                        key={i}
+                        open
+                        className="group border-b border-rule [&[open]>summary_.marker]:rotate-90"
+                    >
+                        <summary className="flex cursor-pointer list-none items-baseline gap-3 py-5 marker:content-none hover:text-caution-ink focus-visible:outline-none focus-visible:text-caution-ink">
+                            <span
+                                className="marker placard text-ink-faint shrink-0 transition-transform duration-150"
+                                aria-hidden="true"
+                            >
+                                &rsaquo;
+                            </span>
+                            <span className="placard nums text-ink-faint shrink-0">
+                                {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <h2 className="text-xl md:text-2xl font-bold text-ink uppercase tracking-tight leading-snug">
+                                {section.title}
+                            </h2>
+                        </summary>
+                        <div className="pb-6">
+                            {section.blocks.map((block, j) => (
+                                <ContentBlock key={j} block={block} />
+                            ))}
+                        </div>
+                    </details>
+                ))}
+            </div>
+        </div>
+    );
 };
 
 // Going back is the same event in reverse, so it is the same turn: pass the
@@ -244,14 +358,24 @@ export const PostDetail = () => {
                     `visibleBlocks` renders the first N blocks and stops; the
                     rest is still in posts.js, just not served. Absent, the
                     whole body renders. */}
-                <div className="mt-10">
-                    {(typeof post.visibleBlocks === "number"
-                        ? post.content.slice(0, post.visibleBlocks)
-                        : post.content
-                    ).map((block, i) => (
-                        <ContentBlock key={i} block={block} />
-                    ))}
-                </div>
+                {(() => {
+                    const body =
+                        typeof post.visibleBlocks === "number"
+                            ? post.content.slice(0, post.visibleBlocks)
+                            : post.content;
+
+                    // Opt-in: only long follow-along posts fold into sections.
+                    if (post.collapsibleSections) {
+                        return <CollapsibleBody blocks={body} />;
+                    }
+                    return (
+                        <div className="mt-10">
+                            {body.map((block, i) => (
+                                <ContentBlock key={i} block={block} />
+                            ))}
+                        </div>
+                    );
+                })()}
 
                 {(prevPost || nextPost) && (
                     // grid, not flex — a fixed two-column layout can't ever

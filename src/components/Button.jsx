@@ -30,10 +30,13 @@ export const Button = ({
   size = "default",
   variant = "primary",
   href,
+  as,
   children,
   ...props
 }) => {
-  const Tag = href ? "a" : "button";
+  // `as` lets a caller swap in a router <Link> (passing `to`) for in-app
+  // routes, so they navigate client-side instead of reloading the page.
+  const Tag = as ?? (href ? "a" : "button");
   return (
     <Tag
       href={href}

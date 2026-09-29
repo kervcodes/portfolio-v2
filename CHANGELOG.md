@@ -4,6 +4,46 @@ Notable changes to the portfolio, newest first. This site deploys
 continuously, so entries are grouped by the date they landed on `master`
 rather than by release version.
 
+## 2026-09-22
+
+- **New `/ride` route: a passive iPad kiosk for the car.** A single
+  scrollable page — welcome, selected work, experience summary, connect —
+  built entirely from existing components and verified content, meant to
+  stay open on an iPad mounted behind the front seat while driving for
+  Uber. No Navbar/Footer (a standalone shell), 44px+ touch targets, no
+  autoplay/sound/camera/mic/location access, and after 90 seconds with no
+  touch/pointer/keyboard/scroll activity the page smoothly scrolls itself
+  back to the welcome section (`prefers-reduced-motion` skips the smooth
+  behavior). Selected work features exactly two projects — Bank Statement
+  Analyzer and AI Digital Twin, the only ones with real case-study
+  content in the repo; BranchBeacon and the four disabled `Projects.jsx`
+  entries were deliberately left out rather than invented. (`src/pages/Ride.jsx`,
+  `src/components/ride/`, `src/lib/ride.js`, `src/App.jsx`)
+- **Four QR codes, generated once at build time, not at runtime.**
+  `scripts/generate-ride-qr.js` renders static SVGs (portfolio, LinkedIn,
+  résumé, contact) into `public/ride/qr/`, each tagged with
+  `utm_source=uber_kiosk&utm_medium=qr&utm_campaign=ride_portfolio` plus a
+  per-destination `utm_content`. `qrcode` is a devDependency used only by
+  that script — nothing ships to the browser bundle. A single source of
+  truth (`src/lib/rideLinks.js`) builds every URL through the `URL` API
+  so the QR code and its text fallback link can never diverge.
+  (`scripts/generate-ride-qr.js`, `src/lib/rideLinks.js`, `public/ride/qr/`)
+- **New GA4 events, reusing the existing `trackEvent()`.** `ride_page_view`,
+  `ride_project_opened`, and one `ride_<id>_qr_viewed` per QR destination
+  (portfolio/linkedin/resume/contact) — the "viewed" events fire once via
+  the same `useSeen()` intersection observer the rest of the site uses
+  for its check marks, not on click, since nobody taps a QR code with a
+  touchscreen. (`src/components/ride/QrCard.jsx`, `src/lib/analytics.js`)
+- **`/ride` added to the prerendered-routes list**, so it ships as real
+  static HTML like every other route rather than an empty shell.
+  (`scripts/prerender.js`)
+- **First test runner in the repo.** Added `vitest` +
+  `@testing-library/react` + `jsdom` as devDependencies (none existed
+  before) and 16 tests covering `/ride`'s rendering, QR/UTM correctness,
+  project-status accuracy, the inactivity-reset timer, safe external
+  links, and keyboard reachability. (`vite.config.js`, `src/test/setup.js`,
+  `src/pages/Ride.test.jsx`, `src/lib/ride.test.js`, `src/lib/rideLinks.test.js`)
+
 ## 2026-09-12
 
 - **Nine missing Build Log posts published, closing the gap between the

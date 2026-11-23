@@ -41,7 +41,7 @@ export const WelcomeScreen = () => (
             I design, implement, and stabilize AI-powered workflows and
             software systems.
           </p>
-          <p className="mt-3 text-base text-ink-muted leading-relaxed max-w-[52ch]">
+          <p className="text-body mt-3 text-ink-muted max-w-[52ch]">
             While we ride, explore a few systems I&rsquo;ve built.
           </p>
 

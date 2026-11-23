@@ -42,7 +42,7 @@ export const ExperienceSummary = () => (
         {AREAS.map((area) => (
           <Entry as="li" key={area.label} className="rule-sub pt-3">
             <p className="font-bold text-ink">{area.label}</p>
-            <p className="mt-1 text-sm text-ink-muted leading-relaxed">
+            <p className="text-body mt-1 text-ink-muted">
               {area.detail}
             </p>
           </Entry>

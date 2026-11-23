@@ -99,12 +99,12 @@ const ProjectCard = ({ project }) => {
                     <Status kind={project.status} />
                 </div>
                 <h3
-                    className="mt-2 text-lg font-bold text-ink tracking-tight"
+                    className="mt-2 text-xl md:text-3xl font-bold text-ink tracking-tight"
                     style={paired ? { viewTransitionName: "project-title" } : undefined}
                 >
                     {project.name}
                 </h3>
-                <p className="mt-2 text-sm text-ink-muted leading-relaxed">
+                <p className="text-body mt-2 text-ink-muted">
                     {project.description}
                 </p>
 

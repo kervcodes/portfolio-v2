@@ -52,12 +52,12 @@ export const TwinFeature = () => {
           <div className="px-5 md:px-8 py-6 md:py-8 grid lg:grid-cols-12 gap-8 lg:gap-10">
             <div className="lg:col-span-7 space-y-6">
               <Block label="Problem" rule={false}>
-                <p className="text-base md:text-lg text-ink leading-relaxed">
+                <p className="text-body text-ink">
                   {TWIN_FEATURE.problem}
                 </p>
               </Block>
               <Block label="What I built">
-                <p className="text-base md:text-lg text-ink leading-relaxed">
+                <p className="text-body text-ink">
                   {TWIN_FEATURE.built}
                 </p>
               </Block>

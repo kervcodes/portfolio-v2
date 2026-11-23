@@ -55,7 +55,7 @@ export const ContinueConversation = () => (
           <span className="placard text-panel-muted nums" aria-hidden="true">
             04
           </span>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
             Continue the conversation
           </h2>
         </div>

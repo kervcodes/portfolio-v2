@@ -78,13 +78,15 @@ export const SectionHead = ({ index, title, lede, id, className = "" }) => (
       )}
       <h2
         id={id}
-        className="text-2xl md:text-3xl font-bold tracking-tight text-ink"
+        className="text-3xl md:text-5xl font-bold tracking-tight text-ink"
       >
         {title}
       </h2>
     </div>
     {lede && (
-      <p className="mt-3 text-ink-muted leading-relaxed">{lede}</p>
+      <p className="mt-3 text-body text-ink-muted max-w-[60ch]">
+        {lede}
+      </p>
     )}
   </header>
 );
@@ -93,7 +95,7 @@ export const SectionHead = ({ index, title, lede, id, className = "" }) => (
 export const Notice = ({ kind = "caution", label, children, className = "" }) => (
   <aside className={`notice notice--${kind} ${className}`}>
     <p className="notice__band">{label}</p>
-    <div className="px-4 py-3 text-sm text-ink-muted leading-relaxed">
+    <div className="text-body px-4 py-3 text-ink-muted">
       {children}
     </div>
   </aside>

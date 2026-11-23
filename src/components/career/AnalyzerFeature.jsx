@@ -32,7 +32,7 @@ export const AnalyzerFeature = () => {
           </div>
 
           <div className="px-5 md:px-8 py-6 md:py-8">
-            <p className="text-base md:text-lg text-ink leading-relaxed max-w-[60ch]">
+            <p className="text-body text-ink max-w-[60ch]">
               {f.summary}
             </p>
 
@@ -52,7 +52,7 @@ export const AnalyzerFeature = () => {
                   <p className="mt-1 font-bold text-ink leading-tight">
                     {step.label}
                   </p>
-                  <p className="mt-1 text-sm text-ink-muted leading-snug">
+                  <p className="text-body mt-1 text-ink-muted">
                     {step.detail}
                   </p>
                   {i < f.pipeline.length - 1 && (
@@ -87,7 +87,7 @@ export const AnalyzerFeature = () => {
                 {f.talkingPoints.map((t) => (
                   <div key={t.label} className="rule-sub pt-2">
                     <dt className="placard text-xs text-ink-muted">{t.label}</dt>
-                    <dd className="mt-1 text-ink leading-snug">{t.body}</dd>
+                    <dd className="text-body mt-1 text-ink">{t.body}</dd>
                   </div>
                 ))}
               </dl>
@@ -96,11 +96,11 @@ export const AnalyzerFeature = () => {
             <div className="mt-8 grid sm:grid-cols-2 gap-4">
               <div className="border-l-4 border-verified pl-4">
                 <p className="placard text-xs text-verified">Works today</p>
-                <p className="mt-1 text-ink leading-snug">{f.working}</p>
+                <p className="text-body mt-1 text-ink">{f.working}</p>
               </div>
               <div className="border-l-4 border-caution pl-4">
                 <p className="placard text-xs text-caution-ink">Not yet</p>
-                <p className="mt-1 text-ink leading-snug">{f.notYet}</p>
+                <p className="text-body mt-1 text-ink">{f.notYet}</p>
               </div>
             </div>
 

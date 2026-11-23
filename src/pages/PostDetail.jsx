@@ -17,19 +17,19 @@ const ContentBlock = ({ block }) => {
     switch (block.type) {
         case "paragraph":
             return (
-                <p className="text-ink-muted leading-relaxed text-base mb-6">
+                <p className="text-body text-ink-muted mb-6">
                     {block.text}
                 </p>
             );
         case "heading":
             return (
-                <h2 className="mt-12 mb-5 text-xl md:text-2xl font-bold text-ink tracking-tight">
+                <h2 className="mt-12 mb-5 text-2xl md:text-4xl font-bold text-ink tracking-tight">
                     {block.text}
                 </h2>
             );
         case "subheading":
             return (
-                <h3 className="mt-8 mb-3 text-lg font-bold text-ink">{block.text}</h3>
+                <h3 className="mt-8 mb-3 text-xl md:text-3xl font-bold text-ink">{block.text}</h3>
             );
         case "image":
             return (
@@ -64,7 +64,7 @@ const ContentBlock = ({ block }) => {
         case "callout":
             return (
                 <blockquote className="my-10">
-                    <p className="text-xl md:text-2xl font-bold text-ink leading-snug">
+                    <p className="text-xl md:text-3xl font-bold text-ink leading-snug">
                         {block.text}
                     </p>
                 </blockquote>
@@ -170,7 +170,7 @@ const CollapsibleBody = ({ blocks }) => {
                             <span className="placard nums text-ink-faint shrink-0">
                                 {String(i + 1).padStart(2, "0")}
                             </span>
-                            <h2 className="text-xl md:text-2xl font-bold text-ink tracking-tight leading-snug">
+                            <h2 className="text-xl md:text-3xl font-bold text-ink tracking-tight leading-snug">
                                 {section.title}
                             </h2>
                         </summary>

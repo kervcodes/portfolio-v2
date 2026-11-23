@@ -87,7 +87,7 @@ export const Experience = () => (
 
             {/* Right column: the entry */}
             <div className="md:col-span-8">
-              <h3 className="text-lg md:text-xl font-bold text-ink leading-snug tracking-tight">
+              <h3 className="text-xl md:text-3xl font-bold text-ink leading-snug tracking-tight">
                 {exp.role}
               </h3>
               <p className="mt-1 text-sm text-ink-muted">
@@ -95,7 +95,7 @@ export const Experience = () => (
                 <span className="mx-2 text-ink-faint" aria-hidden="true">·</span>
                 {exp.place}
               </p>
-              <p className="mt-3 text-sm text-ink-muted leading-relaxed max-w-[62ch]">
+              <p className="text-body mt-3 text-ink-muted max-w-[62ch]">
                 {exp.description}
               </p>
               <ul className="mt-3 flex flex-wrap gap-2">

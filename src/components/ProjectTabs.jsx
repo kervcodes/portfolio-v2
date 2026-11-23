@@ -9,13 +9,13 @@ export const ContentBlock = ({ block }) => {
     switch (block.type) {
         case "paragraph":
             return (
-                <p className="text-ink-muted leading-relaxed text-base mb-6">
+                <p className="text-body text-ink-muted mb-6">
                     {block.text}
                 </p>
             );
         case "heading":
             return (
-                <h3 className="mt-8 mb-3 text-lg font-bold text-ink tracking-tight first:mt-0">
+                <h3 className="mt-8 mb-3 text-xl md:text-3xl font-bold text-ink tracking-tight first:mt-0">
                     {block.text}
                 </h3>
             );
@@ -86,7 +86,7 @@ const KeyDecisionsPanel = ({ project }) => {
             {items.map((d) => (
                 <li key={d.title}>
                     <p className="font-bold text-ink">{d.title}</p>
-                    <p className="mt-1.5 text-sm text-ink-muted leading-relaxed">
+                    <p className="text-body mt-1.5 text-ink-muted">
                         {d.body}
                     </p>
                 </li>
@@ -105,7 +105,7 @@ const BuildLogPanel = ({ project }) => {
             {entries.map((e, i) => (
                 <li key={i} className="rule-sub pt-3">
                     <p className="placard text-ink-faint">{e.date}</p>
-                    <p className="mt-1.5 text-sm text-ink-muted leading-relaxed">
+                    <p className="text-body mt-1.5 text-ink-muted">
                         {e.text}
                     </p>
                     {(e.images ?? []).length > 0 && (
@@ -194,7 +194,7 @@ const ResultPanel = ({ project }) => {
                         {roadmap.map((item, i) => (
                             <li key={i} className="flex items-start gap-3">
                                 <Status kind={item.status} />
-                                <span className="text-sm text-ink-muted leading-relaxed">
+                                <span className="text-body text-ink-muted">
                                     {item.label}
                                 </span>
                             </li>
@@ -207,7 +207,7 @@ const ResultPanel = ({ project }) => {
                     <p className="placard text-ink-faint mb-2">What I'd improve next</p>
                     <ul className="space-y-2 list-disc list-inside">
                         {improvements.map((text, i) => (
-                            <li key={i} className="text-sm text-ink-muted leading-relaxed">
+                            <li key={i} className="text-body text-ink-muted">
                                 {text}
                             </li>
                         ))}

@@ -20,7 +20,7 @@ export const About = () => (
 
       <div className="mt-10 grid lg:grid-cols-12 gap-10">
         {/* Prose holds a real measure — 62ch, not the full grid width. */}
-        <div className="lg:col-span-7 space-y-5 text-ink-muted leading-relaxed max-w-[62ch]">
+        <div className="text-body lg:col-span-7 space-y-5 text-ink-muted max-w-[62ch]">
           <p>
             I live in Boston, where I build web applications and the
             infrastructure underneath them. I started programming in high school
@@ -29,7 +29,7 @@ export const About = () => (
             to software development in 2019.
           </p>
 
-          <blockquote className="my-8 rule-sub pt-4 text-lg md:text-xl leading-snug text-ink font-bold max-w-[46ch]">
+          <blockquote className="my-8 rule-sub pt-4 text-xl md:text-3xl leading-snug text-ink font-bold max-w-[46ch]">
             I build for longevity — systems that stay reliable long after the
             launch excitement fades.
           </blockquote>

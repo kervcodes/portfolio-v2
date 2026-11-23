@@ -62,12 +62,12 @@ export const Posts = () => {
                                         <Status kind="verified">Published</Status>
                                     </div>
                                     <h3
-                                        className="mt-3 text-xl md:text-2xl font-bold text-ink leading-snug tracking-tight max-w-[34ch]"
+                                        className="mt-3 text-xl md:text-3xl font-bold text-ink leading-snug tracking-tight max-w-[34ch]"
                                         style={paired ? { viewTransitionName: "note-entry" } : undefined}
                                     >
                                         {post.title}
                                     </h3>
-                                    <p className="mt-3 text-sm text-ink-muted leading-relaxed">
+                                    <p className="text-body mt-3 text-ink-muted">
                                         {post.excerpt}
                                     </p>
                                     <p className="mt-5 rule-sub pt-3 placard text-ink group-hover:text-caution-ink transition-colors inline-flex items-center gap-2">

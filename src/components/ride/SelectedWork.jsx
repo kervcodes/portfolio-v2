@@ -63,16 +63,16 @@ const ProjectCard = ({ entry }) => {
       </div>
       <div className="p-5 md:p-6">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h3 className="text-lg md:text-xl font-bold text-ink tracking-tight">
+          <h3 className="text-xl md:text-3xl font-bold text-ink tracking-tight">
             {project.name}
           </h3>
           <Status kind={project.status} />
         </div>
 
-        <p className="mt-3 text-sm text-ink-muted leading-relaxed">
+        <p className="text-body mt-3 text-ink-muted">
           {entry.problem}
         </p>
-        <p className="mt-2 text-sm text-ink leading-relaxed font-medium">
+        <p className="text-body mt-2 text-ink font-medium">
           {entry.solution}
         </p>
 

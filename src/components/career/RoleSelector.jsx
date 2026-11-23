@@ -55,7 +55,7 @@ export const RoleSelector = ({ value, onChange }) => {
             {track.strengths.map((s) => (
               <li key={s.label} className="rule-sub pt-2">
                 <p className="font-bold text-ink">{s.label}</p>
-                <p className="mt-0.5 text-sm text-ink-muted leading-snug">
+                <p className="text-body mt-0.5 text-ink-muted">
                   {s.detail}
                 </p>
               </li>

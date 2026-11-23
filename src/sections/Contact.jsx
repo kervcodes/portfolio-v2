@@ -109,11 +109,11 @@ export const Contact = () => {
             <span className="placard text-panel-muted nums" aria-hidden="true">
               05
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
               Contact
             </h2>
           </div>
-          <p className="mt-3 text-panel-muted leading-relaxed">
+          <p className="mt-3 text-body text-panel-muted max-w-[60ch]">
             If you're hiring, tell me about the role and the team — I'd rather
             hear about the problems than the perks. If you're building something
             and want to compare notes, that works too.
@@ -219,7 +219,7 @@ export const Contact = () => {
                   <p className="notice__band">
                     {submitStatus.type === "success" ? "Sent" : "Not sent"}
                   </p>
-                  <p className="px-4 py-3 text-sm text-ink-muted leading-relaxed">
+                  <p className="text-body px-4 py-3 text-ink-muted">
                     {submitStatus.message}
                   </p>
                 </div>

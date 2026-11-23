@@ -5,7 +5,7 @@
    Aviation checklist cards and the Quick Reference Handbook. Colour carries
    state and nothing else: black is normal, amber is in progress, green is
    verified, red is a warning. The charcoal panel is structure, not mood.
-   Type is Georgia throughout (system serif, no web-font download).
+   Type is Arial / Helvetica throughout (system sans, no web-font download).
    ───────────────────────────────────────────────────────────────────────── */
 
 @theme {
@@ -83,14 +83,27 @@
   --color-error: oklch(52% 0.195 27);
 
   /* ── Type ── */
-  /* One face everywhere: Georgia, a system serif, so nothing is downloaded.
-     The mono and serif tokens point at it too, so placards, buttons and
-     figures all share the same type as the prose. */
-  --font-sans: Georgia, "Times New Roman", serif;
-  --font-mono: Georgia, "Times New Roman", serif;
-  --font-serif: Georgia, "Times New Roman", serif;
+  /* One face everywhere: Arial / Helvetica, a plain system sans chosen for
+     how clearly it reads on screen, so nothing is downloaded. The mono and
+     serif tokens point at it too, so labels, buttons and figures all share
+     the same type as the prose. */
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-mono: Arial, Helvetica, sans-serif;
+  --font-serif: Arial, Helvetica, sans-serif;
 
   --radius: 0.125rem;
+}
+
+/* ── Body text: one size for every paragraph on the site ──────────────────
+   One size for all running text (20px on desktop, 17px on phones, 1.625
+   line height), so the site reads at one comfortable size.
+   An @utility so it sorts with the other text-* utilities. */
+@utility text-body {
+  font-size: 1.0625rem;
+  line-height: 1.625;
+  @media (width >= 48rem) {
+    font-size: 1.25rem;
+  }
 }
 
 @layer base {

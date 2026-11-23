@@ -92,7 +92,7 @@ const Headshot = () => (
 );
 
 export const Hero = () => (
-  <section className="relative mt-25 pt-24 md:pt-32 pb-16 md:pb-24">
+  <section className="relative mt-5 pt-24 md:pt-32 pb-16 md:pb-24">
     <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
         {/* ── Photo: first on mobile, right column on desktop ── */}
@@ -109,7 +109,7 @@ export const Hero = () => (
             Software Engineer · Python · React · AWS · LLM Workflows
           </p>
 
-          <p className="hero-rise mt-6 text-base md:text-lg leading-relaxed text-ink max-w-[58ch]" style={delay(240)}>
+          <p className="hero-rise mt-6 text-body text-ink max-w-[58ch]" style={delay(240)}>
             I'm a Boston-based engineer who designs, implements, and stabilizes
             AI-powered workflows for real business operations. More than a
             decade across enterprise IT, legal technology, and site
@@ -119,7 +119,7 @@ export const Hero = () => (
 
           {/* ── The card ── */}
           <div className="hero-rise mt-15 sheet rounded-xl px-6 md:px-8 py-7" style={delay(340)}>
-            <p className="text-sm md:text-[0.9375rem] leading-relaxed text-ink-muted">
+            <p className="text-body text-ink-muted">
               I specialize in turning AI prototypes into dependable systems.
               API integrations, LLM workflows, and the monitoring that keeps
               them honest in production. I'm just as comfortable debugging a

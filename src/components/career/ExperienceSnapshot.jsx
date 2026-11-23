@@ -33,7 +33,7 @@ export const ExperienceSnapshot = () => (
               </span>
             )}
             <p className="placard text-xs text-ink-muted nums">{s.when}</p>
-            <h3 className="mt-1 text-lg md:text-xl font-bold text-ink tracking-tight leading-snug">
+            <h3 className="mt-1 text-xl md:text-3xl font-bold text-ink tracking-tight leading-snug">
               {s.stage}
             </h3>
             <p className="mt-1 text-sm text-ink-muted">{s.where}</p>

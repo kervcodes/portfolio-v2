@@ -32,7 +32,7 @@ import { Learning } from "@/sections/Learning";
 //
 // Content widths — two named roles, nothing else:
 //   prose / forms   max-w-2xl (672)
-//   page frame      max-w-5xl (1024) — every page shares this outer width,
+//   page frame      max-w-7xl (1280), px-6 md:px-12 — every page shares this outer width,
 //                   including full-page articles and their notice/error
 //                   states, so no page reads as narrower than another.
 //

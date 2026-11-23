@@ -39,7 +39,7 @@ export const Twin = () => (
                 style={{ minHeight: "calc(100vh - 4rem)" }}
             />
         ) : (
-            <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
+            <div className="max-w-7xl mx-auto px-6 md:px-12 py-20">
                 <div className="notice notice--warning">
                     <p className="notice__band">Unavailable</p>
                     <div className="px-5 py-6">

@@ -11,7 +11,7 @@ const tools = [
 
 export const About = () => (
   <section id="about" className="py-16 md:py-24 scroll-mt-20">
-    <div className="max-w-5xl mx-auto px-5 md:px-6">
+    <div className="max-w-7xl mx-auto px-6 md:px-12">
       <SectionHead
         index="01"
         title="About"

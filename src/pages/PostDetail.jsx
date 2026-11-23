@@ -216,7 +216,7 @@ const BackLink = ({ className = "", turnKey }) => {
 
 // ─── Not written yet ──────────────────────────────────────────────────────────
 const ComingSoonPage = ({ post }) => (
-    <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
+    <div className="max-w-7xl mx-auto px-6 md:px-12 py-20">
         <Helmet>
             <title>{`${post.title} | Kervintz Noel`}</title>
             <meta name="description" content={post.excerpt} />
@@ -241,7 +241,7 @@ const ComingSoonPage = ({ post }) => (
 
 // ─── 404 ──────────────────────────────────────────────────────────────────────
 const NotFoundPage = () => (
-    <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
+    <div className="max-w-7xl mx-auto px-6 md:px-12 py-20">
         <Helmet>
             <title>Note Not Found | Kervintz Noel</title>
             <meta name="robots" content="noindex" />
@@ -306,7 +306,7 @@ export const PostDetail = () => {
                 <title>{`${post.title} | Kervintz Noel`}</title>
                 <meta name="description" content={post.excerpt} />
             </Helmet>
-            <article className="max-w-5xl mx-auto px-5 md:px-6 py-12 md:py-16">
+            <article className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-16">
                 <BackLink className="inline-block mb-8" turnKey={slug} />
 
                 <header className="rule-head">

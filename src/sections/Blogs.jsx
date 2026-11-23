@@ -159,7 +159,7 @@ export const Blogs = () => {
             <div className="absolute top-1/4 left-0 w-80 h-80 bg-highlight/5 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-1/3 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="container max-w-5xl mx-auto px-6 relative z-10">
+            <div className="container max-w-7xl mx-auto px-6 md:px-12 relative z-10">
 
                 {/* ── Section Header ── */}
                 <div className="text-center mx-auto max-w-3xl mb-16 animate-fade-in">

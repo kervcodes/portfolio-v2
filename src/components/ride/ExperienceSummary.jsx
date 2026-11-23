@@ -32,7 +32,7 @@ const AREAS = [
 
 export const ExperienceSummary = () => (
   <section id="ride-experience" className="py-16 md:py-24 scroll-mt-10">
-    <div className="max-w-5xl mx-auto px-5 md:px-6">
+    <div className="max-w-7xl mx-auto px-6 md:px-12">
       <SectionHead
         index="02"
         title="Experience"

@@ -14,7 +14,7 @@ export const ExperienceSnapshot = () => (
     id="career-experience"
     className="py-14 md:py-20 scroll-mt-6 border-t border-rule"
   >
-    <div className="max-w-5xl mx-auto px-5 md:px-6">
+    <div className="max-w-7xl mx-auto px-6 md:px-12">
       <SectionHead
         index="03"
         title="Experience snapshot"

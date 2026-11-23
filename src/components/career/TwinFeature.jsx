@@ -32,7 +32,7 @@ export const TwinFeature = () => {
 
   return (
     <section id="career-twin" className="py-14 md:py-20 scroll-mt-6">
-      <div className="max-w-5xl mx-auto px-5 md:px-6">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
         <SectionHead
           index="02"
           title="Featured work"

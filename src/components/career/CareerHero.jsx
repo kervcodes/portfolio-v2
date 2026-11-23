@@ -40,7 +40,7 @@ export const CareerHero = () => {
       id="career-top"
       className="min-h-[100dvh] flex items-center py-14 md:py-16"
     >
-      <div className="max-w-5xl mx-auto px-5 md:px-6 w-full">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
         <div className="flex items-center gap-4">
           <span className="text-ink">
             <AnimatedLogo size={56} />

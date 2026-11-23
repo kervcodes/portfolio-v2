@@ -20,7 +20,7 @@ export const AnalyzerFeature = () => {
 
   return (
     <section id="career-analyzer" className="pb-14 md:pb-20 scroll-mt-6">
-      <div className="max-w-5xl mx-auto px-5 md:px-6">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
         <Entry as="article" className="sheet">
           <div className="border-b border-rule px-5 md:px-8 pt-6 pb-5 flex flex-wrap items-baseline justify-between gap-3">
             <h3 className="text-2xl md:text-4xl font-bold text-ink tracking-tight">

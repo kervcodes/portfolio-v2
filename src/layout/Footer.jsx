@@ -28,7 +28,7 @@ export const Footer = () => {
 
   return (
     <footer className="on-panel bg-panel text-panel-ink">
-      <div className="max-w-5xl mx-auto px-5 md:px-6 py-10">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-10">
         <div className="flex flex-wrap items-start justify-between gap-8">
           <a
             href="/"

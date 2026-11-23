@@ -59,7 +59,7 @@ export const Career = () => {
       <button
         type="button"
         onClick={startOver}
-        className="fixed bottom-5 right-5 z-40 min-h-12 min-w-12 px-5 py-3 bg-ink text-sheet border border-ink font-mono uppercase tracking-[0.14em] text-xs font-bold shadow-lg hover:bg-panel-2 transition-colors"
+        className="fixed bottom-5 right-5 z-40 min-h-11 px-6 py-3 rounded-lg bg-panel text-sheet font-sans font-medium text-[17px] leading-normal shadow-lg hover:bg-ink transition-all duration-200 ease-in-out active:translate-y-px focus-visible:outline-3 focus-visible:outline-offset-2"
       >
         Start over
       </button>

@@ -34,7 +34,7 @@ const BackLink = ({ className = "", turnKey }) => {
 
 // ─── 404 ──────────────────────────────────────────────────────────────────────
 const NotFoundPage = () => (
-    <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
+    <div className="max-w-7xl mx-auto px-6 md:px-12 py-20">
         <Helmet>
             <title>Project Not Found | Kervintz Noel</title>
             <meta name="robots" content="noindex" />
@@ -83,7 +83,7 @@ export const ProjectCaseStudy = () => {
                 <title>{`${project.name} | Kervintz Noel`}</title>
                 <meta name="description" content={description} />
             </Helmet>
-            <article className="max-w-5xl mx-auto px-5 md:px-6 py-12 md:py-16">
+            <article className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-16">
                 <BackLink className="inline-block mb-8" turnKey={slug} />
 
                 <header className="rule-head">

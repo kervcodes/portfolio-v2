@@ -103,7 +103,7 @@ export const Contact = () => {
       id="contact"
       className="on-panel bg-panel text-panel-ink py-16 md:py-24 scroll-mt-20"
     >
-      <div className="max-w-5xl mx-auto px-5 md:px-6">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
         <header className="rule-head rule-head--panel">
           <div className="flex items-baseline gap-3">
             <span className="placard text-panel-muted nums" aria-hidden="true">

@@ -17,7 +17,7 @@ export const WelcomeScreen = () => (
     id="ride-welcome"
     className="min-h-[100dvh] flex items-center py-16 md:py-20"
   >
-    <div className="max-w-5xl mx-auto px-5 md:px-6 w-full">
+    <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
         <div className="lg:col-span-8">
           <div

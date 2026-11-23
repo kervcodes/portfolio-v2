@@ -92,8 +92,8 @@ export const Navbar = () => {
     };
 
     measure();
-    // Tabs are text-width and B612 arrives after first paint, so the strip is
-    // re-measured rather than trusted once.
+    // Tabs are text-width and can change size after first paint (fonts,
+    // zoom), so the strip is re-measured rather than trusted once.
     const ro = new ResizeObserver(measure);
     ro.observe(strip);
     document.fonts?.ready.then(measure).catch(() => {});
@@ -141,7 +141,7 @@ export const Navbar = () => {
       <nav
         ref={navRowRef}
         aria-label="Sections"
-        className="max-w-5xl mx-auto px-5 md:px-6 flex items-stretch justify-between gap-4"
+        className="max-w-7xl mx-auto px-6 md:px-12 flex items-stretch justify-between gap-4"
       >
         <a
           href="/"
@@ -227,7 +227,7 @@ export const Navbar = () => {
             not leave a stray line under the strip. Content fills the sheet
             rather than sitting top-aligned above empty charcoal: the rows
             centre in the space above the fold, the key sits at its foot. */}
-        <div className="flex flex-col max-w-5xl mx-auto w-full px-5 pb-6">
+        <div className="flex flex-col max-w-7xl mx-auto w-full px-6 md:px-12 pb-6">
           <ul className="flex-1 flex flex-col justify-center border-t border-panel-2">
             {navLinks.map((link) => (
               <li key={link.href}>

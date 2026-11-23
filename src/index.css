@@ -5,8 +5,7 @@
    Aviation checklist cards and the Quick Reference Handbook. Colour carries
    state and nothing else: black is normal, amber is in progress, green is
    verified, red is a warning. The charcoal panel is structure, not mood.
-   Type is B612 / B612 Mono — the face Airbus and ENAC commissioned for
-   cockpit displays.
+   Type is Georgia throughout (system serif, no web-font download).
    ───────────────────────────────────────────────────────────────────────── */
 
 @theme {
@@ -82,9 +81,12 @@
   --color-error: oklch(52% 0.195 27);
 
   /* ── Type ── */
-  --font-sans: "B612", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "B612 Mono", ui-monospace, "Courier New", monospace;
-  --font-serif: "B612", ui-sans-serif, system-ui, sans-serif;
+  /* One face everywhere: Georgia, a system serif, so nothing is downloaded.
+     The mono and serif tokens point at it too, so placards, buttons and
+     figures all share the same type as the prose. */
+  --font-sans: Georgia, "Times New Roman", serif;
+  --font-mono: Georgia, "Times New Roman", serif;
+  --font-serif: Georgia, "Times New Roman", serif;
 
   --radius: 0.125rem;
 }

@@ -1,28 +1,28 @@
-// Buttons are placard keys: square, stencil-lettered, and they commit with a
-// press rather than a glow. No rounded pills, no shadows growing on hover.
+// Buttons: soft rounded keys in the page's serif, sentence case, with a small
+// drop shadow and a 200ms ease on hover. Proportions follow the reference
+// hero (17px type, 12×24 padding, 8px radius); colour stays in this site's
+// palette — charcoal panel for the committed action, amber on the dark strip.
 const base =
-  "relative inline-flex items-center justify-center gap-2 font-mono uppercase " +
-  "tracking-[0.14em] font-bold transition-colors duration-150 " +
-  "active:translate-y-px disabled:opacity-45 disabled:cursor-not-allowed " +
-  "disabled:active:translate-y-0";
+  "relative inline-flex items-center justify-center gap-2 overflow-hidden " +
+  "font-sans font-medium leading-normal no-underline rounded-lg " +
+  "transition-all duration-200 ease-in-out active:translate-y-px " +
+  "focus-visible:outline-3 focus-visible:outline-offset-2 " +
+  "disabled:opacity-45 disabled:cursor-not-allowed disabled:active:translate-y-0";
 
 const variants = {
-  // The committed action.
-  primary: "bg-ink text-sheet hover:bg-panel-2 border border-ink",
-  // Available, secondary. Reads as an unlit key until you touch it.
+  // The committed action. Darkens on hover, the way the reference does.
+  primary: "bg-panel text-sheet shadow-md hover:bg-ink hover:shadow-lg",
+  // Available, secondary: drawn, not filled, until you touch it.
   outline:
-    "bg-transparent text-ink border border-ink hover:bg-ink hover:text-sheet",
+    "bg-transparent text-ink border border-ink hover:bg-ink hover:text-sheet hover:shadow-md",
   // On the charcoal panel.
-  panel:
-    "bg-caution text-ink border border-caution hover:bg-sheet hover:border-sheet",
+  panel: "bg-caution text-ink shadow-md hover:bg-sheet hover:shadow-lg",
 };
 
-// A placard key is not a small object: the page's conversion actions should
-// not be its smallest lettering.
 const sizes = {
-  sm: "text-[0.6875rem] px-3 py-2 min-h-9",
-  default: "text-xs px-5 py-3 min-h-11",
-  lg: "text-sm px-7 py-4 min-h-12",
+  sm: "text-[15px] px-4 py-2 min-h-10",
+  default: "text-[17px] px-6 py-3 min-h-11",
+  lg: "text-lg px-7 py-3.5 min-h-12",
 };
 
 export const Button = ({

@@ -21,7 +21,7 @@ export const NotFound = () => (
             <title>Page Not Found | Kervintz Noel</title>
             <meta name="robots" content="noindex" />
         </Helmet>
-        <div className="max-w-5xl mx-auto px-5 md:px-6 py-20">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-20">
             <div className="notice notice--warning">
                 <p className="notice__band">404</p>
                 <div className="px-5 py-6">

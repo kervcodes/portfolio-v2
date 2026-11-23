@@ -34,7 +34,7 @@ export const WelcomeScreen = () => (
             Noel
           </h1>
           <p className="mt-3 rule-sub placard text-ink pt-3">
-            AI Solutions Engineer
+            Software Engineer
           </p>
 
           <p className="mt-6 text-lg md:text-xl leading-relaxed text-ink max-w-[46ch]">

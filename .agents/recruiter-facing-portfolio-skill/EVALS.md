@@ -8,7 +8,7 @@ Use these prompts to sanity-check skill routing.
 2. "Reorder my projects so completed work is stronger than my unfinished AI project."
 3. "Review every metric on my portfolio and remove anything I cannot defend."
 4. "Turn this unfinished project page from a fake case study into an honest build brief."
-5. "Make my AI Solutions Engineer portfolio consistent without redesigning the site."
+5. "Make my Software Engineer portfolio consistent without redesigning the site."
 6. "Check whether my About page and SEO contradict my target role."
 7. "Implement the recruiter-facing portfolio changes in this repo and run validation."
 
@@ -23,7 +23,7 @@ Expected primary owner:
 4. "Write unit tests for this utility."
 5. "Optimize this SQL query."
 6. "Rewrite my resume for this job."
-7. "Find open AI Solutions Engineer jobs."
+7. "Find open Software Engineer jobs."
 
 Expected:
 another more specific skill or normal Codex workflow.

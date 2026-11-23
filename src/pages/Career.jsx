@@ -39,10 +39,10 @@ export const Career = () => {
   return (
     <div className="min-h-screen overflow-x-hidden">
       <Helmet>
-        <title>Kervintz Noel | AI Solutions Engineer — Career</title>
+        <title>Kervintz Noel | Software Engineer — Career</title>
         <meta
           name="description"
-          content="Kervintz Noel — AI Solutions Engineer, Software Engineer, Production Reliability. Try the AI Digital Twin, see what he's building, and save his contact."
+          content="Kervintz Noel — Software Engineer, Software Engineer, Production Reliability. Try the AI Digital Twin, see what he's building, and save his contact."
         />
         <link rel="canonical" href="https://kervintznoel.com/career" />
       </Helmet>

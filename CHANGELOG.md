@@ -208,4 +208,4 @@ rather than by release version.
 
 ## 2026-08-16
 
-- Reworked the hero positioning around AI Solutions Engineering.
+- Reworked the hero positioning around Software Engineering.

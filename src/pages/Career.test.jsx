@@ -28,7 +28,7 @@ describe("/career", () => {
     const h1 = screen.getByRole("heading", { level: 1 });
     expect(h1).toHaveTextContent(/kervintz noel/i);
     const hero = document.getElementById("career-top");
-    expect(within(hero).getByText("AI Solutions Engineer")).toBeInTheDocument();
+    expect(within(hero).getByText("Software Engineer")).toBeInTheDocument();
     const progression = within(hero).getByRole("list", { name: /career progression/i });
     expect(within(progression).getAllByRole("listitem")).toHaveLength(3);
   });

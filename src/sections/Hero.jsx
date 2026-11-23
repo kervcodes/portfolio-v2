@@ -68,7 +68,7 @@ const Headshot = () => (
 );
 
 export const Hero = () => (
-  <section className="relative mt-30 pt-24 md:pt-32 pb-16 md:pb-24">
+  <section className="relative mt-25 pt-24 md:pt-32 pb-16 md:pb-24">
     <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
         {/* ── Photo: first on mobile, right column on desktop ── */}
@@ -76,28 +76,25 @@ export const Hero = () => (
           <Headshot />
         </div>
 
-        {/* ── Introduction ── */}
         <div className="lg:col-span-7 lg:order-1">
           <p className="hero-rise text-lg text-ink-muted" style={delay(0)}>Hi! My name is</p>
           <h1 className="hero-rise mt-1 text-5xl sm:text-6xl font-bold tracking-[-0.03em] leading-[1.02] text-ink" style={delay(80)}>
             Kervintz Noel
           </h1>
           <p className="hero-rise mt-3 placard text-ink-faint" style={delay(160)}>
-            AI Solutions Engineer · Python · React · AWS · LLM Workflows
+            Software Engineer · Python · React · AWS · LLM Workflows
           </p>
 
           <p className="hero-rise mt-6 text-base md:text-lg leading-relaxed text-ink max-w-[58ch]" style={delay(240)}>
             I'm a Boston-based engineer who designs, implements, and stabilizes
-            AI-powered workflows for real business operations. Twelve years
-            across enterprise IT, legal technology, and site reliability
-            engineering taught me how systems actually fail. Now I build
+            AI-powered workflows for real business operations. I have more than a decace across enterprise IT, legal technology, and site reliability engineering taught me how systems actually fail. Now, I build
             the ones that don't.
           </p>
 
           {/* ── The card ── */}
-          <div className="hero-rise mt-8 sheet rounded-xl px-6 md:px-8 py-7" style={delay(340)}>
+          <div className="hero-rise mt-15 sheet rounded-xl px-6 md:px-8 py-7" style={delay(340)}>
             <p className="text-sm md:text-[0.9375rem] leading-relaxed text-ink-muted">
-              I specialize in turning AI prototypes into dependable systems —
+              I specialize in turning AI prototypes into dependable systems.
               API integrations, LLM workflows, and the monitoring that keeps
               them honest in production. I'm just as comfortable debugging a
               customer's integration as I am designing the backend behind it.

@@ -40,10 +40,10 @@ import { Learning } from "@/sections/Learning";
 const HomePage = () => (
   <div className="min-h-screen overflow-x-hidden flex flex-col">
     <Helmet>
-      <title>Kervintz Noel | AI Solutions Engineer</title>
+      <title>Kervintz Noel | Software Engineer</title>
       <meta
         name="description"
-        content="Kervintz Noel — AI Solutions Engineer in Boston. Twelve years from enterprise IT to site reliability engineering, now building AI-powered workflows for real business operations. Open to full-time roles."
+        content="Kervintz Noel — Software Engineer in Boston. Twelve years from enterprise IT to site reliability engineering, now building AI-powered workflows for real business operations. Open to full-time roles."
       />
     </Helmet>
     <Navbar />

@@ -15,7 +15,7 @@ export const PROFILE = {
   firstName: "Kervintz",
   lastName: "Noel",
   name: "Kervintz Noel",
-  title: "AI Solutions Engineer",
+  title: "Software Engineer",
   email: "kervcodes@gmail.com",
   location: "Greater Boston, MA",
 };

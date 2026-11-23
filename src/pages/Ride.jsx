@@ -32,7 +32,7 @@ export const Ride = () => {
         <title>Kervintz Noel | Explore My Work</title>
         <meta
           name="description"
-          content="Kervintz Noel — AI Solutions Engineer. Explore the systems he's built, his experience, and how to connect, right from your phone."
+          content="Kervintz Noel — Software Engineer. Explore the systems he's built, his experience, and how to connect, right from your phone."
         />
         <link rel="canonical" href="https://kervintznoel.com/ride" />
       </Helmet>

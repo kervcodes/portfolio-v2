@@ -10,14 +10,16 @@
 
 @theme {
   /* ── Ground and ink ── */
-  --color-ground: oklch(96.8% 0.003 250);
+  /* Blue-grey page (#E6EAEE): the same cool cast as the charcoal strip and
+     ink, a clear step darker than the white sheets so cards lift off it. */
+  --color-ground: #E9E3D8;
   --color-sheet: oklch(99.4% 0.001 250);
   --color-ink: oklch(21% 0.012 255);
   /* Both tiers clear 4.5:1 on the ground and on a sheet. `ink-faint` carries
      real text — dates, indices, tag lists — so it is a readable grey, not a
      whisper. Nothing lighter than this may hold words. */
   --color-ink-muted: oklch(43% 0.012 255);
-  --color-ink-faint: oklch(52% 0.010 255);
+  --color-ink-faint: oklch(48% 0.010 255);
   --color-rule: oklch(87% 0.005 255);
   --color-rule-strong: oklch(21% 0.012 255);
 
@@ -65,7 +67,7 @@
   --color-tint-teal: oklch(97% 0.017 200);
 
   /* ── Legacy semantic aliases (unmounted files still reference these) ── */
-  --color-background: oklch(96.8% 0.003 250);
+  --color-background: #e6eaee;
   --color-foreground: oklch(21% 0.012 255);
   --color-card: oklch(99.4% 0.001 250);
   --color-surface: oklch(99.4% 0.001 250);

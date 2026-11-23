@@ -1,20 +1,18 @@
-// The mark is a stencilled equipment plate: initials punched into a square,
-// the way a placard is riveted to a panel. The aurora-gradient hexagon
-// belonged to the previous world.
+// The mark: dark initials on a rounded amber tile — the same solid amber the
+// Contact and résumé buttons wear, so the logo reads as part of that set.
 export const AnimatedLogo = ({ size = 34 }) => (
   <span
-    className="relative inline-flex shrink-0 items-center justify-center border border-current"
-    style={{ width: size, height: size }}
+    className="relative inline-flex shrink-0 items-center justify-center bg-caution text-ink shadow-md"
+    style={{
+      width: size,
+      height: size,
+      borderRadius: Math.round(size * 0.24),
+    }}
     aria-hidden="true"
   >
-    {/* corner rivets */}
-    <span className="absolute left-0.5 top-0.5 w-0.5 h-0.5 bg-current opacity-60" />
-    <span className="absolute right-0.5 top-0.5 w-0.5 h-0.5 bg-current opacity-60" />
-    <span className="absolute left-0.5 bottom-0.5 w-0.5 h-0.5 bg-current opacity-60" />
-    <span className="absolute right-0.5 bottom-0.5 w-0.5 h-0.5 bg-current opacity-60" />
     <span
-      className="font-mono font-bold leading-none tracking-[0.06em]"
-      style={{ fontSize: size * 0.38 }}
+      className="font-sans font-bold leading-none tracking-tight"
+      style={{ fontSize: size * 0.42 }}
     >
       KN
     </span>

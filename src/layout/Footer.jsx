@@ -10,7 +10,7 @@ const socialLinks = [
   { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/kervintznoel/", label: "LinkedIn", event: "linkedin_click" },
 ];
 
-// Mirrors the tab strip, in the same order as the page scrolls.
+// Mirrors the header links, in the same order as the page scrolls.
 const footerLinks = [
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
@@ -36,12 +36,12 @@ export const Footer = () => {
             aria-label="Kervintz Noel — back to home"
             className="flex items-center gap-3"
           >
-            <AnimatedLogo size={30} />
+            <AnimatedLogo size={40} />
             <span>
-              <span className="block font-bold text-sm leading-tight tracking-tight">
+              <span className="block font-bold text-lg leading-tight tracking-tight">
                 Kervintz Noel
               </span>
-              <span className="placard block text-panel-muted leading-tight">
+              <span className="block font-bold text-sm text-panel-muted leading-tight">
                 Software Engineer
               </span>
             </span>
@@ -54,7 +54,7 @@ export const Footer = () => {
                   <a
                     href={link.href}
                     onClick={(e) => go(e, link.href)}
-                    className="placard text-panel-muted hover:text-panel-ink transition-colors"
+                    className="font-bold text-base text-panel-ink hover:text-caution/80 transition-colors"
                   >
                     {link.label}
                   </a>
@@ -64,7 +64,7 @@ export const Footer = () => {
                 <li>
                   <Link
                     to="/twin"
-                    className="placard text-panel-muted hover:text-panel-ink transition-colors"
+                    className="font-bold text-base text-panel-ink hover:text-caution/80 transition-colors"
                   >
                     AI Twin
                   </Link>
@@ -92,10 +92,10 @@ export const Footer = () => {
         </div>
 
         <div className="mt-8 pt-4 border-t border-panel-2 flex flex-wrap justify-between gap-3">
-          <p className="placard text-panel-muted nums">
+          <p className="text-sm text-panel-muted">
             © {currentYear} Kervintz Noel
           </p>
-          <p className="placard text-panel-muted nums">
+          <p className="text-sm text-panel-muted">
             Boston, MA · Rev. 2026-08
           </p>
         </div>

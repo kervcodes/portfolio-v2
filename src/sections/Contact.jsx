@@ -101,7 +101,7 @@ export const Contact = () => {
   return (
     <section
       id="contact"
-      className="on-panel bg-panel text-panel-ink py-16 md:py-24 scroll-mt-20"
+      className="on-panel bg-panel text-panel-ink py-16 md:py-24 scroll-mt-28"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <header className="rule-head rule-head--panel">

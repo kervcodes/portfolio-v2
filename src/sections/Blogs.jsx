@@ -154,7 +154,7 @@ export const Blogs = () => {
     );
 
     return (
-        <section id="blogs" className="py-24 relative overflow-hidden scroll-mt-24">
+        <section id="blogs" className="py-24 relative overflow-hidden scroll-mt-28">
             {/* Background glows */}
             <div className="absolute top-1/4 left-0 w-80 h-80 bg-highlight/5 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-1/3 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { Arrow } from "@/components/Checklist";
 import { Button } from "@/components/Button";
@@ -6,7 +7,15 @@ import { useSectionLink } from "@/lib/motion";
 import { TWIN_URL } from "@/lib/twin";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-// Section tabs, in scroll order. Root-relative so they work from /sprint and
+// Plain text links on the charcoal bar: bold, light ink, and the section you
+// are reading in amber. Amber still means "you are here" — hover only lifts
+// the link toward full brightness, it never borrows the current-section colour.
+const linkBase =
+  "font-sans font-bold text-base transition-colors duration-200";
+const linkClass = (isCurrent) =>
+  `${linkBase} ${isCurrent ? "text-caution" : "text-panel-ink hover:text-caution/80"}`;
+
+// Section links, in scroll order. Root-relative so they work from /sprint and
 // /posts/:slug, where the anchors do not exist on the page.
 const navLinks = [
   { href: "/#about", label: "About" },
@@ -25,12 +34,6 @@ export const Navbar = () => {
   const go = useSectionLink();
   const headerRef = useRef(null);
   const navRowRef = useRef(null);
-  const stripRef = useRef(null);
-  const markerRef = useRef(null);
-  // The marker must not slide in from the strip's left edge the first time it
-  // is placed — it appears where it belongs, then travels from there.
-  const placed = useRef(false);
-  const lastLeft = useRef(0);
 
   // A handbook divider tells you which section you are in. The strip reports
   // position rather than only responding to a pointer.
@@ -53,52 +56,6 @@ export const Navbar = () => {
     nodes.forEach((n) => io.observe(n));
     return () => io.disconnect();
   }, []);
-
-  // One marker travels between tabs rather than four bars blinking on and off:
-  // the strip reads as a single index moving down a handbook, and the movement
-  // itself says the two tabs are positions in one thing. Measured, because the
-  // tabs are text-width and the font arrives after first paint.
-  useLayoutEffect(() => {
-    const strip = stripRef.current;
-    const marker = markerRef.current;
-    if (!strip || !marker) return;
-
-    const measure = () => {
-      const tab = strip.querySelector('[aria-current="true"]');
-
-      if (!tab) {
-        // Nothing is current — top of the page, or a route with no sections on
-        // it. The marker retracts where it stands instead of sliding home.
-        marker.style.transform = `translateX(${lastLeft.current}px) scaleX(0)`;
-        return;
-      }
-
-      // Matches the tab's own 0.5rem inset, so the marker sits inside the
-      // chamfered shoulder rather than running under it.
-      lastLeft.current = tab.offsetLeft + 8;
-      const width = Math.max(0, tab.offsetWidth - 16);
-      const next = `translateX(${lastLeft.current}px) scaleX(${width})`;
-
-      if (placed.current) {
-        marker.style.transform = next;
-        return;
-      }
-      // First placement: appear, do not travel.
-      marker.style.transitionProperty = "none";
-      marker.style.transform = next;
-      void marker.offsetWidth; // commit the jump before transitions resume
-      marker.style.transitionProperty = "";
-      placed.current = true;
-    };
-
-    measure();
-    // Tabs are text-width and can change size after first paint (fonts,
-    // zoom), so the strip is re-measured rather than trusted once.
-    const ro = new ResizeObserver(measure);
-    ro.observe(strip);
-    document.fonts?.ready.then(measure).catch(() => {});
-    return () => ro.disconnect();
-  }, [current]);
 
   // The open mobile sheet fills the rest of the screen below this row, not
   // just the height of its own rows — the row is measured rather than
@@ -141,7 +98,7 @@ export const Navbar = () => {
       <nav
         ref={navRowRef}
         aria-label="Sections"
-        className="max-w-7xl mx-auto px-6 md:px-12 flex items-stretch justify-between gap-4"
+        className="max-w-7xl mx-auto px-6 md:px-12 min-h-16 md:min-h-20 flex items-center justify-between gap-4"
       >
         <a
           href="/"
@@ -149,19 +106,19 @@ export const Navbar = () => {
           className="flex items-center gap-3 py-3 shrink-0"
           aria-label="Kervintz Noel — home"
         >
-          <AnimatedLogo size={30} />
+          <AnimatedLogo size={40} />
           <span className="hidden sm:block">
-            <span className="block font-bold text-sm leading-tight tracking-tight">
+            <span className="block font-bold text-lg leading-tight tracking-tight">
               Kervintz Noel
             </span>
-            <span className="placard block text-panel-muted leading-tight">
+            <span className="block font-bold text-sm text-panel-muted leading-tight">
               Software Engineer
             </span>
           </span>
         </a>
 
-        {/* Desktop tabs */}
-        <div ref={stripRef} className="tabstrip hidden md:flex items-stretch pt-2">
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => {
             const id = link.href.split("#")[1];
             const isCurrent = current === id;
@@ -171,32 +128,26 @@ export const Navbar = () => {
                 key={link.href}
                 onClick={(e) => go(e, link.href)}
                 aria-current={isCurrent ? "true" : undefined}
-                className="tab flex items-center"
+                className={linkClass(isCurrent)}
               >
                 {link.label}
               </a>
             );
           })}
           {TWIN_URL && (
-            <Link to="/twin" className="tab flex items-center">
+            <Link to="/twin" className={linkClass(false)}>
               AI Twin
             </Link>
           )}
-          {/* Painted after the tabs so it sits above the pointer indicator.
-              Positioned imperatively — its transform is measured layout, not
-              rendered state, and it should not cost a render to move. */}
-          <span ref={markerRef} aria-hidden="true" className="tabstrip__marker" />
-          <span className="w-px bg-panel-2 mx-3 my-3" aria-hidden="true" />
-          <span className="flex items-center py-2.5">
-            <Button
-              href="/#contact"
-              onClick={(e) => go(e, "/#contact")}
-              variant="panel"
-              size="sm"
-            >
-              Contact
-            </Button>
-          </span>
+          <Button
+            href="/#contact"
+            onClick={(e) => go(e, "/#contact")}
+            variant="panel"
+            size="sm"
+            className="font-bold text-base"
+          >
+            Contact
+          </Button>
         </div>
 
         {/* Mobile trigger — 44px minimum, labelled */}
@@ -206,9 +157,13 @@ export const Navbar = () => {
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-menu"
           onClick={() => setIsMobileMenuOpen((v) => !v)}
-          className="md:hidden placard -mr-2 px-4 min-h-11 flex items-center text-panel-ink"
+          className="md:hidden -mr-2 px-2 min-w-11 min-h-11 flex items-center justify-center text-panel-ink hover:text-caution transition-colors"
         >
-          {isMobileMenuOpen ? "Close" : "Menu"}
+          {isMobileMenuOpen ? (
+            <X className="w-7 h-7" strokeWidth={2.25} aria-hidden="true" />
+          ) : (
+            <Menu className="w-7 h-7" strokeWidth={2.25} aria-hidden="true" />
+          )}
         </button>
       </nav>
 
@@ -227,36 +182,41 @@ export const Navbar = () => {
             not leave a stray line under the strip. Content fills the sheet
             rather than sitting top-aligned above empty charcoal: the rows
             centre in the space above the fold, the key sits at its foot. */}
-        <div className="flex flex-col max-w-7xl mx-auto w-full px-6 md:px-12 pb-6">
+        {/* Bottom padding only while open: a collapsed grid row still keeps its
+            child's padding, which left a 24px band under the bar. */}
+        <div
+          className={`flex flex-col max-w-7xl mx-auto w-full px-6 md:px-12 ${
+            isMobileMenuOpen ? "pb-6" : ""
+          }`}
+        >
           <ul className="flex-1 flex flex-col justify-center border-t border-panel-2">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={(e) => {
-                    setIsMobileMenuOpen(false);
-                    go(e, link.href);
-                  }}
-                  className="chk py-4 border-b border-panel-2"
-                >
-                  <span className="chk__label text-panel-muted">{link.label}</span>
-                  <span
-                    className="chk__lead border-panel-2"
-                    aria-hidden="true"
-                  />
-                  <Arrow className="text-panel-ink" />
-                </a>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const isCurrent = current === link.href.split("#")[1];
+              return (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    onClick={(e) => {
+                      setIsMobileMenuOpen(false);
+                      go(e, link.href);
+                    }}
+                    aria-current={isCurrent ? "true" : undefined}
+                    className={`flex items-center justify-between py-4 border-b border-panel-2 text-lg ${linkClass(isCurrent)}`}
+                  >
+                    {link.label}
+                    <Arrow />
+                  </a>
+                </li>
+              );
+            })}
             {TWIN_URL && (
               <li>
                 <Link
                   to="/twin"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="chk py-4 border-b border-panel-2"
+                  className={`flex items-center justify-between py-4 border-b border-panel-2 text-lg ${linkClass(false)}`}
                 >
-                  <span className="chk__label text-panel-muted">AI Twin</span>
-                  <span className="chk__lead border-panel-2" aria-hidden="true" />
+                  AI Twin
                   <Arrow />
                 </Link>
               </li>
@@ -265,7 +225,7 @@ export const Navbar = () => {
           <Button
             href="/#contact"
             variant="panel"
-            className="w-full shrink-0 mt-4"
+            className="w-full shrink-0 mt-4 font-bold"
             onClick={(e) => {
               setIsMobileMenuOpen(false);
               go(e, "/#contact");

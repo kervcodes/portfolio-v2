@@ -611,6 +611,13 @@
   .menu-sheet > * {
     overflow: hidden;
   }
+  /* `display: grid` above would otherwise beat the `md:hidden` on the sheet,
+     leaving a collapsed (but space-taking) sheet under the desktop bar. */
+  @media (width >= 48rem) {
+    .menu-sheet {
+      display: none;
+    }
+  }
   .menu-sheet.is-open {
     grid-template-rows: 1fr;
     opacity: 1;

@@ -156,7 +156,7 @@ const ProjectCard = ({ project }) => {
 // ─── Section ──────────────────────────────────────────────────────────────────
 export const Learning = () => {
     return (
-    <section id="learning" className="py-16 md:py-24 scroll-mt-20">
+    <section id="learning" className="py-16 md:py-24 scroll-mt-28">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
             <SectionHead
                 index="03"

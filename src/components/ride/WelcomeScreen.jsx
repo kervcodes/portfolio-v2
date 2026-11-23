@@ -28,7 +28,7 @@ export const WelcomeScreen = () => (
             <AnimatedLogo size={56} />
           </div>
 
-          <h1 className="mt-6 text-[2.5rem] leading-[0.95] sm:text-6xl md:text-7xl font-bold tracking-[-0.03em] text-ink uppercase">
+          <h1 className="mt-6 text-[2.5rem] leading-[0.95] sm:text-6xl md:text-7xl font-bold tracking-[-0.03em] text-ink">
             Kervintz
             <br />
             Noel

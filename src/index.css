@@ -148,9 +148,7 @@
   }
   .chk__label {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
+    font-size: 0.875rem;
     color: var(--color-ink-muted);
     flex: 0 1 auto;
     min-width: 0;
@@ -171,7 +169,7 @@
     text-align: right;
   }
   .chk--lg .chk__label {
-    font-size: 0.8125rem;
+    font-size: 0.9375rem;
   }
   .chk--lg .chk__value {
     font-size: 1.0625rem;
@@ -192,12 +190,10 @@
     padding-top: 0.5rem;
   }
 
-  /* ── Placard label: stencil caps in mono ─────────────────────────────── */
+  /* ── Placard label: a small sentence-case label in the page serif ────── */
   .placard {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+    font-size: 0.8125rem;
   }
 
   /* ── Notice box: the colour owns the header band, never a fat edge ───── */
@@ -221,9 +217,7 @@
   }
   .notice__band {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+    font-size: 0.8125rem;
     padding: 0.3125rem 0.75rem;
     font-weight: 700;
   }
@@ -380,9 +374,7 @@
   .tab {
     position: relative;
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-size: 0.875rem;
     padding: 0.75rem 0.875rem 0.625rem;
     margin-inline: 1px;
     color: var(--color-panel-muted);
@@ -661,6 +653,51 @@
       both;
   }
 
+  /* ── Hero entrance on page load ──────────────────────────────────────── */
+  /* Text blocks rise 14px and fade in on a stagger set inline in Hero.jsx;
+     the photo settles from a slight scale; tool icons pop in one by one.
+     All three use `both` fill, and the reduced-motion block at the bottom
+     of this file collapses them to their finished state. */
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes hero-photo {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  @keyframes hero-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  .hero-rise {
+    animation: hero-rise 600ms cubic-bezier(0.2, 0.9, 0.25, 1) both;
+  }
+  .hero-photo {
+    animation: hero-photo 800ms cubic-bezier(0.2, 0.9, 0.25, 1) both;
+  }
+  .hero-pop {
+    animation: hero-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
   /* Legacy name kept so unmounted sections still compile. */
   .animate-fade-in {
     animation: settle 520ms cubic-bezier(0.2, 0.9, 0.25, 1) both;
@@ -813,5 +850,12 @@
   }
   .key-working::after {
     display: none;
+  }
+  /* The global rule shortens durations but keeps delays, which would leave
+     the hero blank for most of a second. The entrance simply doesn't run. */
+  .hero-rise,
+  .hero-photo,
+  .hero-pop {
+    animation: none;
   }
 }

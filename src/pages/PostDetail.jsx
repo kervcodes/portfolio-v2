@@ -23,7 +23,7 @@ const ContentBlock = ({ block }) => {
             );
         case "heading":
             return (
-                <h2 className="mt-12 mb-5 text-xl md:text-2xl font-bold text-ink uppercase tracking-tight">
+                <h2 className="mt-12 mb-5 text-xl md:text-2xl font-bold text-ink tracking-tight">
                     {block.text}
                 </h2>
             );
@@ -170,7 +170,7 @@ const CollapsibleBody = ({ blocks }) => {
                             <span className="placard nums text-ink-faint shrink-0">
                                 {String(i + 1).padStart(2, "0")}
                             </span>
-                            <h2 className="text-xl md:text-2xl font-bold text-ink uppercase tracking-tight leading-snug">
+                            <h2 className="text-xl md:text-2xl font-bold text-ink tracking-tight leading-snug">
                                 {section.title}
                             </h2>
                         </summary>

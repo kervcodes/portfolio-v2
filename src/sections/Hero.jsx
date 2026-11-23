@@ -23,17 +23,22 @@ import { trackEvent } from "@/lib/analytics";
 const HEADSHOT_SRC = "/images/kn.jpg";
 
 // Same tools the About and Experience sections already list — nothing here
-// that isn't backed elsewhere on the page.
+// that isn't backed elsewhere on the page. Each icon wears its own brand
+// colour; React's is the darker react.dev cyan so it holds up on white.
 const tools = [
-  { icon: SiPython, label: "Python" },
-  { icon: SiFastapi, label: "FastAPI" },
-  { icon: SiReact, label: "React" },
-  { icon: SiTypescript, label: "TypeScript" },
-  { icon: FaAws, label: "AWS" },
-  { icon: SiPostgresql, label: "PostgreSQL" },
-  { icon: SiDatadog, label: "Datadog" },
-  { icon: SiClaude, label: "Claude" },
+  { icon: SiPython, label: "Python", color: "#3776AB" },
+  { icon: SiFastapi, label: "FastAPI", color: "#009688" },
+  { icon: SiReact, label: "React", color: "#087EA4" },
+  { icon: SiTypescript, label: "TypeScript", color: "#3178C6" },
+  { icon: FaAws, label: "AWS", color: "#FF9900" },
+  { icon: SiPostgresql, label: "PostgreSQL", color: "#4169E1" },
+  { icon: SiDatadog, label: "Datadog", color: "#632CA6" },
+  { icon: SiClaude, label: "Claude", color: "#D97757" },
 ];
+
+// Page-load entrance: each block rises in on a short stagger. `hero-rise`
+// and `hero-photo` live in index.css, and reduced-motion turns them off.
+const delay = (ms) => ({ animationDelay: `${ms}ms` });
 
 const socials = [
   { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/kervintznoel/", label: "LinkedIn", event: "linkedin_click" },
@@ -63,34 +68,34 @@ const Headshot = () => (
 );
 
 export const Hero = () => (
-  <section className="relative pt-24 md:pt-32 pb-16 md:pb-24">
+  <section className="relative mt-30 pt-24 md:pt-32 pb-16 md:pb-24">
     <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
         {/* ── Photo: first on mobile, right column on desktop ── */}
-        <div className="lg:col-span-5 lg:order-2 flex justify-center lg:justify-end">
+        <div className="hero-photo lg:col-span-5 lg:order-2 flex justify-center lg:justify-end" style={delay(150)}>
           <Headshot />
         </div>
 
         {/* ── Introduction ── */}
         <div className="lg:col-span-7 lg:order-1">
-          <p className="text-lg text-ink-muted">Hi! My name is</p>
-          <h1 className="mt-1 text-5xl sm:text-6xl font-bold tracking-[-0.03em] leading-[1.02] text-ink">
+          <p className="hero-rise text-lg text-ink-muted" style={delay(0)}>Hi! My name is</p>
+          <h1 className="hero-rise mt-1 text-5xl sm:text-6xl font-bold tracking-[-0.03em] leading-[1.02] text-ink" style={delay(80)}>
             Kervintz Noel
           </h1>
-          <p className="mt-3 placard text-ink-faint">
+          <p className="hero-rise mt-3 placard text-ink-faint" style={delay(160)}>
             AI Solutions Engineer · Python · React · AWS · LLM Workflows
           </p>
 
-          <p className="mt-6 text-base md:text-lg leading-relaxed text-ink max-w-[58ch]">
+          <p className="hero-rise mt-6 text-base md:text-lg leading-relaxed text-ink max-w-[58ch]" style={delay(240)}>
             I'm a Boston-based engineer who designs, implements, and stabilizes
             AI-powered workflows for real business operations. Twelve years
             across enterprise IT, legal technology, and site reliability
-            engineering taught me how systems actually fail — now I build
+            engineering taught me how systems actually fail. Now I build
             the ones that don't.
           </p>
 
           {/* ── The card ── */}
-          <div className="mt-8 sheet rounded-xl px-6 md:px-8 py-7">
+          <div className="hero-rise mt-8 sheet rounded-xl px-6 md:px-8 py-7" style={delay(340)}>
             <p className="text-sm md:text-[0.9375rem] leading-relaxed text-ink-muted">
               I specialize in turning AI prototypes into dependable systems —
               API integrations, LLM workflows, and the monitoring that keeps
@@ -99,9 +104,13 @@ export const Hero = () => (
             </p>
 
             <ul className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-4" aria-label="Tools I work with">
-              {tools.map((t) => (
-                <li key={t.label} title={t.label}>
-                  <t.icon className="w-8 h-8 text-ink" aria-hidden="true" />
+              {tools.map((t, i) => (
+                <li key={t.label} title={t.label} className="hero-pop" style={delay(520 + i * 50)}>
+                  <t.icon
+                    className="w-8 h-8 transition-transform duration-200 hover:-translate-y-0.5"
+                    style={{ color: t.color }}
+                    aria-hidden="true"
+                  />
                   <span className="sr-only">{t.label}</span>
                 </li>
               ))}
@@ -115,14 +124,14 @@ export const Hero = () => (
           </div>
 
           {/* ── Résumé + socials ── */}
-          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+          <div className="hero-rise mt-6 flex flex-wrap items-center gap-x-6 gap-y-2" style={delay(460)}>
             <a
               href="/resume/kervintz_noel_resume.pdf"
               download="Kervintz_Noel_Resume.pdf"
               onClick={() => trackEvent("resume_download", { file: "Kervintz_Noel_Resume.pdf" })}
               className="inline-flex items-center gap-2 text-sm font-bold text-ink underline underline-offset-4 decoration-2 decoration-caution hover:decoration-ink"
             >
-              Download résumé (PDF)
+              Download resume
               <Arrow />
             </a>
             <ul className="flex items-center gap-1">

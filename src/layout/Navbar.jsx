@@ -152,7 +152,7 @@ export const Navbar = () => {
           <AnimatedLogo size={30} />
           <span className="hidden sm:block">
             <span className="block font-bold text-sm leading-tight tracking-tight">
-              KERVINTZ NOEL
+              Kervintz Noel
             </span>
             <span className="placard block text-panel-muted leading-tight">
               AI Solutions Engineer

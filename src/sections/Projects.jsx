@@ -81,7 +81,7 @@ export const Projects = () => {
 
                                 {/* Project name — visible at rest, slides out on hover */}
                                 <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-0 group-hover:translate-y-2 group-hover:opacity-0 transition-all duration-300">
-                                    <p className="text-xs font-medium tracking-widest uppercase text-primary/80 mb-1">
+                                    <p className="text-xs font-medium text-primary/80 mb-1">
                                         Project
                                     </p>
                                     <h3 className="text-white font-semibold text-base leading-tight">

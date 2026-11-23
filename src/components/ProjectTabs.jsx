@@ -15,7 +15,7 @@ export const ContentBlock = ({ block }) => {
             );
         case "heading":
             return (
-                <h3 className="mt-8 mb-3 text-lg font-bold text-ink uppercase tracking-tight first:mt-0">
+                <h3 className="mt-8 mb-3 text-lg font-bold text-ink tracking-tight first:mt-0">
                     {block.text}
                 </h3>
             );

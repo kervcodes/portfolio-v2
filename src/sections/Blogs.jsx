@@ -163,7 +163,7 @@ export const Blogs = () => {
 
                 {/* ── Section Header ── */}
                 <div className="text-center mx-auto max-w-3xl mb-16 animate-fade-in">
-                    <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase">
+                    <span className="text-secondary-foreground text-sm font-medium">
                         Writing
                     </span>
                     <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-secondary-foreground">
@@ -200,7 +200,7 @@ export const Blogs = () => {
                 {featuredUpcoming.length > 0 && (
                     <div className="animate-fade-in animation-delay-100">
                         {published.length > 0 && (
-                            <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-4">
+                            <p className="text-xs text-muted-foreground font-medium mb-4">
                                 Coming Soon
                             </p>
                         )}
@@ -221,7 +221,7 @@ export const Blogs = () => {
                 {/* ── Background upcoming posts (dimmed) ── */}
                 {bgUpcoming.length > 0 && (
                     <div className="animate-fade-in animation-delay-200">
-                        <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-4">
+                        <p className="text-xs text-muted-foreground font-medium mb-4">
                             Also in the pipeline
                         </p>
                         <div className={`grid gap-4 ${bgGridCols}`}>

@@ -48,11 +48,11 @@ export const CareerHero = () => {
           <p className="placard text-xs text-ink-muted">{PROFILE.location}</p>
         </div>
 
-        <h1 className="mt-6 text-[2.75rem] leading-[0.95] sm:text-6xl lg:text-7xl font-bold tracking-[-0.03em] text-ink uppercase">
+        <h1 className="mt-6 text-[2.75rem] leading-[0.95] sm:text-6xl lg:text-7xl font-bold tracking-[-0.03em] text-ink">
           Kervintz Noel
         </h1>
 
-        <p className="mt-4 rule-sub pt-3 font-mono uppercase tracking-[0.12em] text-sm md:text-base font-bold text-ink">
+        <p className="mt-4 rule-sub pt-3 font-mono text-sm md:text-base font-bold text-ink">
           <TitleLine />
         </p>
 

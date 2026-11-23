@@ -12,7 +12,7 @@ export const ConnectSection = () => (
           <span className="placard text-panel-muted nums" aria-hidden="true">
             03
           </span>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight uppercase">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
             Connect
           </h2>
         </div>

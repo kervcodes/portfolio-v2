@@ -63,7 +63,7 @@ export const RoleSelector = ({ value, onChange }) => {
           </ul>
           <a
             href={track.proof.href}
-            className="mt-6 inline-flex min-h-11 items-center gap-2 font-mono uppercase tracking-[0.14em] text-xs font-bold text-ink underline underline-offset-4 decoration-2 decoration-caution hover:decoration-ink"
+            className="mt-6 inline-flex min-h-11 items-center gap-2 font-mono text-sm font-bold text-ink underline underline-offset-4 decoration-2 decoration-caution hover:decoration-ink"
           >
             {track.proof.label}
             <Arrow />

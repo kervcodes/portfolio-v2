@@ -55,7 +55,7 @@ export const ContinueConversation = () => (
           <span className="placard text-panel-muted nums" aria-hidden="true">
             04
           </span>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight uppercase">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
             Continue the conversation
           </h2>
         </div>
@@ -69,7 +69,7 @@ export const ContinueConversation = () => (
           <p className="text-3xl md:text-4xl font-bold tracking-tight">
             {PROFILE.name}
           </p>
-          <p className="mt-2 font-mono uppercase tracking-[0.12em] text-sm text-panel-ink">
+          <p className="mt-2 font-mono text-sm text-panel-ink">
             <TitleLine />
           </p>
           <p className="mt-1 text-panel-muted">{PROFILE.location}</p>

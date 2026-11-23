@@ -39,7 +39,7 @@ export const Footer = () => {
             <AnimatedLogo size={30} />
             <span>
               <span className="block font-bold text-sm leading-tight tracking-tight">
-                KERVINTZ NOEL
+                Kervintz Noel
               </span>
               <span className="placard block text-panel-muted leading-tight">
                 AI Solutions Engineer

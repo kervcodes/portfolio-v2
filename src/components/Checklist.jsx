@@ -78,7 +78,7 @@ export const SectionHead = ({ index, title, lede, id, className = "" }) => (
       )}
       <h2
         id={id}
-        className="text-2xl md:text-3xl font-bold tracking-tight text-ink uppercase"
+        className="text-2xl md:text-3xl font-bold tracking-tight text-ink"
       >
         {title}
       </h2>

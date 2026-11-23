@@ -15,7 +15,7 @@ const variants = {
   // Available, secondary: drawn, not filled, until you touch it.
   outline:
     "bg-transparent text-ink border border-ink hover:bg-ink hover:text-sheet hover:shadow-md",
-  // On the charcoal panel.
+  // Amber: the nav Contact key and every résumé button, on any ground.
   panel: "bg-caution text-ink shadow-md hover:bg-sheet hover:shadow-lg",
 };
 

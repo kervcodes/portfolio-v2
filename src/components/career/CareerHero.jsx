@@ -102,7 +102,7 @@ export const CareerHero = () => {
             target="_blank"
             rel="noopener noreferrer"
             size="lg"
-            variant="outline"
+            variant="panel"
             onClick={() => trackEvent("career_cta_click", { cta: "resume" })}
           >
             View résumé

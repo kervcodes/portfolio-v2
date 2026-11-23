@@ -4,6 +4,20 @@ Notable changes to the portfolio, newest first. This site deploys
 continuously, so entries are grouped by the date they landed on `master`
 rather than by release version.
 
+## 2026-11-23
+
+- **Repositioned the title from AI Solutions Engineer to Software
+  Engineer** across the hero, navbar, footer, `/career`, `/ride`, page
+  titles, meta descriptions, and profile data. The `/career` title line is
+  now Software Engineer · AI Workflows · Production Reliability.
+- **Redesigned the homepage hero** as a two-column intro with a headshot,
+  a specialty card with brand-colored tool icons, and a staggered
+  entrance animation on load (off under reduced motion).
+- **Site-wide look:** 1280px page width, Georgia throughout with
+  sentence-case labels instead of spaced caps, rounded buttons, a sand
+  page background (`#E9E3D8`), and amber résumé buttons matching the nav
+  Contact key.
+
 ## 2026-09-22
 
 - **New `/ride` route: a passive iPad kiosk for the car.** A single
@@ -208,4 +222,4 @@ rather than by release version.
 
 ## 2026-08-16
 
-- Reworked the hero positioning around Software Engineering.
+- Reworked the hero positioning around AI Solutions Engineering.

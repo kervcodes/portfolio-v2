@@ -1,5 +1,5 @@
+import { useSyncExternalStore } from "react";
 import { Button } from "@/components/Button";
-import { Arrow } from "@/components/Checklist";
 import { FaAws, FaGithub, FaLinkedinIn } from "react-icons/fa";
 import {
   SiClaude,
@@ -40,6 +40,30 @@ const tools = [
 // and `hero-photo` live in index.css, and reduced-motion turns them off.
 const delay = (ms) => ({ animationDelay: `${ms}ms` });
 
+// ─── Time-of-day greeting ────────────────────────────────────────────────────
+// The page is prerendered at build time, so the greeting is read from the
+// visitor's own clock in the browser. useSyncExternalStore gives the server
+// (and the first hydration pass) a neutral "Hello" and then swaps in the real
+// greeting without a hydration mismatch. The swap lands inside the hero's
+// fade-in, so it isn't seen as a flicker.
+//   5:00–11:59 morning · 12:00–16:59 afternoon · otherwise evening
+const greetingFor = (hour) =>
+  hour >= 5 && hour < 12
+    ? "Good morning"
+    : hour >= 12 && hour < 17
+      ? "Good afternoon"
+      : "Good evening";
+
+const noSubscribe = () => () => {};
+const Greeting = () => {
+  const greeting = useSyncExternalStore(
+    noSubscribe,
+    () => greetingFor(new Date().getHours()),
+    () => "Hello"
+  );
+  return <>{greeting}! My name is</>;
+};
+
 const socials = [
   { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/kervintznoel/", label: "LinkedIn", event: "linkedin_click" },
   { icon: FaGithub, href: "https://github.com/kervcodes", label: "GitHub", event: "github_click" },
@@ -77,7 +101,7 @@ export const Hero = () => (
         </div>
 
         <div className="lg:col-span-7 lg:order-1">
-          <p className="hero-rise text-lg text-ink-muted" style={delay(0)}>Hi! My name is</p>
+          <p className="hero-rise text-lg text-ink-muted" style={delay(0)}><Greeting /></p>
           <h1 className="hero-rise mt-1 text-5xl sm:text-6xl font-bold tracking-[-0.03em] leading-[1.02] text-ink" style={delay(80)}>
             Kervintz Noel
           </h1>
@@ -87,8 +111,10 @@ export const Hero = () => (
 
           <p className="hero-rise mt-6 text-base md:text-lg leading-relaxed text-ink max-w-[58ch]" style={delay(240)}>
             I'm a Boston-based engineer who designs, implements, and stabilizes
-            AI-powered workflows for real business operations. I have more than a decace across enterprise IT, legal technology, and site reliability engineering taught me how systems actually fail. Now, I build
-            the ones that don't.
+            AI-powered workflows for real business operations. More than a
+            decade across enterprise IT, legal technology, and site
+            reliability engineering taught me how systems actually fail. Now,
+            I build the ones that don't.
           </p>
 
           {/* ── The card ── */}
@@ -122,15 +148,15 @@ export const Hero = () => (
 
           {/* ── Résumé + socials ── */}
           <div className="hero-rise mt-6 flex flex-wrap items-center gap-x-6 gap-y-2" style={delay(460)}>
-            <a
+            <Button
               href="/resume/kervintz_noel_resume.pdf"
               download="Kervintz_Noel_Resume.pdf"
+              variant="panel"
               onClick={() => trackEvent("resume_download", { file: "Kervintz_Noel_Resume.pdf" })}
-              className="inline-flex items-center gap-2 text-sm font-bold text-ink underline underline-offset-4 decoration-2 decoration-caution hover:decoration-ink"
             >
-              Download resume
-              <Arrow />
-            </a>
+              Download Resume
+            </Button>
+        
             <ul className="flex items-center gap-1">
               {socials.map((s) => (
                 <li key={s.label}>

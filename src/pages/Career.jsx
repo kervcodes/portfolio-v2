@@ -42,7 +42,7 @@ export const Career = () => {
         <title>Kervintz Noel | Software Engineer — Career</title>
         <meta
           name="description"
-          content="Kervintz Noel — Software Engineer, Software Engineer, Production Reliability. Try the AI Digital Twin, see what he's building, and save his contact."
+          content="Kervintz Noel — Software Engineer, AI Workflows, Production Reliability. Try the AI Digital Twin, see what he's building, and save his contact."
         />
         <link rel="canonical" href="https://kervintznoel.com/career" />
       </Helmet>

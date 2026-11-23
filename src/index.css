@@ -10,8 +10,8 @@
 
 @theme {
   /* ── Ground and ink ── */
-  /* Blue-grey page (#E6EAEE): the same cool cast as the charcoal strip and
-     ink, a clear step darker than the white sheets so cards lift off it. */
+  /* Sand page (#E9E3D8): warm and paper-like, a clear step darker than the
+     white sheets so cards lift off it. */
   --color-ground: #E9E3D8;
   --color-sheet: oklch(99.4% 0.001 250);
   --color-ink: oklch(21% 0.012 255);
@@ -33,7 +33,7 @@
   --color-caution: oklch(72% 0.155 72);
   --color-caution-ink: oklch(38% 0.095 65);
   --color-caution-wash: oklch(95% 0.045 82);
-  --color-verified: oklch(50% 0.115 152);
+  --color-verified: oklch(48% 0.115 152);
   /* Verified must keep meaning verified on the charcoal too. The light-ground
      green computes to 2.65:1 on panel, so the panel tier is a second token —
      never a swap to amber, which means "in progress" and would invert the
@@ -67,7 +67,7 @@
   --color-tint-teal: oklch(97% 0.017 200);
 
   /* ── Legacy semantic aliases (unmounted files still reference these) ── */
-  --color-background: #e6eaee;
+  --color-background: #E9E3D8;
   --color-foreground: oklch(21% 0.012 255);
   --color-card: oklch(99.4% 0.001 250);
   --color-surface: oklch(99.4% 0.001 250);

@@ -57,9 +57,9 @@ export const About = () => (
             <Button
               href="/resume/kervintz_noel_resume.pdf"
               download="Kervintz_Noel_Resume.pdf"
-              variant="outline"
+              variant="panel"
             >
-              Download CV — PDF
+              Download Resume
             </Button>
           </div>
         </div>

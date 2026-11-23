@@ -20,7 +20,7 @@
  */
 
 export const POSITIONING = {
-  titles: ["Software Engineer", "Software Engineer", "Production Reliability"],
+  titles: ["Software Engineer", "AI Workflows", "Production Reliability"],
   statement:
     "I build AI-powered software that works beyond the demo — combining software engineering, APIs, cloud infrastructure, and production reliability.",
   progression: [
@@ -121,7 +121,7 @@ export const TWIN_FEATURE = {
     "What has he built with AI?",
     "Tell me about his production reliability experience.",
     "What kind of software projects has he shipped?",
-    "Why would he fit an Software Engineer role?",
+    "Why would he fit a Software Engineer role?",
   ],
 };
 

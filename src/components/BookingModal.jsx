@@ -11,23 +11,9 @@ import { X } from "lucide-react";
 import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { trackEvent } from "@/lib/analytics";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Book a Call, as a modal. Any "Book a Call" control calls openBooking(); the
-// dialog shows a charcoal invitation beside the live Calendly calendar.
-//
-// The facts mirror the Calendly event itself (15 Minute Meeting, Eastern
-// time). If the event changes in Calendly — length, a meeting location,
-// availability — update BOOKING so the modal doesn't promise something the
-// calendar won't deliver.
-//
-// The reason a visitor picks is passed to Calendly as `a1`, which pre-fills
-// the event's first booking question ("Please share anything that will help
-// prepare for our meeting."). Their answer then arrives with the booking.
-// ─────────────────────────────────────────────────────────────────────────────
-
 const BOOKING = {
-  pageUrl: "https://calendly.com/kervintznoel/15min",
-  duration: "15 minutes",
+  pageUrl: "https://calendly.com/kervintznoel/30min",
+  duration: "30 minutes",
   timezone: "Eastern",
 };
 
@@ -58,6 +44,13 @@ const embedUrl = (reason) => {
   url.searchParams.set("embed_domain", "kervintznoel.com");
   url.searchParams.set("hide_gdpr_banner", "1");
   url.searchParams.set("hide_event_type_details", "1");
+  // Theme colors. Calendly only honors these on paid plans — on the free
+  // plan they are ignored and the calendar stays Calendly blue. Kept here so
+  // they apply the day the account is upgraded. The accent is a darker
+  // amber than the site's buttons so white text on it stays readable.
+  url.searchParams.set("background_color", "ffffff");
+  url.searchParams.set("text_color", "15191e");
+  url.searchParams.set("primary_color", "a26000");
   return url.toString();
 };
 
@@ -99,9 +92,6 @@ const BookingDialog = ({ onClose }) => {
   const dialogRef = useRef(null);
   const closeRef = useRef(null);
 
-  // Escape closes, the page behind doesn't scroll, focus moves into the
-  // dialog and goes back to whatever opened it afterwards, and Tab stays
-  // inside while it's open.
   useEffect(() => {
     const opener = document.activeElement;
     closeRef.current?.focus();
@@ -155,7 +145,7 @@ const BookingDialog = ({ onClose }) => {
           type="button"
           onClick={onClose}
           aria-label="Close booking"
-          className="absolute right-3 top-3 z-10 min-w-11 min-h-11 flex items-center justify-center rounded-full text-ink lg:text-ink bg-sheet/90 hover:bg-ground transition-colors"
+          className="absolute right-3 top-3 z-10 min-w-11 min-h-11 flex items-center justify-center rounded-full text-ink bg-white/90 hover:bg-ground transition-colors"
         >
           <X className="w-6 h-6" aria-hidden="true" />
         </button>
@@ -218,7 +208,9 @@ const BookingDialog = ({ onClose }) => {
         </div>
 
         {/* ── Right: the booking ── */}
-        <div className="lg:col-span-7 bg-sheet px-5 md:px-8 py-7 md:py-9">
+        {/* Pure white, the same as Calendly's own background, so the
+            embedded calendar has no visible edge against the panel. */}
+        <div className="lg:col-span-7 bg-white px-5 md:px-8 py-7 md:py-9">
           <div className="flex items-center gap-3 pr-12">
             <img
               src="/images/kn.jpg"
@@ -233,7 +225,7 @@ const BookingDialog = ({ onClose }) => {
           </div>
 
           <p className="mt-5 text-3xl md:text-4xl font-bold tracking-tight text-ink">
-            15 Minute Call
+            30 Minute Call
           </p>
           <p className="mt-1 text-sm text-ink-muted">
             Times show in your own time zone.
@@ -242,9 +234,9 @@ const BookingDialog = ({ onClose }) => {
           <div className="mt-4 -mx-2">
             <iframe
               key={reason}
-              title="Book a 15-minute call with Kervintz Noel on Calendly"
+              title="Book a call with me on Calendly"
               src={embedUrl(reason)}
-              className="block w-full h-[640px] md:h-[600px] bg-sheet"
+              className="block w-full h-[680px] md:h-[660px] bg-white"
             />
           </div>
 

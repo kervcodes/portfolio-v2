@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { LazyMotion, MotionConfig, domAnimation } from "motion/react";
 import { useNavigationContinuity } from "@/lib/motion";
@@ -19,13 +19,13 @@ import { Career } from "@/pages/Career";
 import { NotFound } from "@/pages/NotFound";
 import { RouteLoader } from "@/components/RouteLoader";
 import { BookingProvider, useBooking } from "@/components/BookingModal";
+import { Blog } from "@/pages/Blog";
 import { Posts } from "@/sections/Posts";
-// import { Projects } from "@/sections/Projects";
 import { Learning } from "@/sections/Learning";
 
 // ─── Homepage ─────────────────────────────────────────────────────────────────
-// Order is deliberate: the primary visitor is a recruiter with ~60 seconds.
-// Credibility (Experience) lands before work-in-progress (Learning, Posts).
+// Order is deliberate: the primary visitor is a recruiter with ~60 seconds,
+// so the work (Learning, rendered as #projects) lands right under the Hero.
 //
 // Section rhythm — two steps, applied by meaning, not uniformly:
 //   major boundary (topic change)  py-24 md:py-32
@@ -38,7 +38,8 @@ import { Learning } from "@/sections/Learning";
 //                   including full-page articles and their notice/error
 //                   states, so no page reads as narrower than another.
 //
-// Projects stays out until the product names are cleared — see PRODUCT.md.
+// The old four-product section (sections/Projects.jsx) is retired; #projects
+// now points at the current case studies in Learning.
 const HomePage = () => (
   <div className="min-h-screen overflow-x-hidden flex flex-col">
     <Helmet>
@@ -51,11 +52,10 @@ const HomePage = () => (
     <Navbar />
     <main className="flex-1">
       <Hero />
+      <Learning />
       <About />
       <Experience />
-      <Learning />
       <Posts />
-      {/* <Projects /> */}
       <Contact />
     </main>
     <Footer />
@@ -107,6 +107,7 @@ function App() {
         <RouteLoader />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/posts/:slug" element={<PostDetail />} />
           <Route path="/projects/:slug" element={<ProjectCaseStudy />} />
           <Route path="/twin" element={<Twin />} />
@@ -114,6 +115,7 @@ function App() {
           <Route path="/career" element={<Career />} />
           <Route path="/book" element={<BookOnLoad />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/projects" element={<Navigate to="/#projects" replace />} />
         </Routes>
         </BookingProvider>
       </MotionConfig>

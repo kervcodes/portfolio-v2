@@ -26,7 +26,7 @@ const PROJECTS = [
         id: "local-bank-statement-analyzer",
         name: "Local Bank Statement Analyzer",
         description:
-            "Import months or years of bank and credit-card statements and get one consolidated, local view of your finances across every account. Deterministic Python parses and reconciles the numbers; AI is used only for interpretation, and PII never leaves the machine.",
+            "Import months or years of bank and credit-card statements and get one consolidated, local view of your finances across every account. Deterministic Python parses the numbers and reconciles every statement against its own opening and closing balances; AI is used only for categorization and explanation. Raw statements stay on the machine, and only an allowlisted set of sanitized fields ever reaches a model.",
         status: "active",
         stack: ["Electron", "React", "TypeScript", "FastAPI", "Python", "SQLModel", "Alembic", "pdfplumber", "Recharts", "Tailwind CSS", "pytest"],
         milestones: [
@@ -183,7 +183,7 @@ const ProjectCard = ({ project }) => {
 // ─── Section ──────────────────────────────────────────────────────────────────
 export const Learning = () => {
     return (
-    <section id="learning" className="py-16 md:py-24 scroll-mt-28">
+    <section id="projects" className="py-16 md:py-24 scroll-mt-28">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
             <SectionHead
                 title="Projects"

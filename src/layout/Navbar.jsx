@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useBooking } from "@/components/BookingModal";
 import { Menu, X } from "lucide-react";
 import { AnimatedLogo } from "@/components/AnimatedLogo";
@@ -20,15 +20,19 @@ const linkClass = (isCurrent) =>
 // /posts/:slug, where the anchors do not exist on the page.
 const navLinks = [
   { href: "/#about", label: "About" },
+  { href: "/#projects", label: "Projects" },
   { href: "/#experience", label: "Experience" },
-  { href: "/#learning", label: "Projects" },
-  { href: "/#posts", label: "Notes" },
+  { href: "/#blogs", label: "Blogs" },
 ];
 
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [current, setCurrent] = useState(null);
   const { openBooking } = useBooking();
+  // A link to a page (not a homepage section) is current while you are on it.
+  const { pathname } = useLocation();
+  const isLinkCurrent = (link, id) =>
+    id ? current === id : pathname === link.href;
   // On the homepage these hrefs are a fragment away and the browser scrolls
   // there smoothly. From /sprint or a note they used to be a full document
   // load — the strip's own marker travels between these four tabs to say they
@@ -123,7 +127,7 @@ export const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => {
             const id = link.href.split("#")[1];
-            const isCurrent = current === id;
+            const isCurrent = isLinkCurrent(link, id);
             return (
               <a
                 href={link.href}
@@ -200,7 +204,7 @@ export const Navbar = () => {
         >
           <ul className="flex-1 flex flex-col justify-center border-t border-panel-2">
             {navLinks.map((link) => {
-              const isCurrent = current === link.href.split("#")[1];
+              const isCurrent = isLinkCurrent(link, link.href.split("#")[1]);
               return (
                 <li key={link.href}>
                   <a

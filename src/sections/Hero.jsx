@@ -110,24 +110,30 @@ export const Hero = () => (
             Kervintz
           </h1>
           <p className="hero-rise mt-3 placard text-ink-faint" style={delay(160)}>
-            Software Engineer · Python · React · AWS · LLM Workflows
+            Software Engineer · Full-Stack Development · Applied AI · Production Reliability
           </p>
 
           <p className="hero-rise mt-6 text-body text-ink max-w-[58ch]" style={delay(240)}>
-            I'm a Boston-based engineer who designs, implements, and stabilizes
-            AI-powered workflows for real business operations. More than a
-            decade across enterprise IT, legal technology, and site
-            reliability engineering taught me how systems actually fail. Now,
-            I build the ones that don't.
+            I'm a Boston-based engineer who builds reliable software and
+            AI-powered applications for real business problems. My background
+            combines full-stack development, enterprise application support,
+            and site reliability engineering at Liberty Mutual, so I work
+            across the whole lifecycle: understanding the requirement,
+            designing the API, building the workflow, testing how it fails,
+            and troubleshooting it in production.
           </p>
 
           {/* ── The card ── */}
           <div className="hero-rise mt-15 sheet rounded-xl px-6 md:px-8 py-7" style={delay(340)}>
             <p className="text-body text-ink-muted">
-              I specialize in turning AI prototypes into dependable systems.
-              API integrations, LLM workflows, and the monitoring that keeps
-              them honest in production. I'm just as comfortable debugging a
-              customer's integration as I am designing the backend behind it.
+              <strong className="text-ink">Build</strong> full-stack
+              applications in Python, TypeScript, and React.{" "}
+              <strong className="text-ink">Integrate</strong> LLM workflows and
+              APIs with the business systems they serve.{" "}
+              <strong className="text-ink">Operate</strong> them: monitoring,
+              incident investigation, and root-cause analysis. I'm just as
+              comfortable debugging a customer's integration as I am designing
+              the backend behind it.
             </p>
 
             <ul className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-4" aria-label="Tools I work with">
@@ -145,7 +151,7 @@ export const Hero = () => (
 
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Button href="/#about">Get to Know Me</Button>
-              <Button href="/#experience">See My Work</Button>
+              <Button href="/#projects">See My Work</Button>
               <Button href="/#contact">Let's Connect</Button>
             </div>
           </div>

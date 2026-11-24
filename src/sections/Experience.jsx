@@ -11,7 +11,7 @@ const experiences = [
     company: "Self-Directed",
     place: "Boston, MA",
     description:
-      "Building across mobile, web, and infrastructure, with four independent products owned end to end — from architecture and implementation through testing and release. Currently expanding that work into AI engineering through a focused program of advanced coursework and production-oriented projects built in public",
+      "Building across mobile, web, and infrastructure, with four independent products owned end to end — from architecture and implementation through testing and release. Since 2026, focused on applied AI: a local-first bank statement analyzer, a deployed AI digital twin, and an AI invoice-processing app delivered with a six-week engineering team.",
     technologies: ["React", "React Native", "Next.js", "AWS", "TypeScript", "Supabase"],
     current: true,
   },
@@ -58,7 +58,7 @@ export const Experience = () => (
     <div className="max-w-7xl mx-auto px-6 md:px-12">
       <SectionHead
         title="Record"
-        lede="Twelve years from help desk to site reliability engineering to independent AI and software engineering — the roles where I learned how production systems actually break, and how to build them so they don't."
+        lede="Twelve years in technology: enterprise IT and application support, then site reliability engineering at Liberty Mutual, and since 2025 independent software and AI engineering. The roles where I learned how production systems actually break, and how to find out why."
       />
 
       {/* Each role is an entry in the record: the period is the response, the

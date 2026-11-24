@@ -13,10 +13,10 @@ const socialLinks = [
 
 // Mirrors the header links, in the same order as the page scrolls.
 const footerLinks = [
+  { href: "/#projects", label: "Projects" },
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
-  { href: "/#learning", label: "Projects" },
-  { href: "/#posts", label: "Notes" },
+  { href: "/#blog", label: "Blog" },
   { href: "/#contact", label: "Contact" },
 ];
 

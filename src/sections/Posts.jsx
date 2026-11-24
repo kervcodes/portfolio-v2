@@ -1,120 +1,66 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Posts.jsx — Notes
+// Posts.jsx — the homepage preview of the blog
 //
-// All post data lives in src/data/posts.js.
-// To add a post: edit that file and set comingSoon: false when it's ready.
+// All post data lives in src/data/posts.js. The full list, with category
+// filters and the in-the-pipeline titles, is the /blog page (pages/Blog.jsx);
+// this section shows the first few as the same cards and links there.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { Link } from "react-router-dom";
 import { POSTS } from "@/data/posts";
-import { SectionHead, Status, Arrow } from "@/components/Checklist";
-import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
-import { Entry } from "@/lib/sequence";
+import { SectionHead, Arrow } from "@/components/Checklist";
+import { PostCard } from "@/components/PostCard";
+import { useSectionLink } from "@/lib/motion";
+
+const PREVIEW_COUNT = 3;
+
+// The notes that best show engineering judgment lead the preview, in this
+// order; everything else follows in its data-file order. A slug that is
+// missing or unpublished is simply skipped.
+const PINNED = [
+    "it-parsed-it-was-wrong-anyway",
+    "build-log-7-the-gateway-that-only-lets-four-fields-through",
+    "build-log-6-nothing-gets-deleted-on-a-guess",
+    "build-log-9-the-batch-that-got-stuck-at-zero-of-six",
+];
+const pinRank = (slug) => {
+    const i = PINNED.indexOf(slug);
+    return i === -1 ? PINNED.length : i;
+};
 
 export const Posts = () => {
-    const published = POSTS.filter((p) => !p.comingSoon && !p.unlisted);
-    const upcoming = POSTS.filter((p) => p.comingSoon && !p.unlisted);
-    // The entry becomes the procedure: while this card is the one being turned
-    // to, its stamp and title carry the same names as the article's header.
-    const turn = usePageTurn();
-    const turning = useTurnKey();
+    const go = useSectionLink();
+    // Array.prototype.sort is stable, so unpinned posts keep their order.
+    const published = POSTS.filter((p) => !p.comingSoon && !p.unlisted).sort(
+        (a, b) => pinRank(a.slug) - pinRank(b.slug)
+    );
+    const preview = published.slice(0, PREVIEW_COUNT);
 
     return (
-        <section id="posts" className="py-16 md:py-24 scroll-mt-28">
+        <section id="blogs" className="py-16 md:py-24 scroll-mt-28">
             <div className="max-w-7xl mx-auto px-6 md:px-12">
                 <SectionHead
-                    title="Notes"
+                    title="Engineering Case Notes"
                     lede="What I learned and what broke. Written as I go, not after the fact."
                 />
 
-                {/* Published — the finished work carries the weight */}
-                {published.length > 0 && (
-                    <div className="mt-10 space-y-4">
-                        {published.map((post) => {
-                            const to = `/posts/${post.slug}`;
-                            const paired = turning === post.slug;
-                            return (
-                                // The run-in wraps the card rather than the
-                                // card being the animated element: the paired
-                                // stamp and title inside it carry
-                                // view-transition names, and the turn should
-                                // capture them from a settled box.
-                                <Entry key={post.slug}>
-                                <Link
-                                    to={to}
-                                    onClick={(e) => {
-                                        if (opensElsewhere(e)) return;
-                                        e.preventDefault();
-                                        turn(to, post.slug);
-                                    }}
-                                    className="sheet block p-5 md:p-7 group hover:border-ink transition-colors"
-                                >
-                                    {/* Paired with the article's header while
-                                        this is the entry being turned to. */}
-                                    <div
-                                        className="flex flex-wrap items-baseline justify-between gap-3"
-                                        style={paired ? { viewTransitionName: "note-stamp" } : undefined}
-                                    >
-                                        <p className="placard nums text-ink-faint">
-                                            {post.date} · {post.readTime}
-                                        </p>
-                                        <Status kind="verified">Published</Status>
-                                    </div>
-                                    <h3
-                                        className="mt-3 text-xl md:text-3xl font-bold text-ink leading-snug tracking-tight max-w-[34ch]"
-                                        style={paired ? { viewTransitionName: "note-entry" } : undefined}
-                                    >
-                                        {post.title}
-                                    </h3>
-                                    <p className="text-body mt-3 text-ink-muted">
-                                        {post.excerpt}
-                                    </p>
-                                    <p className="mt-5 rule-sub pt-3 placard text-ink group-hover:text-caution-ink transition-colors inline-flex items-center gap-2">
-                                        Read it
-                                        <Arrow />
-                                    </p>
-                                </Link>
-                                </Entry>
-                            );
-                        })}
-                    </div>
-                )}
+                <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {preview.map((post) => (
+                        <li key={post.slug}>
+                            <PostCard post={post} />
+                        </li>
+                    ))}
+                </ul>
 
-                {/* Pipeline — titles only. These are not finished articles and
-                    should not be dressed as any. */}
-                {upcoming.length > 0 && (
-                    <div className="mt-10">
-                        <p className="placard text-ink-faint">In the pipeline</p>
-                        <ul className="mt-3">
-                            {upcoming.map((post) => (
-                                <li
-                                    key={post.slug}
-                                    className="chk py-3 border-t border-rule"
-                                >
-                                    <span className="chk__label text-ink-muted normal-case tracking-normal font-sans text-sm leading-snug">
-                                        {post.title}
-                                    </span>
-                                    <span className="chk__lead" aria-hidden="true" />
-                                    <span className="chk__value placard text-ink-faint nums font-normal">
-                                        {post.date}
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-
-                <p className="mt-8 text-sm text-ink-muted">
-                    Posts live here first. I'll start cross-posting them on{" "}
-                    <a
-                        href="https://hashnode.com/@kervcodes"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-ink font-bold underline underline-offset-4 decoration-rule hover:decoration-ink"
+                <p className="mt-8">
+                    <Link
+                        to="/blog"
+                        onClick={(e) => go(e, "/blog")}
+                        className="inline-flex items-center gap-2 font-bold text-ink underline underline-offset-4 decoration-2 decoration-caution hover:decoration-ink"
                     >
-                        Hashnode
-                    </a>
-                    .
+                        View all {published.length} posts
+                        <Arrow />
+                    </Link>
                 </p>
             </div>
         </section>

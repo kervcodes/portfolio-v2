@@ -10,7 +10,7 @@ import { Tag } from "@/components/Tag";
 import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
 
 // The card lives in the Learning section, so that's where Back returns to.
-const BACK_TO = "/#learning";
+const BACK_TO = "/#projects";
 const BACK_LABEL = "Projects";
 
 // Same pairing mechanism as the Notes page turn: the slug travels with the

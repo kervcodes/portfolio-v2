@@ -9,8 +9,8 @@ import { CodeBlock } from "@/components/CodeBlock";
 import { usePageTurn, useTurnKey } from "@/lib/motion";
 
 // Posts are back on the homepage, so the return path is the Notes section.
-const BACK_TO = "/#posts";
-const BACK_LABEL = "All notes";
+const BACK_TO = "/blog";
+const BACK_LABEL = "All posts";
 
 // ─── Content block renderer ───────────────────────────────────────────────────
 const ContentBlock = ({ block }) => {

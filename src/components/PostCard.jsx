@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
+import { useState } from "react";
+import { isExternalPost } from "@/data/posts";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PostCard — one article in the blog grid (the /blog page and the homepage
@@ -31,13 +33,23 @@ const TECH_TAGS = ["Python", "TypeScript", "Pydantic", "Claude Code"];
 // for a build log, the subject for anything else, and the languages used.
 // Pure CSS: nothing to download, and nothing unrelated to the article.
 export const PostCover = ({ post, className = "" }) => {
-  if (post.coverImage) {
+  // If the image file is missing, fall back to the typographic cover rather
+  // than showing a broken-image icon.
+  const [imageFailed, setImageFailed] = useState(false);
+
+  if (post.coverImage && !imageFailed) {
+    // A cover that isn't 3:2 (a square social image, say) can set
+    // coverFit: "contain" plus coverBg, its own edge color, to show whole on
+    // a matching background instead of being cropped to fill the frame.
+    const contain = post.coverFit === "contain";
     return (
       <img
         src={post.coverImage}
         alt=""
         loading="lazy"
-        className={`w-full h-full object-cover ${className}`}
+        onError={() => setImageFailed(true)}
+        style={contain && post.coverBg ? { backgroundColor: post.coverBg } : undefined}
+        className={`w-full h-full ${contain ? "object-contain" : "object-cover"} ${className}`}
       />
     );
   }
@@ -104,16 +116,24 @@ export const PostCard = ({ post, headingLevel = "h3" }) => {
   const paired = useTurnKey() === post.slug;
   const to = `/posts/${post.slug}`;
   const Heading = headingLevel;
-
-  return (
-    <article className="h-full">
-      <Link
-        to={to}
-        onClick={(e) => {
+  // A post with no on-site body lives only on Hashnode: link out to it.
+  const external = isExternalPost(post);
+  const CardLink = external ? "a" : Link;
+  const linkProps = external
+    ? { href: post.hashnodeUrl, target: "_blank", rel: "noopener noreferrer" }
+    : {
+        to,
+        onClick: (e) => {
           if (opensElsewhere(e)) return;
           e.preventDefault();
           turn(to, post.slug);
-        }}
+        },
+      };
+
+  return (
+    <article className="h-full">
+      <CardLink
+        {...linkProps}
         className="group flex flex-col h-full rounded-xl border border-rule bg-sheet p-3 transition-colors duration-200 hover:border-ink-faint focus-visible:outline-offset-4"
       >
         <div className="aspect-[3/2] overflow-hidden rounded-lg">
@@ -155,7 +175,7 @@ export const PostCard = ({ post, headingLevel = "h3" }) => {
             <span className="font-bold text-ink">{AUTHOR.name}</span>
           </p>
         </div>
-      </Link>
+      </CardLink>
     </article>
   );
 };

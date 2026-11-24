@@ -31,6 +31,28 @@
 
 export const POSTS = [
     {
+        // HASHNODE-ONLY POST: no content[] here, so the card links straight
+        // to hashnodeUrl instead of an on-site page (see PostCard.jsx), and
+        // prerender skips it. Cover art lives in public/posts/code-to-business/.
+        slug: "from-code-to-business-value",
+        title: "From Code to Business Value: A 90-Day Exploration",
+        excerpt: "Building software is not the same as solving a business problem.",
+        date: "Nov 2026",
+        tags: ["Career"],
+        readTime: "1 min read",
+        comingSoon: false,
+        unlisted: false,
+        featured: true,
+        hashnodeUrl: "https://kervintznoel.hashnode.dev/from-code-to-business-value-day-1",
+        // cover.jpg is a compressed copy of "From Code to Business Value.png"
+        // (140 KB vs 1.25 MB). The art is square, so it shows whole on its
+        // own navy rather than being cropped to the card's 3:2 frame.
+        coverImage: "/posts/code-to-business/cover.jpg",
+        coverFit: "contain",
+        coverBg: "#041632",
+        content: [],
+    },
+    {
         // DRAFT — previewable, unlisted.
         //   unlisted: true   → hidden from both the published and pipeline lists,
         //                      but the page renders at /posts/<slug> so you can
@@ -48,7 +70,7 @@ export const POSTS = [
         tags: ["AI Engineering", "LLM Evaluation", "Structured Outputs", "Python", "Pydantic"],
         readTime: "12 min read",
         comingSoon: false,
-        unlisted: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: false,
         // Long follow-along post: fold each h2 into a collapsible section so a
         // reader can close a step once they have worked through it.
@@ -796,6 +818,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Claude Code", "Building in Public", "TypeScript"],
         readTime: "4 min read",
         comingSoon: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null,
         coverImage: null,
@@ -876,6 +899,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Claude Code", "Building in Public", "TypeScript"],
         readTime: "4 min read",
         comingSoon: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null,
         coverImage: null,
@@ -947,6 +971,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Claude Code", "Building in Public", "Python"],
         readTime: "3 min read",
         comingSoon: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null,
         coverImage: null,
@@ -1007,6 +1032,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Claude Code", "Building in Public", "TypeScript"],
         readTime: "3 min read",
         comingSoon: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null,
         coverImage: null,
@@ -1063,6 +1089,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Claude Code", "Building in Public", "Python"],
         readTime: "5 min read",
         comingSoon: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null,
         coverImage: null,
@@ -1151,6 +1178,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Claude Code", "Building in Public", "Python"],
         readTime: "4 min read",
         comingSoon: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null,
         coverImage: null,
@@ -1215,6 +1243,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Claude Code", "Building in Public", "Python"],
         readTime: "4 min read",
         comingSoon: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null,
         coverImage: null,
@@ -1279,6 +1308,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Claude Code", "Building in Public", "Python"],
         readTime: "3 min read",
         comingSoon: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null,
         coverImage: null,
@@ -1339,6 +1369,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Claude Code", "Building in Public", "Python"],
         readTime: "4 min read",
         comingSoon: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null,
         coverImage: null,
@@ -1407,6 +1438,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Claude Code", "Building in Public", "Python"],
         readTime: "4 min read",
         comingSoon: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null, // ← set when published to Hashnode
         coverImage: null,
@@ -1599,6 +1631,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Claude Code", "Building in Public", "Python"],
         readTime: "5 min read",
         comingSoon: false,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null, // ← set when published to Hashnode
         // No cover: the header image renders decorative (alt="", aria-hidden), and
@@ -1844,6 +1877,7 @@ print(response_b.output_text)`,
         tags: ["AI Engineering", "Software Longevity"],
         readTime: "6 min read",
         comingSoon: true,
+        unlisted: true, // hidden 2026-11-24: writing moved to Hashnode
         featured: true,
         hashnodeUrl: null,
         coverImage: null,
@@ -1922,3 +1956,7 @@ print(response_b.output_text)`,
 ];
 
 export const getPostBySlug = (slug) => POSTS.find((p) => p.slug === slug);
+
+// A post that lives only on Hashnode: it has a hashnodeUrl but no on-site body.
+export const isExternalPost = (post) =>
+    Boolean(post.hashnodeUrl) && !(post.content?.length > 0);

@@ -13,6 +13,8 @@ import { PostCard } from "@/components/PostCard";
 import { useSectionLink } from "@/lib/motion";
 
 const PREVIEW_COUNT = 3;
+const MORE_LINK =
+    "inline-flex items-center gap-2 font-bold text-ink underline underline-offset-4 decoration-2 decoration-caution hover:decoration-ink";
 
 // The notes that best show engineering judgment lead the preview, in this
 // order; everything else follows in its data-file order. A slug that is
@@ -52,15 +54,29 @@ export const Posts = () => {
                     ))}
                 </ul>
 
+                {/* Until there are more posts than the preview shows, "view
+                    all" would only repeat them — point to Hashnode instead. */}
                 <p className="mt-8">
-                    <Link
-                        to="/blog"
-                        onClick={(e) => go(e, "/blog")}
-                        className="inline-flex items-center gap-2 font-bold text-ink underline underline-offset-4 decoration-2 decoration-caution hover:decoration-ink"
-                    >
-                        View all {published.length} posts
-                        <Arrow />
-                    </Link>
+                    {published.length > PREVIEW_COUNT ? (
+                        <Link
+                            to="/blog"
+                            onClick={(e) => go(e, "/blog")}
+                            className={MORE_LINK}
+                        >
+                            View all {published.length} posts
+                            <Arrow />
+                        </Link>
+                    ) : (
+                        <a
+                            href="https://kervintznoel.hashnode.dev"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={MORE_LINK}
+                        >
+                            Follow along on Hashnode
+                            <Arrow />
+                        </a>
+                    )}
                 </p>
             </div>
         </section>

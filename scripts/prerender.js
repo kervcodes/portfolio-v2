@@ -6,7 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { render } from "../dist-ssr/entry-server.js";
-import { POSTS } from "../src/data/posts.js";
+import { POSTS, isExternalPost } from "../src/data/posts.js";
 import { PROJECTS } from "../src/data/projects.js";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -22,7 +22,7 @@ const routes = [
   "/career",
   "/book",
   "/blog",
-  ...POSTS.map((p) => `/posts/${p.slug}`),
+  ...POSTS.filter((p) => !isExternalPost(p)).map((p) => `/posts/${p.slug}`),
   ...PROJECTS.map((p) => `/projects/${p.slug}`),
 ];
 

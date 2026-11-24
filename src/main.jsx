@@ -28,17 +28,13 @@ if (root.hasChildNodes()) {
   createRoot(root).render(app)
 }
 
-// The first-load signature (#boot-loader in index.html) fades itself out
-// with CSS; once it has, take it out of the DOM and shorten the hero's wait
-// to match the quicker page-change loader.
 const bootLoader = document.getElementById('boot-loader')
 const finishBoot = () => {
   bootLoader?.remove()
-  document.documentElement.style.setProperty('--boot-delay', '800ms')
 }
 if (bootLoader && getComputedStyle(bootLoader).display !== 'none') {
   bootLoader.addEventListener('animationend', (e) => {
-    if (e.animationName === 'sig-out') finishBoot()
+    if (e.animationName === 'sig-out' || e.animationName === 'sig-fade') finishBoot()
   })
 } else {
   finishBoot()

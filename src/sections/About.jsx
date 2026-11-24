@@ -13,7 +13,6 @@ export const About = () => (
   <section id="about" className="py-16 md:py-24 scroll-mt-28">
     <div className="max-w-7xl mx-auto px-6 md:px-12">
       <SectionHead
-        index="01"
         title="About"
         lede="Where the reliability instinct came from, and why it shows up in the code."
       />

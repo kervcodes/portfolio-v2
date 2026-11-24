@@ -16,7 +16,6 @@ export const ExperienceSnapshot = () => (
   >
     <div className="max-w-7xl mx-auto px-6 md:px-12">
       <SectionHead
-        index="03"
         title="Experience snapshot"
         lede="Twelve years, each stage built on the one before it."
       />

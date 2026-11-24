@@ -57,7 +57,6 @@ export const Experience = () => (
   <section id="experience" className="py-16 md:py-24 scroll-mt-28">
     <div className="max-w-7xl mx-auto px-6 md:px-12">
       <SectionHead
-        index="02"
         title="Record"
         lede="Twelve years from help desk to site reliability engineering to independent AI and software engineering — the roles where I learned how production systems actually break, and how to build them so they don't."
       />

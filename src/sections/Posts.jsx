@@ -23,7 +23,6 @@ export const Posts = () => {
         <section id="posts" className="py-16 md:py-24 scroll-mt-28">
             <div className="max-w-7xl mx-auto px-6 md:px-12">
                 <SectionHead
-                    index="04"
                     title="Notes"
                     lede="What I learned and what broke. Written as I go, not after the fact."
                 />

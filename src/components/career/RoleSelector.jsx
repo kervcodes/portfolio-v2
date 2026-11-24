@@ -20,7 +20,6 @@ export const RoleSelector = ({ value, onChange }) => {
     <section id="career-hiring" className="py-14 md:py-20 scroll-mt-6">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <SectionHead
-          index="01"
           title="What are you hiring for?"
           lede="Tap a role to see the strengths that matter most for it."
         />

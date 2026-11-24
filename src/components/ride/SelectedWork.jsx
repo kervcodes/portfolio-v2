@@ -106,7 +106,6 @@ export const SelectedWork = () => (
   <section id="ride-work" className="py-16 md:py-24 scroll-mt-10">
     <div className="max-w-7xl mx-auto px-6 md:px-12">
       <SectionHead
-        index="01"
         title="Selected work"
         lede="Two systems built end to end — the strongest completed work first."
       />

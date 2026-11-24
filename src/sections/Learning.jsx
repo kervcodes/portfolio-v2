@@ -14,7 +14,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { Link } from "react-router-dom";
-import { SectionHead, Status, Check, Notice, Arrow } from "@/components/Checklist";
+import { Status, Check, Notice, Arrow } from "@/components/Checklist";
 import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
 import { Entry } from "@/lib/sequence";
 import { tagBorderClass } from "@/lib/tagColors";
@@ -27,7 +27,6 @@ const PROJECTS = [
         name: "Local Bank Statement Analyzer",
         description:
             "Import months or years of bank and credit-card statements and get one consolidated, local view of your finances across every account. Deterministic Python parses and reconciles the numbers; AI is used only for interpretation, and PII never leaves the machine.",
-        phase: "Project 01",
         status: "active",
         stack: ["Electron", "React", "TypeScript", "FastAPI", "Python", "SQLModel", "Alembic", "pdfplumber", "Recharts", "Tailwind CSS", "pytest"],
         milestones: [
@@ -95,7 +94,9 @@ const ProjectCard = ({ project }) => {
                     className="flex flex-wrap items-baseline justify-between gap-3"
                     style={paired ? { viewTransitionName: "project-stamp" } : undefined}
                 >
-                    <p className="placard nums text-ink-faint">{project.phase}</p>
+                    {project.phase && (
+                        <p className="placard nums text-ink-faint">{project.phase}</p>
+                    )}
                     <Status kind={project.status} />
                 </div>
                 <h3
@@ -158,16 +159,6 @@ export const Learning = () => {
     return (
     <section id="learning" className="py-16 md:py-24 scroll-mt-28">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-            <SectionHead
-                index="03"
-                title="Current"
-                lede="One shipped. Three more planned."
-            />
-
-            {/* The world's loudest device, used for the one thing it is for:
-                most of this section is the only part of the site describing
-                unfinished work, and saying so plainly is the point of building
-                in public. */}
             <Notice kind="caution" label="Building in public" className="mt-10">
                 The shipped project below is live. The rest are unfinished — a running
                 record of work as it's built.
@@ -176,7 +167,7 @@ export const Learning = () => {
             {/* ── Shipped ── */}
             <div className="mt-10">
                 <p className="placard text-ink-faint">
-                    Shipped — <span className="nums">{SHIPPED.length}</span>
+                    {/* Shipped — <span className="nums">{SHIPPED.length}</span> */}
                 </p>
                 <div className="mt-3 space-y-6">
                     {SHIPPED.map((project) => (
@@ -187,10 +178,10 @@ export const Learning = () => {
 
             {/* ── In progress ── */}
             <div className="mt-10">
-                <p className="placard text-ink-faint">
+                {/* <p className="placard text-ink-faint">
                     In progress — <span className="nums">{PROJECTS.length}</span> of{" "}
                     <span className="nums">4</span> started
-                </p>
+                </p> */}
                 <div className="mt-3 space-y-6">
                     {PROJECTS.map((project) => (
                         <ProjectCard key={project.id} project={project} />

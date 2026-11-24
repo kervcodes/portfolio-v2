@@ -21,7 +21,7 @@ const linkClass = (isCurrent) =>
 const navLinks = [
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
-  { href: "/#learning", label: "Current" },
+  { href: "/#learning", label: "Projects" },
   { href: "/#posts", label: "Notes" },
 ];
 

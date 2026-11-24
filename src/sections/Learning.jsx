@@ -14,7 +14,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { Link } from "react-router-dom";
-import { Status, Check, Notice, Arrow } from "@/components/Checklist";
+import { SectionHead, Status, Check, Notice, Arrow } from "@/components/Checklist";
 import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
 import { Entry } from "@/lib/sequence";
 import { tagBorderClass } from "@/lib/tagColors";
@@ -42,6 +42,32 @@ const PROJECTS = [
 ];
 
 const SHIPPED = [
+    {
+        id: "property-bill-automation",
+        name: "Property Bill Automation",
+        description:
+            "A six-week team build in the Dallas Software Developers 2026 cohort: upload property invoices, extract the bill details with AI, route bills for approval, and track payment runs. As a full-stack engineer I built the backend foundation and database schema, secure invoice upload designed for failure cases, and vendor and property management.",
+        phase: "Shipped · Nov 2026 · Team project",
+        status: "verified",
+        cta: "Read the case study",
+        stack: [
+            "Next.js",
+            "TypeScript",
+            "FastAPI",
+            "Python",
+            "Supabase",
+            "PostgreSQL",
+            "Claude API",
+            "Playwright",
+        ],
+        milestones: [
+            { label: "Set up the FastAPI backend, CI, and Supabase schema migrations", done: true },
+            { label: "Secure invoice PDF upload with validation", done: true },
+            { label: "Save and edit draft bills on the dashboard", done: true },
+            { label: "Vendor and property management with address matching", done: true },
+            { label: "Review teammates' pull requests and turn requirements into tickets", done: true },
+        ],
+    },
     {
         id: "digital-twin",
         name: "AI Digital Twin",
@@ -159,9 +185,14 @@ export const Learning = () => {
     return (
     <section id="learning" className="py-16 md:py-24 scroll-mt-28">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <SectionHead
+                title="Projects"
+                lede="What I've shipped, and what I'm building now."
+            />
+
             <Notice kind="caution" label="Building in public" className="mt-10">
-                The shipped project below is live. The rest are unfinished — a running
-                record of work as it's built.
+                The shipped projects below are live. The rest are unfinished — a
+                running record of work as it's built.
             </Notice>
 
             {/* ── Shipped ── */}

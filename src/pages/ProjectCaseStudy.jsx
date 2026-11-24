@@ -5,12 +5,13 @@ import { Footer } from "@/layout/Footer";
 import { getProjectBySlug } from "@/data/projects";
 import { Status, Arrow } from "@/components/Checklist";
 import { ProjectTabs } from "@/components/ProjectTabs";
+import { ProjectMedia } from "@/components/ProjectMedia";
 import { Tag } from "@/components/Tag";
 import { usePageTurn, useTurnKey, opensElsewhere } from "@/lib/motion";
 
 // The card lives in the Learning section, so that's where Back returns to.
 const BACK_TO = "/#learning";
-const BACK_LABEL = "Current work";
+const BACK_LABEL = "Projects";
 
 // Same pairing mechanism as the Notes page turn: the slug travels with the
 // turn so the outgoing card and the incoming header can share a name.
@@ -101,6 +102,14 @@ export const ProjectCaseStudy = () => {
                         {project.name}
                     </h1>
                 </header>
+
+                {(project.video || project.gallery?.length > 0) && (
+                    <ProjectMedia
+                        video={project.video}
+                        gallery={project.gallery}
+                        projectName={project.name}
+                    />
+                )}
 
                 <ProjectTabs project={project} />
 

@@ -46,6 +46,8 @@ export const TAG_GLOSSARY = {
     "OpenAI API": "Hosted API for OpenAI's language models, including tool calling.",
     "Claude API": "Anthropic's API for the Claude family of language models.",
     "Claude Code": "Anthropic's command-line AI coding agent.",
+    "Gemini API": "Google's API for the Gemini family of language models.",
+    Playwright: "Browser automation library, used here to drive web portals like a person would.",
     "Hugging Face Spaces": "Hosting platform for machine-learning apps and interactive demos.",
     Pushover: "Service for sending push notifications to a phone or desktop.",
 

@@ -21,6 +21,13 @@
 //                                screenshots of what that milestone produced.
 //   tabs.result               — { liveUrl?, githubUrl?, improvements?: [] }
 //
+// OPTIONAL, at the top level of a project:
+//   video                     — { youtubeId, title?, caption? } — a demo
+//                                video, the first slide of the media slider
+//                                under the header. Unlisted YouTube works.
+//   gallery                   — [{ src, alt, caption? }] — screenshots that
+//                                follow the video in the same slider.
+//
 // CONTENT BLOCK TYPES (used in `tabs.problem.content`):
 //   { type: "heading", text: "..." }
 //   { type: "paragraph", text: "..." }
@@ -28,9 +35,149 @@
 
 export const PROJECTS = [
     {
+        slug: "property-bill-automation",
+        name: "Property Bill Automation",
+        status: "verified", // shipped and live
+        stack: [
+            "Next.js",
+            "React",
+            "TypeScript",
+            "Tailwind CSS",
+            "Python",
+            "FastAPI",
+            "Pydantic",
+            "Supabase",
+            "PostgreSQL",
+            "Claude API",
+            "Gemini API",
+            "Playwright",
+            "pytest",
+            "GitHub Actions",
+        ],
+        video: {
+            youtubeId: "8g-NMv5cdNE",
+            title: "Property Bill Automation — demo",
+            caption: "End-to-end demo of the finished app. Plays muted; unmute in the player.",
+        },
+        gallery: [
+            {
+                src: "/projects/property-bill-automation/dashboard.png",
+                alt: "Bill & Invoice dashboard showing the outstanding total, bills due this week, saved drafts, and an invoice history table with approved, rejected, and paid bills.",
+                caption: "The Bill & Invoice dashboard, with demo data.",
+            },
+            {
+                src: "/projects/property-bill-automation/new-invoice.png",
+                alt: "New invoice form after a PDF upload: ten fields filled from the invoice, with warnings that no vendor account has the account number and that the property address doesn't match the text it was read from.",
+                caption: "A new invoice after upload: fields filled from the PDF, with anything that needs checking flagged before the bill is saved.",
+            },
+            {
+                src: "/projects/property-bill-automation/vendors.png",
+                alt: "Vendors list with name, email, phone, default payment method, and created date for six vendors.",
+                caption: "Vendor management.",
+            },
+            {
+                src: "/projects/property-bill-automation/edit-property.png",
+                alt: "Edit property form with property name, street, city, state, and ZIP code fields.",
+                caption: "Property management: the address bills are matched against.",
+            },
+            {
+                src: "/projects/property-bill-automation/team-board.png",
+                alt: "The team's Kanban board with Triage, To Do, In Progress, Code Review, and Done columns of tickets.",
+                caption: "The team's ticket board during the build.",
+            },
+            {
+                src: "/projects/property-bill-automation/ci-runs.png",
+                alt: "GitHub Actions page listing passing CI workflow runs on pull requests and on main, 294 runs in total.",
+                caption: "The CI workflow, which ran 294 times over the project.",
+            },
+            {
+                src: "/projects/property-bill-automation/migrations-decision.webp",
+                alt: "Confluence page titled Database Migrations: Alembic vs Supabase CLI, with a comparison table, reasons for the CLI, the rollback trade-off, working rules, and sources.",
+                caption: "My write-up comparing Alembic and the Supabase CLI. Click to read it full size.",
+            },
+        ],
+        // Team project. "My part", the build log, and the key decisions are
+        // drawn from Kervintz's own commits and merged PRs in the repo, and
+        // from his cohort mentor's written recommendation (Nov 2026).
+        tabs: {
+            problem: {
+                content: [
+                    { type: "heading", text: "The problem" },
+                    {
+                        type: "paragraph",
+                        text: "Property management teams handle bills across multiple properties, vendors, due dates, and approval rules. Keeping track of what has been received, approved, and paid means juggling a lot of separate steps.",
+                    },
+                    { type: "heading", text: "What we built" },
+                    {
+                        type: "paragraph",
+                        text: "A full-stack app that brings those steps into one workflow. Teams manage properties, vendors, and vendor accounts; upload invoices and have an AI provider extract the bill details; review the extraction before a bill is created or updated; route bills for approval; and record payments and review payment runs, with an audit trail of important changes. A browser-based payment agent built on Playwright runs payment runs against demo vendor portals — it is not connected to real banking or payment networks.",
+                    },
+                    { type: "heading", text: "A team build" },
+                    {
+                        type: "paragraph",
+                        text: "Built by DSD Mighty, a five-person team in the Dallas Software Developers 2026 Commit Your Code cohort — a six-week program where developers join a team and ship a working application together, in October and November 2026. The frontend is Next.js 16 with React 19 and TypeScript; it calls a Python FastAPI backend, which uses Supabase for data, authentication, and invoice storage. Invoice extraction runs on Anthropic or Google Gemini, and GitHub Actions runs CI.",
+                    },
+                    { type: "heading", text: "My part" },
+                    {
+                        type: "paragraph",
+                        text: "I was a full-stack engineer on the team. I laid the backend foundation — the initial FastAPI service and the GitHub Actions workflow — connected Supabase, and wrote the core database migrations.",
+                    },
+                    {
+                        type: "paragraph",
+                        text: "My largest piece was secure invoice PDF upload, which ties together the frontend, backend, authentication, private storage, and the database. It verifies the user, checks that they own the draft bill, validates the PDF, prevents duplicate attachments, and removes the uploaded file if the database write fails — with tests for the access boundaries and the failure cases, not only the expected path. I also built saving and editing draft bills, vendor management, and property management with automatic address matching and mismatch warnings.",
+                    },
+                    {
+                        type: "paragraph",
+                        text: "Beyond my own features, I reviewed teammates' pull requests across authentication, invoice processing, payments, and the interface — including catching an authentication error path that could leave a page stuck loading — and wrote tickets that turned project requirements into clear tasks for the team.",
+                    },
+                ],
+            },
+            keyDecisions: {
+                items: [
+                    {
+                        title: "Supabase CLI for schema changes, not Alembic",
+                        body: "I researched how the team should manage schema changes and wrote up why we should use the Supabase CLI rather than Alembic. The write-up gave the team one clear, documented approach to changing the database.",
+                    },
+                    {
+                        title: "Design the upload for failure, not just success",
+                        body: "Invoice upload touches auth, private storage, and the database in one request, so a partial failure is the real risk. The endpoint checks identity and draft ownership before anything is stored, rejects invalid PDFs, prevents duplicate attachments, and deletes the stored file if the database write fails, so storage never holds an orphaned invoice. Tests cover the access boundaries and these failure cases, not just the happy path.",
+                    },
+                ],
+            },
+            buildLog: {
+                entries: [
+                    {
+                        date: "Nov 2026",
+                        text: "Added property management with automatic address matching and mismatch warnings, and updated the project README.",
+                    },
+                    {
+                        date: "Nov 2026",
+                        text: "Built the vendors list page.",
+                    },
+                    {
+                        date: "Nov 2026",
+                        text: "Implemented secure invoice PDF upload end to end: user and draft-ownership checks, PDF validation, duplicate-attachment prevention, and cleanup of the stored file when the database write fails, with tests for the access boundaries and failure cases. Added saving and editing draft bills on the dashboard, and addressed code-review feedback on auth-outage handling, tenant tests, and the storage bucket.",
+                    },
+                    {
+                        date: "Oct 2026",
+                        text: "Connected Supabase and wrote the core database schema migrations, including new bill fields; aligned the backend's Pydantic enums with the database schema; and documented why the team should use the Supabase CLI rather than Alembic for schema changes.",
+                    },
+                    {
+                        date: "Oct 2026",
+                        text: "Initialized the FastAPI backend and project foundation, and fixed the GitHub Actions CI workflow.",
+                    },
+                ],
+            },
+            result: {
+                liveUrl: "https://cohort-team-2026-dsd-mighty.vercel.app",
+                githubUrl: "https://github.com/kervcodes/cohort-team-2026-dsd-mighty",
+            },
+        },
+    },
+    {
         slug: "local-bank-statement-analyzer",
         name: "Local Bank Statement Analyzer",
-        status: "active", // "standby" | "active" | "completed" — maps to <Status>
+        status: "active", // "standby" | "active" | "verified" (complete) — maps to <Status>
         stack: ["Electron", "React", "TypeScript", "FastAPI", "Python", "SQLModel", "Alembic", "pdfplumber", "Recharts", "Tailwind CSS", "pytest"],
         tabs: {
             problem: {

@@ -15,7 +15,7 @@ const socialLinks = [
 const footerLinks = [
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
-  { href: "/#learning", label: "Current" },
+  { href: "/#learning", label: "Projects" },
   { href: "/#posts", label: "Notes" },
   { href: "/#contact", label: "Contact" },
 ];

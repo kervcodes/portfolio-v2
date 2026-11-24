@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useBooking } from "@/components/BookingModal";
 import { Menu, X } from "lucide-react";
 import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { Arrow } from "@/components/Checklist";
@@ -27,6 +28,7 @@ const navLinks = [
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [current, setCurrent] = useState(null);
+  const { openBooking } = useBooking();
   // On the homepage these hrefs are a fragment away and the browser scrolls
   // there smoothly. From /sprint or a note they used to be a full document
   // load — the strip's own marker travels between these four tabs to say they
@@ -139,6 +141,13 @@ export const Navbar = () => {
               AI Twin
             </Link>
           )}
+          <button
+            type="button"
+            onClick={() => openBooking("nav")}
+            className={linkClass(false)}
+          >
+            Book a Call
+          </button>
           <Button
             href="/#contact"
             onClick={(e) => go(e, "/#contact")}
@@ -221,6 +230,19 @@ export const Navbar = () => {
                 </Link>
               </li>
             )}
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  openBooking("mobile_menu");
+                }}
+                className={`w-full flex items-center justify-between py-4 border-b border-panel-2 text-lg ${linkClass(false)}`}
+              >
+                Book a Call
+                <Arrow />
+              </button>
+            </li>
           </ul>
           <Button
             href="/#contact"

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useCallback, useEffect } from "react";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { LazyMotion, MotionConfig, domAnimation } from "motion/react";
 import { useNavigationContinuity } from "@/lib/motion";
@@ -17,6 +17,8 @@ import { Twin } from "@/pages/Twin";
 import { Ride } from "@/pages/Ride";
 import { Career } from "@/pages/Career";
 import { NotFound } from "@/pages/NotFound";
+import { RouteLoader } from "@/components/RouteLoader";
+import { BookingProvider, useBooking } from "@/components/BookingModal";
 import { Posts } from "@/sections/Posts";
 // import { Projects } from "@/sections/Projects";
 import { Learning } from "@/sections/Learning";
@@ -60,8 +62,25 @@ const HomePage = () => (
   </div>
 );
 
+// /book is a shareable link to the booking modal: it shows the homepage with
+// the modal already open. Closing it returns to / without a page-change
+// loader (see the `silent` state in RouteLoader).
+const BookOnLoad = () => {
+  const { openBooking } = useBooking();
+  useEffect(() => {
+    openBooking("direct_link");
+  }, [openBooking]);
+  return <HomePage />;
+};
+
 // ─── App ──────────────────────────────────────────────────────────────────────
 function App() {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const onBookingClose = useCallback(() => {
+    if (pathname === "/book") navigate("/", { replace: true, state: { silent: true } });
+  }, [pathname, navigate]);
+
   // Where a route lands: top of the new page, back to the offset you left, or
   // on the section a deep link named. Mounted once, above the routes.
   useNavigationContinuity();
@@ -84,6 +103,8 @@ function App() {
     // so the guard is a pair rather than a single point of failure.
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
+        <BookingProvider onClose={onBookingClose}>
+        <RouteLoader />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/posts/:slug" element={<PostDetail />} />
@@ -91,8 +112,10 @@ function App() {
           <Route path="/twin" element={<Twin />} />
           <Route path="/ride" element={<Ride />} />
           <Route path="/career" element={<Career />} />
+          <Route path="/book" element={<BookOnLoad />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </BookingProvider>
       </MotionConfig>
     </LazyMotion>
   );

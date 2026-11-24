@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { AnimatedLogo } from "@/components/AnimatedLogo";
+import { useBooking } from "@/components/BookingModal";
 import { useSectionLink } from "@/lib/motion";
 import { TWIN_URL } from "@/lib/twin";
 import { trackEvent } from "@/lib/analytics";
@@ -25,6 +26,7 @@ export const Footer = () => {
   // The footer sits on every route, so these five were the most-repeated
   // full-document reload in the build.
   const go = useSectionLink();
+  const { openBooking } = useBooking();
 
   return (
     <footer className="on-panel bg-panel text-panel-ink">
@@ -70,6 +72,15 @@ export const Footer = () => {
                   </Link>
                 </li>
               )}
+              <li>
+                <button
+                  type="button"
+                  onClick={() => openBooking("footer")}
+                  className="font-bold text-base text-panel-ink hover:text-caution/80 transition-colors"
+                >
+                  Book a Call
+                </button>
+              </li>
             </ul>
           </nav>
 

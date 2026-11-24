@@ -38,7 +38,11 @@ const tools = [
 
 // Page-load entrance: each block rises in on a short stagger. `hero-rise`
 // and `hero-photo` live in index.css, and reduced-motion turns them off.
-const delay = (ms) => ({ animationDelay: `${ms}ms` });
+// --boot-delay (set in index.html) holds the entrance until the signature
+// loader has cleared, so it doesn't play unseen behind it.
+const delay = (ms) => ({
+  animationDelay: `calc(${ms}ms + var(--boot-delay, 0ms))`,
+});
 
 // ─── Time-of-day greeting ────────────────────────────────────────────────────
 // The page is prerendered at build time, so the greeting is read from the
@@ -102,8 +106,8 @@ export const Hero = () => (
 
         <div className="lg:col-span-7 lg:order-1">
           <p className="hero-rise text-lg text-ink-muted" style={delay(0)}><Greeting /></p>
-          <h1 className="hero-rise mt-1 text-5xl sm:text-6xl font-bold tracking-[-0.03em] leading-[1.02] text-ink" style={delay(80)}>
-            Kervintz Noel
+          <h1 className="hero-rise mt-1 text-5xl sm:text-8xl font-bold tracking-[-0.03em] leading-[1.02] text-ink" style={delay(80)}>
+            Kervintz
           </h1>
           <p className="hero-rise mt-3 placard text-ink-faint" style={delay(160)}>
             Software Engineer · Python · React · AWS · LLM Workflows

@@ -9,8 +9,92 @@
       name="description"
       content="Kervintz Noel — Software Engineer in Boston. Twelve years from enterprise IT to site reliability engineering, now building AI-powered workflows for real business operations. Open to full-time roles."
     />
+    <!-- Script face for the loader only (Lavishly Yours), subset to the
+         eight letters it writes, so it is a few KB. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&text=Kervintz&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      /* ── Signature loader ────────────────────────────────────────────────
+         "Kervintz" in Lavishly Yours, animated after Stas Melnikov's
+         text-only CSS loader (type 1): every letter sits as a faint ghost,
+         and a solid copy of it pops up from nothing, one letter after the
+         next. Here it ripples across once instead of looping, then the sheet
+         fades away. It lives in this file, not the bundle, so it is on screen
+         before any JavaScript loads, and it hides itself with CSS alone, so
+         the page can never get stuck behind it. RouteLoader.jsx reuses these
+         classes for page changes. */
+      .sig-sheet {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        background: #e9e3d8;
+        pointer-events: none;
+        --sig-step: 90ms;
+        --sig-dur: 420ms;
+      }
+      .sig-word {
+        display: flex;
+        font-family: "Lavishly Yours", cursive;
+        font-size: clamp(4.5rem, 17vw, 9.5rem);
+        line-height: 1.2;
+        color: rgba(28, 32, 39, 0.16); /* the ghost */
+        user-select: none;
+      }
+      .sig-letter {
+        position: relative;
+        display: inline-flex;
+      }
+      .sig-letter__ink {
+        position: absolute;
+        inset: 0;
+        color: #1c2027;
+        transform-origin: 50% 60%;
+        animation: sig-pop var(--sig-dur) cubic-bezier(0.34, 1.4, 0.64, 1) both;
+        animation-delay: calc(var(--i) * var(--sig-step));
+      }
+      @keyframes sig-pop {
+        from { scale: 0; }
+        to { scale: 1; }
+      }
+      @keyframes sig-out {
+        to { opacity: 0; visibility: hidden; }
+      }
+      /* First load: about 1.6s end to end. */
+      #boot-loader { animation: sig-out 350ms ease-in 1250ms forwards; }
+      /* Page changes: a quicker ripple, about 1s. */
+      .sig-sheet--route {
+        --sig-step: 55ms;
+        --sig-dur: 320ms;
+        animation: sig-out 300ms ease-in 700ms forwards;
+      }
+      /* The hero's own entrance waits for the loader instead of running
+         unseen behind it (see `delay` in Hero.jsx). */
+      :root { --boot-delay: 1400ms; }
+      @media (prefers-reduced-motion: reduce) {
+        #boot-loader { display: none; }
+        :root { --boot-delay: 0ms; }
+      }
+    </style>
   </head>
   <body>
+    <div id="boot-loader" class="sig-sheet" aria-hidden="true">
+      <div class="sig-word">
+        <span class="sig-letter" style="--i: 0">K<span class="sig-letter__ink">K</span></span>
+        <span class="sig-letter" style="--i: 1">e<span class="sig-letter__ink">e</span></span>
+        <span class="sig-letter" style="--i: 2">r<span class="sig-letter__ink">r</span></span>
+        <span class="sig-letter" style="--i: 3">v<span class="sig-letter__ink">v</span></span>
+        <span class="sig-letter" style="--i: 4">i<span class="sig-letter__ink">i</span></span>
+        <span class="sig-letter" style="--i: 5">n<span class="sig-letter__ink">n</span></span>
+        <span class="sig-letter" style="--i: 6">t<span class="sig-letter__ink">t</span></span>
+        <span class="sig-letter" style="--i: 7">z<span class="sig-letter__ink">z</span></span>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
